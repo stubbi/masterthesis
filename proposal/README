@@ -1,0 +1,25 @@
+Schnellstart
+Für deutsche Arbeiten in proposal_name.tex Dokumentenklasse zu \documentclass[proposal,german]{cukthesis} aendern.
+In cfg.tex folgendes eintragen:
+Titel, Autor und Abschlussart an den entsprechend gekennzeichneten Stellen
+Aendern Sie den Dateinamen von proposal_name.tex so das er Ihr Proposal eindeutig identifiziert (bitte keine Umlaute oder Leerzeichen)
+Komplieren Sie das eben umbenannte Hauptfile mit pdflatex
+
+Quick Start
+In cfg.tex you will want to edit:
+Enter Title, Author and Degree at the marked locations
+Change the filename of proposal_name.tex in a way that uniquely identifies your proposal (no mutated vowels or whitespace characters)
+Compile the renamed main file with pdflatex
+
+Die folgenden Theorem Umgebungen stehen standardmäßig zur Verfügung
+The following theorem environments are available by default
+definition
+lemma
+proposition
+theorem
+corollary
+example
+claim
+remark
+problem
+observation
