@@ -285,3 +285,12 @@ TSWLatexianTemp*
 
 # standalone packages
 *.sta
+
+# vscode
+.vscode
+
+# nqs
+nqs
+
+# Tunnelblick
+Uni-VPN.tblk
