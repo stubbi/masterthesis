@@ -28,7 +28,7 @@ connected to each other by weighted links $W_{ij}$ and posses a bias $a_i$ or $b
 general case, Boltzmann machines are allowed to be fully connected. A graphical 
 representation of a fully connected Boltzmann machine is shown in figure~\ref{fig:boltzmannMachine}.
 
-\begin{figure}[h]
+\begin{figure}
     \label{fig:boltzmannMachine}
     \centering
     \begin{tikzpicture}[transform shape,line width=0.2pt]
@@ -100,13 +100,11 @@ Deep Belief networks \cite{bengio2009learning, hinton2006fast}.
 RBMs are also the kind of Boltzmann machines which are being used in this study for the simulation 
 of quantum circuits.
 
-\subsection{Properties}
-
 In the restricted case the neurons of the Boltzmann machine are seperated into two layers of visible and hidden neurons which form a bipartite graph. There 
 are only connections allowed between the neurons from the two different layers and no intra-layer connections. The structure of an 
 RBM is shown in figure~\ref{fig:rbm}. 
 
-\begin{figure}[h]
+\begin{figure}
     \label{fig:rbm}
     \centering
     \begin{tikzpicture}[transform shape,line width=0.2pt]
@@ -166,88 +164,166 @@ Before it will be shown how those probabilities can be used sample from the conf
 of the Boltzmann machine in section~\ref{sec:gibbsSampling}, a short excursion on the Representational power 
 of BMs and RBMs is made in the next section.
 
-\subsection{Representational Power}
-\section{Supervised Learning}
-\subsection{Gibbs Sampling}
+Even though the RBM has a restricted connectivity between its units, it is a universal function approximator.
+It can model any distribution over $\{0,1\}^m$ arbitrary well with $m$ visible and $k+1$ hidden units, where 
+$k$ denotes the cardinality of the support set of the target distribution, that is, the number of input elements
+from $\{0,1\}^m$ that have a non-zero probability of being observed. This also implies a worst case 
+exponential number of hidden units for distributions with a large support set. It has been shown though 
+that even less units can be sufficient depending on the patterns in the support set.
+
+\section{Gibbs Sampling}
 \label{sec:gibbsSampling}
-Boltzmann machines are generative models that represent probability distributions over its configurations.
-The probability for a configuration $\bm{c}$ has been given in equation X and X for fully connected and 
-restricted Boltzmann machines respectively. The process on how to draw such configurations of joint 
-probabilities of the BMs state is called \textit{Gibbs Sampling}.
 
-Gibbs sampling belongs to the class of so called \textit{Metropolis-Hastings} algorithms \cite{}.
-It is a simple algorithm to produce samples from the joint probability distribution of multiple random
-variables as in the case of neuron states of a Boltzmann machine. The joint configuration of neuron states
-is considered as a \textit{Markov Chain}.
+Boltzmann machines are generative models which represent probability distributions over their 
+configurations $\bm{c} = \{v_1,\dots,v_n,h_1, \dots, h_m\}$. The probability for a configuration 
+$c_i$ is given in equation X and X for fully connected and restricted Boltzmann machines respectively.
 
-A Markov chain is a discrete stochastic process of random variables $X=\{x_1,\dots,x_n\}$ which take values 
-in a (in the following considerations finite) set $\Omega$ and for which $\forall k \geqq 0$ and 
-$\forall j,i,i_0,\dots,i_{k-1} \in \Omega$ the \textit{Markov property} holds:
+Drawing samples from a Boltzmann machine according to their probabilities does not require to 
+compute the energy function of all the $2^{n+m}$ possible configurations. Instead, samples can be drawn 
+in a stochastic process called \textit{Gibbs sampling}.
+
+Gibbs sampling belongs to the class of so called \textit{Metropolis-Hastings} algorithms and by that is 
+a \textit{Monte Carlo Markov Chain} (MCMC) method. It is a simple algorithm to produce samples from the 
+joint probability distribution of multiple random variables like in the case of neuron state configurations
+of a Boltzmann machine. The possible configurations can be considered as a \textit{Markov chain}.
+
+A Markov chain is a discrete stochastic process of configurations of random variables $C=\{c^{(t)}\}$
+at timesteps $t=1, \dots, T$ which take values in a set $\Omega$ (for Boltzmann machines 
+$\Omega=\{0,1\}^{m+n}$) and for which for all time steps $t$ and for all configurations 
+$c_j, c_i, c_{i-1}, \dots, c_0 \in \Omega$ the \textit{Markov property} holds:
 
 \begin{align}
-    p_{ij}^{(k)} &:=P(X^{(k+1)}=j \mid X^{(k)} = i, X^{(k-1)} = i_{k-1}, \dots, X^{(0)} = i_0) \\
-                 & =P(X^{(k+1)}=j \mid X^{(k)} = i) 
+    p_{ij}^{(t)} &:= P(c^{(t+1)} = c_j \mid c^{(t)} = c_i, \dots, c^{(0)} = c_0) \\
+                 & = P(c^{(t+1)} = c_j \mid c^{(t)} = c_i) 
 \end{align}
 
-meaning that the next state of the system only depends on the current state and not on the history of 
-the system.
+meaning that the next state of the system only depends on the current state and not on the 
+history of the system. A Markov chain corresponds to a random walk on a finite graph 
+as the one shown in figure~\ref{fig:markov}.
 
-A distribution $\pi$ for which it holds that $\pi^T=\pi^TP$ is called \textit{stationary distribution}.
-If the Markov chain for any time $k$ reaches the stationary distribution $\mu^{(k)}= \pi$ all subsequent
-states will be distributed accordingly, that is, $\mu^{(k+n)}=\pi$ for all $n \in \mathbb{N}$.
-A sufficient (but not necessary) condition for a distribution $\pi$ to be stationary w.r.t. a Markov 
-chain described by the transition probabilities $p_{ij},i,j \in \Omega$ is that $\forall i,j \in \Omega$ 
-it holds:
+\begin{figure}
+    \label{fig:markov}
+    \centering
+    \begin{tikzpicture}[transform shape,line width=0.2pt]
+    
+        \node [draw,circle,inner sep=0.25cm] (s0) at (0,0) {$s_0$};
+        \node [draw,circle,inner sep=0.25cm] (s1) at (3,0) {$s_1$};
+    
+        \path[->] (s0) edge[loop left]  node {$p_{00}$} (s0);
+        \path[->] (s0) edge[bend left] node {$p_{01}$} (s1);
+        \path[->] (s1) edge[bend left] node {$p_{10}$} (s0);
+        \path[->] (s1) edge[loop right] node {$p_{11}$} (s1);
+    
+    \end{tikzpicture}
+    \caption{A Markov chain with two possible states $c_0$ and $c_1$. The Markov chain is 
+desribed by the $2 \times 2$ matrix $\bm{P}=\dots$}
+\end{figure}
 
-\begin{equation}
-    \pi(i)p_{ij}= \pi(j)p_{ij}
-\end{equation}
-
-This is called the \textit{detailed balance condition}.
-
-Especially relevant are Markov chains for which it is known that there exists an unique stationary distribution.
-For finite $\Omega$ this is the case if the Markov chain is \textit{irreducible}. A Markov chain is 
-irreducible if one can get from any state in $\Omega$ to any other in a finite number of transitions or 
-more formally $\forall i, j \in \Omega \exists k > 0$ with $P(X^{(k)}=j \mid X^{(0)=i}) >0$.
-
-A chain is called \textit{aperiodic} if for all $i \in \Omega$ the greatest common divisor of $\{k \mid P(X^{(k)} = i \mid
-X^{(0)} = i) > 0 \land k \in \mathbb{N}_0\}$ is 1. One can show that an irreducible and aperiodic Markov 
-chain on a finite state space is guarantied to converge to its stationary distribution (see, e.g. \cite{}).
-That is, for an arbitrary starting distribution $\mu$ it holds
-
-\begin{equation}
-    lim \dots = 0
-\end{equation}
-
-where $d_V$ is the \textit{distance of variation}. For two distributions $\alpha$ and $\beta$ on a 
-finite state space $\Omega$, the distance of variation is defined as 
+In the case of Boltzmann machines the transition probabilities $p_{ij}$ are time independent and 
+given by the ratios of configuration probabilities. For RBMs the transition probability $p_{ij}$ 
+from configuration $c_i$ to $c_j$ is given by:
 
 \begin{equation}
-d_V= \dots
+    p_{ij} = \frac{\mathrm{e}^{\sum_{v_i \in \bm{c_i}}b_iv_i}\prod_{i=1}^m(1+\mathrm{e}^{b_i + \sum_{i=1}^nW_{ij}v_i})}{\mathrm{e}^{\sum_{v_i \in \bm{c_j}}b_iv_i}\prod_{i=1}^m(1+\mathrm{e}^{b_i + \sum_{i=1}^nW_{ij}v_i})}
 \end{equation}
 
-.
+which again can be calculated efficiently.
 
-In the case of Boltzmann machines, the transition probability $\pi_{ij}$ from one configuration $c_i$ to another
-configuration $c_j$ is given by the ratio of their respective state probabilities:
+In each timestep during the Gibbs sampling, the state of a single randomly chosen unit is flipped
+so that the configurations $c^{(t)}$ and $c^{(t+1)}$ only differ in the state of one neuron. With 
+probability $p_{ij}$ configuration $c_j$ is kept as the new configuration and with probability
+$1-p_{ij}$ the Boltzmann machine will stay in configuration $c_i$.
+
+This process is repeated for a predefined number of time steps $T$. The algorithm is given in 
+algorithm~\ref{alg:gibbs}.
+
+\begin{algorithm}
+    \label{alg:gibbs}
+    \caption{Gibbs Sampling}\label{euclid}
+    \begin{algorithmic}[1]
+        \Require $bm(c)$: function returning the energy of a Boltzmann machine for configuration $c$
+        \Require T: time steps
+        \State $t\gets 0$
+        \State $c^{(0)} \gets randomize(\{0,1\}^{m+n})$ (random initialisation)
+        \Repeat
+            \State $r \gets random(m+n)$
+            \State $E_i \gets bm(c^{(t)})$
+            \State $E_j \gets bm(\{c_1,\dots,\bar{c_r},\dots,c_{m+n}\})$
+            \If{$random(1) < \frac{E_i}{E_j}$}
+                \State $c^{(t+1)} \gets \{c_1,\dots,\bar{c_r},\dots,c_{m+n}\}$
+            \EndIf
+            \State $t\gets t+1$
+        \Until{$t=T$}
+        \State \textbf{return} $c^{(T)}$
+    \end{algorithmic}
+\end{algorithm}
+
+The Markov chain for configurations of a Boltzmann machine is known to converge to it so called 
+\textit{stationary distribution} $\pi$, that is
 
 \begin{equation}
-    \pi_{ij} = \dots
+    \pi^T=\pi^T\bm{P}
 \end{equation}
 
-The Markov chain defined by these probabilities fullfills the detailed balance condition and thus 
-has a stationary distribution. show irreducible and aperiodic implying stationary.
+with $\bm{P} = (p_{ij})$ being the transition matrix with the transition probabilities as its entries.
+Once the Markov chain reaches its stationary distribution, all subsequent states will be distributed 
+according to this distribution. This means that running the Gibbs sampling algorithm from X for 
+sufficiently many time steps $T$ will sample configurations from a Boltzmann machine according 
+to the Gibbs-Boltzmann distribution given in equations X and X.
+    
+\section{Supervised Learning}
+The probability distribution over vector spaces given by a Boltzmann machine can be trained to 
+resemble the distribution of data points in a dataset. This can be done either in a \textit{unsupervised}
+or in a \textit{supervised} manner.
 
-During the Gibbs sampling at each timestep $t$ the state of a randomly chosen unit of the BM is flipped.
-Afterwards, the transition probability of the old an new configuration is computed as in ??. The new 
-configuration will be kept with that probability and be reverted to stay in the old configuration with 
-probability 1-... . After enough time steps t, the configuration of the Boltzmann machine converges to 
-its stationary distribution. 
+In both cases the parameters $\mathcal{W} = \{\bm{a},\bm{b},\bm{W}\}$ of the Boltzmann machine are updated minimizing 
+an objective function $O(\mathcal{W})$ which depends on the parameters of the Boltzmann machine and 
+typically depicts the overlap of the current and the target distribution in an iterative process called 
+\textit{gradient descent}.
 
-Running the Gibbs sampling multiple times for a fixed amount of timesteps $T$, samples from it can be 
-drawn.
+Before the training phase, the Boltzmann machine is initialized with random parameters. Afterwards, in each 
+iteration, the overlap for a subset of the training data, also called batch, is computed. Then, the gradient of 
+this value is calculated to update the parameters in the direction of the steepest descent of the target function.
+This process is depicted in figure X.
 
-\subsection{Gradient Descent}
+In case of supervised learning for Boltzmann machine, the training set consists of tuples of configurations 
+and target energy values. For each batch, the difference between the current and target energy state can be 
+calculated and derived for the parameters of the Boltzmann machine. Afterwards, the parameters will be updated 
+according to:
+
+\begin{equation}
+    \dots
+\end{equation}
+
+As seen in fig X, the shape of the objective function typically contains many (local) minimas.
+There are several variations of stochastic gradient descent methods which try to avoid the local minimas
+and reach the global one.
+One successful such strategy that is also being used in this study is \textit{AdaMax}, a special version 
+using the infinity norm of \textit{Adam}. The method computes individual adaptive learning rates for
+different parameters from estimates of first and second moments of the gradient. It d is designed to combine the advantages
+of two recently popular methods: AdaGrad (Duchi et al., 2011), which works well with sparse gradients, and RMSProp. 
+
+The algorithm updates exponential moving averages of the gradient (mt) and the squared gradient
+(vt) where the hyper-parameters $\beta_1, \beta_2 \in [0, 1)$ control the exponential decay rates of these moving
+averages. The moving averages themselves are estimates of the 1st moment (the mean) and the
+2
+nd raw moment (the uncentered variance) of the gradient
+
+In Adamax the 
+parameters are updated according to:
+
+\begin{equation}
+    \dots
+\end{equation}
+
+which is computationally efficient, has little memory requirements and prooved to be well suited 
+for problems with very noise and sparse gradients.
+
+The method combines the advantages of
+two recently popular optimization methods: the ability of AdaGrad to deal with sparse gradients,
+and the ability of RMSProp to deal with non-stationary objectives. The method is straightforward
+to implement and requires little memory
+
 \section{Application to Quantum Computing}
 \label{sec:applicationToQuantumComputing}
 Boltzmann machine have been shown to be a good model for quantum physics. Carleo used RBMs to predict the wave functions 
