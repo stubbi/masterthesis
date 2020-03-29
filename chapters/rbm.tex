@@ -28,7 +28,7 @@ connected to each other by weighted links $W_{ij}$ and posses a bias $a_i$ or $b
 general case, Boltzmann machines are allowed to be fully connected. A graphical 
 representation of a fully connected Boltzmann machine is shown in figure~\ref{fig:boltzmannMachine}.
 
-\begin{figure}
+\begin{figure}[H]
     \label{fig:boltzmannMachine}
     \centering
     \begin{tikzpicture}[transform shape,line width=0.2pt]
@@ -104,7 +104,7 @@ In the restricted case the neurons of the Boltzmann machine are seperated into t
 are only connections allowed between the neurons from the two different layers and no intra-layer connections. The structure of an 
 RBM is shown in figure~\ref{fig:rbm}. 
 
-\begin{figure}
+\begin{figure}[H]
     \label{fig:rbm}
     \centering
     \begin{tikzpicture}[transform shape,line width=0.2pt]
@@ -201,7 +201,7 @@ meaning that the next state of the system only depends on the current state and 
 history of the system. A Markov chain corresponds to a random walk on a finite graph 
 as the one shown in figure~\ref{fig:markov}.
 
-\begin{figure}
+\begin{figure}[H]
     \label{fig:markov}
     \centering
     \begin{tikzpicture}[transform shape,line width=0.2pt]
@@ -237,7 +237,7 @@ $1-p_{ij}$ the Boltzmann machine will stay in configuration $c_i$.
 This process is repeated for a predefined number of time steps $T$. The algorithm is given in 
 algorithm~\ref{alg:gibbs}.
 
-\begin{algorithm}
+\begin{algorithm}[H]
     \label{alg:gibbs}
     \caption{Gibbs Sampling}\label{euclid}
     \begin{algorithmic}[1]
@@ -284,45 +284,72 @@ typically depicts the overlap of the current and the target distribution in an i
 Before the training phase, the Boltzmann machine is initialized with random parameters. Afterwards, in each 
 iteration, the overlap for a subset of the training data, also called batch, is computed. Then, the gradient of 
 this value is calculated to update the parameters in the direction of the steepest descent of the target function.
-This process is depicted in figure X.
+This process is depicted in figure~\ref{fig:sgd}.
+
+\begin{figure}[H]
+    \label{fig:sgd}
+    \centering
+    \begin{tikzpicture}[transform shape,line width=0.2pt]
+    
+        \draw[->] (0,0) -- (3,0) node[right] {$x$};
+        \draw[->] (0,0) -- (0,2) node[above] {$y$};
+        \draw[scale=0.01,domain=0:10,smooth,variable=\x,blue] plot ({\x},{(\x-10)^2+10});
+    
+    \end{tikzpicture}
+    \caption{Iterations of gradient descent.} 
+\end{figure}
 
 In case of supervised learning for Boltzmann machine, the training set consists of tuples of configurations 
 and target energy values. For each batch, the difference between the current and target energy state can be 
-calculated and derived for the parameters of the Boltzmann machine. Afterwards, the parameters will be updated 
-according to:
+calculated and derived for the parameters of the Boltzmann machine. In the naive way of gradient descent, 
+the parameters can be updated to minimize the objective function by:
 
 \begin{equation}
-    \dots
+    \Theta_i = \Theta_i + \Delta O \dots
 \end{equation}
 
-As seen in fig X, the shape of the objective function typically contains many (local) minimas.
-There are several variations of stochastic gradient descent methods which try to avoid the local minimas
-and reach the global one.
+This simple update rule has several drawbacks though. First, The gradient and thus the step size will become smaller as 
+closer the function approaches its minimum, leading to only small improvements and many steps necessary.
+Second, the shape of the function will usually have a lot of (local) minima which should be avoided.
+Several variants of gradient descent have been developed to overcome these issues.
+
 One successful such strategy that is also being used in this study is \textit{AdaMax}, a special version 
-using the infinity norm of \textit{Adam}. The method computes individual adaptive learning rates for
-different parameters from estimates of first and second moments of the gradient. It d is designed to combine the advantages
-of two recently popular methods: AdaGrad (Duchi et al., 2011), which works well with sparse gradients, and RMSProp. 
+of \textit{Adam}. Instead of just taking the gradient as in equation X, the method computes individual adaptive learning rates for
+different parameters from estimates of first and second moments of the gradient. It combines the advantages
+of two other popular gradient descent methods: AdaGrad \cite{} and RMSProp \cite{}. 
 
 The algorithm updates exponential moving averages of the gradient (mt) and the squared gradient
 (vt) where the hyper-parameters $\beta_1, \beta_2 \in [0, 1)$ control the exponential decay rates of these moving
 averages. The moving averages themselves are estimates of the 1st moment (the mean) and the
-2
-nd raw moment (the uncentered variance) of the gradient
+2nd raw moment (the uncentered variance) of the gradient
 
-In Adamax the 
-parameters are updated according to:
+The update rule for the parameters $\Theta_{ij}$ for Adamax are summarized in 
+algorithm~\ref{alg:adamax}.
 
-\begin{equation}
-    \dots
-\end{equation}
+\begin{algorithm}
+    \label{alg:adamax}
+    \caption{Adamax}\label{euclid}
+    \begin{algorithmic}[1]
+        \Require $\alpha$: step size
+        \Require $\beta_1, \beta_2 \in [0,1)$: Exponential decay rates
+        \Require $f(\Theta)$: Stochastic objective function with parameters $Theta$
+        \Require $\Theta_0$: Initial parameter vector
+        \State $m_0 \gets 0$ (Initialize $1^{st}$ moment vector)
+        \State $u_0 \gets 0$ (Initialize the exponential weighted infinity norm)
+        \State $t \gets 0$ (Initialize timestep)
+        \While {$\Theta_t$ not converged}
+            \State $t\gets t+1$
+            \State $g_t \gets \nabla_{\Theta}f_t(\Theta_{t-1})$ (Get gradients w.r.t. objective function at timestep $t$)
+            \State $m_t \gets \beta_1 \cdot m_{t-1} + (1-\beta_1) \cdot g_t$ (Update biased first moment estimate)
+            \State $u_t \gets max(\beta_2 \cdot u_{t-1}, \vert{g_t})$ (Update the exponentially weighted infinity norm)
+            \State $\Theta_t \gets \Theta_{t-1} - (\alpha/ (1-\beta_1^t)) \cdot m_t/u_t$ (Update parameters)
+        \EndWhile
+        \State \textbf{return} $\Theta_t$ (Resulting parameters)
+    \end{algorithmic}
+\end{algorithm}
 
-which is computationally efficient, has little memory requirements and prooved to be well suited 
+Admax is computationally efficient, has little memory requirements and prooved to be well suited 
 for problems with very noise and sparse gradients.
-
-The method combines the advantages of
-two recently popular optimization methods: the ability of AdaGrad to deal with sparse gradients,
-and the ability of RMSProp to deal with non-stationary objectives. The method is straightforward
-to implement and requires little memory
 
 \section{Application to Quantum Computing}
 \label{sec:applicationToQuantumComputing}
