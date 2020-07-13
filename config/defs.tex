@@ -10,4 +10,8 @@
 % Misc
 \newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
 
+\newcommand\qthead[2]{\makebox[42pt][c]{\textbf{#1}}\makebox[260pt][c]{\textbf{#2}}\smallskip\hrule\medskip}
+\newcommand\qtline[2]{\makebox[42pt][c]{#1}\makebox[260pt][c]{\begin{quantikz}& #2 & \qw \end{quantikz}}}
+\newenvironment{qtab}{\par\bigskip\bgroup\parindent32pt\obeylines}{\egroup\bigskip}
+
 % Add additional style definitions as required
