@@ -2,59 +2,53 @@
 
 Despite four decades
 of research in the field of quantum computing, 
-there was no real proof whether it would be possible to build quantum computers
-which are truly more powerful than classical competers. This only changed
-recently, when Google announced the results of their \textit{quantum supremacy}
-experiments on a 54 qubit quantum computer which Google researcher claim to herald the so called
-\textit{NISQ} era. To supremacy experiments, they
-chose the problem of random circuit sampling which has been specically tailored
-to this purpose.
+there was no physical proof whether it would be possible to realise quantum computers
+which have an advantage over classical ones. This only changed
+recently, when a team from Google and the UCSB claimed to have demonstrated \textit{quantum supremacy}
+with a 54 superconducting qubit quantum processor \cite{martines2019supremacy}. For this purpose, they
+chose the problem of \textit{random circuit sampling}, a problem specificaly designed
+as a quantum supremacy experiment \cite{Boixo2018supremacy}.
 
 This chapter will motivate and introduce the theoretical framework of random circuit
 sampling, also used as the benchmark for Restricted Boltzmann machines in this
 study. Further, the results of Google's quantum supremacy experiments and their
 implications for the (near) future of quantum computing will be discussed.
 
-\section{Proposal for Quantum Supremacy}
+\section{Quantum Supremacy}
 
 The term \textit{quantum supremacy} has been coined by John Preskill in 2012
-\cite{}. It describes the point in time when a physical quantum computer
-outperforms a classical computer on a given task for the first time. The problem
-solved by the quantum computer does not need to be useful, it's only purpose is
+\cite{preskill2012quantum}. It describes the point in time when a physical quantum computer
+outperforms a classical computer on some task for the first time. The problem
+solved by the quantum computer does not need to be useful. Its only purpose is
 to proof that a quantum computer can be realised that has an advantage over
-classical computers on some problem.
+classical computers on \textit{some} problem.
 
-Therer exist different theoretically founded proposals for quantum supremacy
-experiments. This is important for different reasons. As discussed in section X,
-quantum computers don't promise to provide an advantage for \textit{every}
-problem over their classical counterparts but only problems which lie in BQP but
-not in P.
+There exist different proposals for quantum supremacy
+experiments. Since quantum computers don't promise to outperform classical
+computers on every problem, as discussed in section \ref{}, but only provide a
+practical advantage for problems which lie in \textbf{BQP} and outside of
+\textbf{P}, quantum supremacy experiments must be based upon a strong theoretical foundation.
 
-One example calculation to demonstrate quantum supremacy would be to run Shor's
-algorithm for integer factorisation on some numbers for which it would take too
-long with known with known classical algorithms on existing supercomputers to
-decompose them in reasonalble time. The issue with this approach is that many
+One way to demonstrate quantum supremacy would be to run Shor's
+algorithm for integer factorisation \cite{shor1997factorisation} on a physical quantum computer on some number which would not be feasible
+to decompose with known classical algorithms on existing supercomputers. The issue with this approach is that many
 qubits are necessary to represent such numbers while today it's possible to
-build quantum processors with about 50 qubits of reasonalble quality to perform
-calculations on them.
+build quantum processors with about 50 qubits of reasonalble quality.
 
-Other proposals are the so called \textit{Boson Sampling} which is based on the
-fact that calculating the permutant of a matrix is a computational hard problem
-and IQP.
+Another famous proposal for a quantum supremacy experiment is \textit{Boson Sampling}, which is based on the
+fact that calculating the permutant of a matrix is computationaly hard \cite{aaronson2013boson}.
 
-The approach that a team from Google and took is called \textit{Random
-  Circuit Sampling} (RCS). For this approach, which is described in the next
-section, random quantum circuits of specific structures that create highly
-entangled states are run on a quantum processor and simulated classically. For
-enough qubits, performing the classical simulations would take too long on the
-biggest existing supercomputers. If the quantum computer can generate outputs
-for such circuits which are too big to simulate while their output can still be
-verified to be correct, this would proof that the quantum computer would be able
-to perform calculations not possible with classical computers anymore. To
-demonstrate quantum supremacy, the structure of the circuits has to build upon a
-strong theoretical foundation.
+The approach that a team from Google and UCSB took last year is called \textit{Random
+  Circuit Sampling} (RCS). In this approach, random quantum circuits of specific structures which create highly
+entangled states are run on a quantum processor and are simulated classically. For
+enough qubits and depth, performing the classical simulations would take years 
+even on the biggest existing supercomputers. If the quantum computer can generate outputs
+for such circuits which cannot be simulated classically anymore while their output can still be
+verified to be correct, this would demonstrate quantum supremacy. A metric that
+allows the verification on random circuit instances which cannot be simulated is
+the \textit{cross entropy fidelity}.
 
-\section{Cross Entropy Difference}
+\section{Cross Entropy Fidelity}
 
 The challenge of quantum supremacy is that one has to be able to verify the
 results of the quantum computer on instances which cannot be calculated
@@ -65,11 +59,11 @@ currently available in existing quantum computer hardware, other supremacy
 experiments like RCS provide a framework to demonstrate quantum supremacy much
 earlier.
 
-Quantum gates are described by unitary transformations. As the product of two
-unitaries is a unitary again and the same holds for the tensor product of two
-unitaries, every quantum circuit can be described by one big $2^n$
-dimensional unitary matrix acting on the input state $\Ket{pis_{init}}$ of size
-$n$, as shown in figure~\ref{circuitasunitary}.
+The first observation to undertand the concept of RCS is that every quantum
+circuit acting on $n$ qubits can be described by a single $2^n$ dimensional
+unitary matrix, as illustrated in figure~\ref{circuitasunitary}. This follows
+from the fact that quantum gates are described by unitary transformations and
+the matrix product as well as the tensor product of two unitaries is a unitary again.
 
 \begin{figure}[H]
   \begin{equation}
@@ -95,241 +89,265 @@ $n$, as shown in figure~\ref{circuitasunitary}.
 \end{figure}
 
 A quantum circuit consisting of gates chosen uniformly at random thus
-will act like a uniformly random unitary
-\cite{}. Since in the input state of the circuit all
-qubits are initialised in the $\Ket{0}$ state, the amplitudes of the final
-quantum state of the circuit are given by the first row of the random unitary.
+will act like a uniformly random unitary $U$. Since the input state of the circuit can be assumed to be
+initialised in the $\Ket{0^{\otimes n}}$ state, the amplitudes of the final
+quantum state of the circuit correspond to the first row of the random unitary $U$.
 
-It can be shown that these entries are distributed by an unbiased Gaussian with
-variance $\frac{1}{2^n}$. As the output probablities of the circuit are given by
-the squared norms of the states amplitudes, they are distributed as the square of
-a Gaussian distribution which in turn is known to be exponential distribution,
-also known as Porter-Thomas. So the probablities $p(x_j) =
-\mid \Bra{x_j}\Ket{\psi_{RC}} \mid ^2$ to observe bitstrings $x_j \in \{x_j\}_{j=1}^N$ with
+The entries of this row are complex numbers with real and imaginary parts
+distributed by an unbiased Gaussian with respect to the normalisation constraints.
+The output probablities of the random circuit are given by
+the squared norms of these entries.
+They are thus distributed as the square of
+a Gaussian distribution which is an exponential distribution,
+also known as a Porter-Thomas distribution \cite{Porter1956Fluctuations}. So the probablities $p(x_j) =
+\| \Braket{x_j\psi_{RC}} \| ^2$ to observe bitstrings $x_j \in \{x_j\}_{j=1}^N$ with
 $N=2^n$ are distributed according to
 
 \begin{equation}
-  Pr(p) = N e^{-Np}
+  Pr(p) = e^{-Np}
 \end{equation}
 
-as visualised in figure X. As quantum computers suffer from decoherent noise, it is
+as visualised in figure~\ref{fig:porterthomas}.
+
+\begin{figure}[H]
+  \label{fig:porterthomas}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      xmin=0,
+      ymin=0,
+      xmax=1,
+      ymax=1]
+      \addplot[blue, domain=0:1, thick] {e^(-5*x)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Distribution $P(p_{x_j})$ of output probablities $p_{x_j}$ of a
+    quantum circuit. The distribution $P(p_{x_j})=e^{-Np}$ is distributed as
+    Porter Thomas. A lot of output strings will have a low probablity to be
+    observed and a few output strings will dominate the observed outputs.}
+\end{figure}
+
+As quantum computers suffer from decoherent noise, it is
 important to undestand how noise during the computation influences the output
 distribution from the quantum computer and if noisy quantum computers can still
-outperform classical computers on the RCS task.
+outperform classical computers on the RCS task. Knowing that the outputs are
+Porter Thomas distributed will help with that.
 
-For this, one has to understand how samples drawn from a perfect execution of
-$U$ compare to \textit{any} set of samples drawn from a potentially noisy
-execution of $U$. A well motivated measure for the difference between two
-probablity distributions is the \textit{cross entropy}, defined as
+The task is to understand how samples $S=\{x_1,\dots,x_m\}$ drawn from a perfect execution of
+$U$ compare to a set $S^{\prime}=\{x_1^{\prime},\dots,x_m^{\prime}\}$ of samples drawn from a potentially noisy
+execution of $U$.
+
+A well motivated measure for the difference between the underlying
+probablity distributions $p_U$ and $p_U^{\prime}$ of samples $S$ and $S^{\prime}$ is the \textit{cross entropy}, defined as
 
 
 \begin{equation}
-  H(p,q) = - \sum
+  H(p_U^{\prime},p_U) = - \sum_{j=1}^Np_U^{\prime}(x_j|U) \log{p_U(x_j)}.
 \end{equation}
 
-Interesting is the average quality of the potentially noisy execution over
+Of interest is the expected quality of the potentially noisy execution over
 different random circuit instances:
 
 \begin{equation}
-  E_U \dots
+  \mathbb{E}_U[H(p_U^{\prime},p_U)] = \mathbb{E} [\sum_{j=1}^Np_U^{\prime}(x_j|U)\log{\frac{1}{p_U(x_j)}}].
 \end{equation}
 
-In a worst-case scenario the output from the noisy execution can be assumed to
-be statistically uncorelated with the output frmo the perfect execution and thus
-$-E...$ can be computed as
+In a worst case, the output of the noisy execution can be assumed to
+be statistically uncorelated with the output of the perfect execution. Thus,
+and since the output distribution for a fixed $x_j$ over many random circuit
+instances $U$ also has the shape of the Porter-Thomas distribution \cite{harrow2008random},
+$-\mathbb{E}_U[\log{p_U(x_j)}]$ can be computed independently as: 
+
+\begin{align}
+  -\mathbb{E}_U[\log{p_U(x_j)}] &\approx - \int_0^{\infty}Ne^{-NP}\log{p} dp \\
+                                &= \log{N} + \gamma,
+\end{align}
+
+where $\gamma \approx 0.577$ is the Euler constant.
+Using the fact that $\sum_{j=1}^Np_U^{\prime}(x_j) = 1$ for any distribution $p_U{\prime}$, the average cross
+entropy $\mathbb{E_U}[H(p_U^{\prime},p_U)]$ between the Porter-Thomas distribution and any other uncorrelated distribution is
+given as 
 
 \begin{equation}
-  - E_U[]\dots
+  \mathbb{E}_U [H(p_U^{\prime},p_U)] = \log{N} + \gamma.
 \end{equation}
 
-since the output distribution for a fixed $x_j$ over many random circuit
-instances will also have the shape of the Porter-Thomas distribution.
-Since $\sum \dots = 1$ for any distribution $p_{noise}$, the average cross
-entropy between the Porter-Thomas distribution and any other distribution will be:
-
-\begin{equation}
-  E_U [\dots]
-\end{equation}
-
-Notice that this is equivalent to the cross entropy $H_0$ between the
-Porter-Thomas and the uniform distribution:
-
-\begin{equation}
-  \dots
-\end{equation}
-
-
-So in a worst case a noisy execution will be as good compared to a perfect
-execution as sampling from the uniform distribution. Compared to the entropy of
+This is equivalent to the cross entropy $H_0 = \log{N} + \gamma$ between the
+Porter-Thomas and the uniform distribution. This means that in the worst case on
+average a noisy execution will be as good compared to a perfect execution as sampling
+every bitstring with probablity $1/N$. $H_0$ differs from the entropy $H(p_U)$ of
 the Porter-Thomas distribution, which corresponds to the cross-entropy with
-itself:
+itself
 
 \begin{align}
-  \dots
+  H(p_U) &= - \int p N^2e^{-Np}\log{p} dp \\
+         &= \log{N} -1 + \gamma,
 \end{align}
 
-,these only differ by the $-1$ term. 
-This directly leads to a benchmark for any algorithm $A$, given either by a
-classical simulation or by a (noisy) quantum computer. The quality of the
-execution of random circuits from $A$ can be calcuated as the difference between
+only by a $-1$ term. 
+
+This directly leads to a benchmark for any algorithm $A_U$ sampling output strings from a
+random circuit $U$, given either by a
+classical simulation or by a (noisy) quantum computer. The quality of 
+$A_U$ can be calcuated as the difference between
 the entropy of the uniform distribution and the cross entropy of the output
-samples with the Porter-Thomas distribution from the circuit. This entity has
-been named \textit{cross entropy difference}:
+samples from $A_U$ with the Porter-Thomas distribution. This metric is
+defined as the \textit{cross entropy difference} \cite{Boixo2018supremacy}:
 
 \begin{align}
-  \dots
+  \Delta H(p_A) &\equiv H_0 - H(p_A, p_U) \\
+                 &=\sum_j (\frac{1}{N} - p_A(x_j|U))\log{\frac{1}{p_U(x_j)}}.
 \end{align}
 
-Notice that in order to calculate $\Delta H(p_A)$, one needs to have access to a
-classical computer capabable of a perfect simulation of the random circuit in
-order to calculate $p_U(x_j)$. This will not be possible in the quantum
-supremacy regime, though, as quantum supremacy is reached when there will be no
-classical simulation possible anymore. As discussed shortly, it will be possible
-to extrapolate the cross entropy for $A$ in the quantum supremacy regime with high
-precision based on measurements of its cross entropy on smaller circuit
-instances which can still be simulated classically perfectly.
-The cross entropy is zero for an algorithm sampling from the uniform
+This metric is zero for an algorithm sampling from the uniform
 distribution and one for an algorithm sampling from the underlying Porter-Thomas
 distribution of the circuit.
+Notice that in order to calculate $\Delta H(p_A)$, 
+a perfect simulation of the random circuit is necessary 
+as the values of $p_U(x_j)$ have to be known. This is not possible in the quantum
+supremacy regime. As discussed shortly, it will be possible
+to extrapolate the cross entropy difference of $A_U$ to the quantum supremacy regime with high
+precision based on samples of its cross entropy difference on smaller circuit
+instances which can still be simulated classically.
 
-Another property of the uniform and Porter Thomson distribution is that their
-$l_1$ distance, given as
+Another justification for the cross entropy difference is that the $l_1$ distance between the uniform and Porter Thomas distribution
+
+\begin{align}
+  l_1(p,q) &= \| p-q\|_1 \\
+           &= \sum_{j=1}^N \mid p_i - q_i \mid
+\end{align}
+
+is a constant and thus independent of the number of qubits $n$. Therefore a
+constant number of samples is sufficient to calculate the cross entropy
+difference.
+
+The experimental cross entropy difference of $A$
 
 \begin{equation}
- l_1 = \dots
+  \alpha = \mathbb{E}_U[\Delta H(p^{\prime}_U)]
 \end{equation}
 
-is $\frac{2}{e}$ and thus independent of the number of qubits $n$. there, a
-constant number of samples is sufficient to distinguish the two distributions
-and thus also to calculate the cross entropy for different number of qubits.
-
-The average cross entropy of $A$
-
-\begin{equation}
-  \alpha = \dots
-\end{equation}
-
-can then be obtained by the execution of several random circuits $U$. Quantum
+can be obtained by the execution of several random circuits $U$. Quantum
 supremacy is achieved by a physical quantum computer when its average cross
 entropy
 
 \begin{equation}
-  1 \alpha C
+  1 \geq \alpha > C
 \end{equation}
 
-is greater than those of any classical algorithm with C being the average
-perfomance of the best known classical algorithm $A\asterix$:
+is greater than the average perfomance $C$ of the best known classical algorithm $A^*$:
 
 \begin{equation}
-  C = \dots .
+  C = \mathbb{E}_U[\Delta H(p^*)] .
 \end{equation}
 
 In the regime where perfect simulations are possible, $C=1$ and quantum
 supremacy cannot be achived. For sufficiently many qubits, perfect simulations
-will not be possible anymore and $1 > C >= 0$ with $C$ decreasing exponentially
-with the number of gates $g>>n$. For a typical sample $S_{exp}$ drawn from the
+will not be possible anymore and $1 > C \geq 0$ with $C$ decreasing exponentially
+with the number of gates $g>>n$. For a typical set of samples $S_{exp}$ drawn from the
 execution of a quantum circuit, the central limit theorem implies that
 
 \begin{equation}
-  \alpha \dots
+  \label{eq:cef}
+  \alpha \simeq H_0 - \frac{1}{m} \sum_{j = 1}^m \log{\frac{1}{p_U(x_j^{exp})}}.
 \end{equation}
 
-The statistical error in this equation from the central limit theorem goes like
-$\frac{k}{\sqrt{m}}$ with $k=1$. The experimental estimation of $\alpha$ then
-is:
+The statistical error in this equation grows like
+$\frac{\kappa}{\sqrt{m}}$ with $\kappa=1$.
 
-\begin{enumeration}
-\item Select random circuit U
+The experimental setup to estimate the cross entropy difference of any
+approximate simulation of a quantum computer thus is:
+
+\begin{enumerate}
+\item Select random circuit $U$.
   \item Take sufficiently many samples $S_{exp} = \{x_1, \dots, x_m\}$, m in
-    range $10^3-10^6$
+    range $10^3-10^6$.
     \item Compute the quantities $\log{\frac{1}{p_U(x_j^{exp})}}$ with the aid
-      of a sufficiently large quantum computer
-      \item estimate $\alpha$ using equation X.
-\end{enumeration}
+      of a sufficiently large quantum computer.
+      \item estimate $\alpha$ using equation~\ref{cef}.
+\end{enumerate}
 
-\section{Influence of Noise}
+\section{Extrapolating to the Supremacy Regime}
 
 Keeping the qubits in a coherent state during a calculation and applying quantum
 gates exactly is a difficult task. Qubits will suffer from decoherent noise
 which will destroy the quantum states. This will happen in particular in early
-implementations of quantum computers as at the current state. The quality of the
-qubits and gate applications is expected to improve over time. Noisy hardware is
-nothing specific to quantum computers, though. Classical computer hardware
-suffers from noise as well and early challenges in computation have been to deal
-with that noise. For quantum computation, the \text{strong error correction
-  theorem} says that there is a treshold of noise in quantum hardware which,
-once reached, allows to correct this noise leading to the theoretical hope for
-large scale quantum computers if that noise treshold can be realised in
-practice. At this stage, there is no physical law known which would prevent such
-fault-tolerant large scale quantum computers but sceptics about the feasibility
-of experimental realisation of such hardware.
+implementations of quantum computers. The quality of the
+qubits and gate applications is expected to improve over time.
 
-Before large scale quantum computers will be available, it is interesting to
-understand the limits and possibilities of currently available noisy hardware
-and in particular if quantum supremacy can be achived with such hardware. In the
-presence of noise, the quantum state generated by a physical quantum computer
+Before large scale error-corrected quantum computers will be available, so
+called noisy intermediate scale qantum (NISQ) computers present the first stage
+of quantum computing hardware. Such noisy devices will already provide an
+advantage over classical computers on specific problems. If the noise can be
+kept below a certain treshold, a NISQ device can be used to demonstrate quantum
+supremacy on the RCS task.
+
+In the presence of noise, the quantum state $\rho$ generated by a physical quantum computer
 after the execution of a random circuit $U$ can be represented as
 
 \begin{equation}
-  p_k = \alpha true + (1-\alpha) noise
+  \rho = \tilde{\alpha} U \Ket{\psi_0} \Bra{\psi_0} U^{\dagger} + (1- \tilde{\alpha}) \sigma
 \end{equation}
 
-with the noise term being an orthogonal state to the original one $\dots = 0$.
+with $\tilde{\alpha}$ being the circuit \textit{fidelity} and $\sigma$ being an orthogonal state to the true state
+$\Bra{\psi_0}U^{\dagger}\sigma U \Ket{\psi_0} = 0$.
 The corresponding average cross entropy difference then is:
 
 \begin{align}
-  \dots
+  \alpha &= \mathbb{E}_U[H_0+ \sum_j \Bra{x_j} \rho \Ket{x_j} \log{p_U(x_j)} ] \\
+         &= \tilde{\alpha} + (1-\tilde{\alpha})H_0 + \mathbb{E}_U[(1-\tilde{\alpha}) \sum_j \Bra{x_j} \sigma \Ket{x_j} \log{p_U(x_j)}].
 \end{align}
 
-As the states generated by the random circuits considered for this task are
-maximally entangled, a single \textit{Pauli error} introduced by a single bit
-flip or phase flip by applying a single $X$ or $X$ gate completely destroys the
-state. This has been numerically shown by Boxio. The output probablities will be
-distributed almost uniform instead, as shown in figure X
+The states generated by the random circuits are
+maximally entangled. A single bit or phase flip introduced by an additional $X$
+or $Z$ gate in the circuit completely destroys such a state. Instead of being
+Porter Thomas distributed, the output with an additional $X$ or $Z$ gate at any
+position would be almost uniformly distributed as shown in figure~\ref{fig:rcs_noise}.
 
-FIG 4 from Boxio paper In the description explain the slight tild at the end
+\begin{figure}[H]
+  \centering
+  \label{fig:rcs_noise}
+  \includegraphics[width=0.58\textwidth]{figures/rcs_noise}
+\end{figure}
 
-. This justifies the assumption that the true output probablities and the output
-of the quantum computer are (almost) uncorrelated. In other words, there can no
-information about the output probablites be inferred efficiently without a
-perfect simulation of the circuit. This assumption of uncorrleation in turn
-leads to the conclusion that the circuit fidelity $\alpha tilde$ of a random
-circuit U is approximately equal to the average cross entropy
-
-\begin{equation}
- 18
-\end{equation}
-
-This in turn justifies the approach to estimate the fidelity $\alpha$ of a
-quantum device by the exact simulation with classical computers outside of the
-quantum supremacy regime and extrapolate its capabilites to calculate the output
-probablity of random circuit instances in the quantum supremacy regime, i.e.
-when no exact classical simulation can be performed anymore.
-
-Interestingly, the cross entropy difference can also aid as a tool to estimate
-the single and two qubit gate as well as initialisation errors, as
+In other words, it is not possible to infer any information about the output
+probablites without a perfect simulation of the circuit.
+This justifies the assumption that the true output probablities and the output
+of the quantum computer are (almost) uncorrelated.
+This assumption of uncorrleation in turn leads to the conclusion that the
+circuit fidelity $\tilde{\alpha}$ of a random
+circuit $U$ is approximately equal to the average cross entropy
 
 \begin{equation}
-  19
+  \label{eq:extrapolate}
+  \alpha = \mathbb{E}_U[\Delta H(p_{exp})] \approx \tilde{\alpha}.
 \end{equation}
 
-with $r_1, r_2$ being the Pauli error rates for 1 and 2 qubit gates, $r_{init},
-r_{mes}$ the initialisation and measurement error and $g_1,g_2$ being the
-numbers of 1 and 2 qubit gates. Boxio et al. could numerically verify that this
-equation gives a good estimate for the $\alpha$ given different Pauli error rates.
+This means that the fidelity $\alpha$ of a quantum device can be extrapolated to
+the quantum supremacy regime withe estimates of it on random circuit instances
+which can still be simulated classically.
 
-In figure X, Boxio et al. showed by numerical
-simulations how different error rates effect the fidelity $\alpha$ for random
-circuit instances of depth 40 and different number of qubits.
+Even further, this also means that the cross entropy difference can also aid to estimate
+the single and two qubit gate and errors of a quantum device:
 
-FIGURE 4 BOXIO, maybe combain with FIGURE 1
+\begin{equation}
+  \alpha \approx e^{-r_1g_1 - r_2g_2 -r_{init}n -r_{mes}n}
+\end{equation}
+
+with $r_1, r_2 \ll 1$ being the Pauli error rates for 1 and 2 qubit gates, $r_{init},
+r_{mes} \ll 1$ the initialisation and measurement error and $g_1,g_2 \gg 1$ being the
+numbers of 1 and 2 qubit gates. This relation has been numerically confirmed by
+Boixo et al. \cite{Boixo2018supremacy}, indicating that the relation between the
+cross entropy difference and the circuit fidelity can be used to extrapolate the
+cross entropy difference of a quantum device to the quantum supremacy regime.
 
 So, even with a noisy quantum computers it is possible to demonstrate quantum
-supremacy, i.e. approximate the output distribution of random circuit instances
-better than possible by any classical algorithm known using equation X to
-calculate the fidelity on random circuit instances still possible to simulate
-classically and extrapolating it to the supremacy regime. If the fidelity will
-be greater zero in the regime where no classical simulation is possible anymore,
+supremacy, i.e. to approximate the output distribution of random circuit instances
+better than possible by any classical algorithm known, by
+calculating the fidelity on random circuit instances still possible to simulate
+classically and extrapolating it to the supremacy regime using
+equation~\ref{eq:extrapolate}.
+If the fidelity is greater zero in the regime where no classical simulation is possible anymore,
 quantum supremacy has been demonstrated.
 
 \section{Random Circuit Design}
@@ -337,7 +355,7 @@ quantum supremacy has been demonstrated.
 The derivation of the cross entropy difference based on the assumption that the
 output probablities of random circuit instances will be distributed according to
 the Porter-Thomas distribution. As it is known that circuits of low depth as
-well as so called \textit{Cliffor Circuits} can be simulated classically
+well as so called \textit{Clifford Circuits} can be simulated classically
 efficiently, it is crucial to understand which requirements the structures of
 the random circuits has to fulfil in order to be hard to simulate classically and generate
 exponential output distributions.
@@ -351,114 +369,146 @@ to be applied to neighbouring qubits on that lattice. Circuits on fully
 connected architectures of logarithmic dephts are known to be translatable into
 circuits of depht $\sqrt{n}$ on 2D lattices. Boxio et al. used numerical
 simulations to optimized strategies to generate random circuits with minimized
-time to converge to Porter Thomas leading to the following algorithm:
+time to converge to a Porter Thomas distribution leading to the following algorithm:
 
 \begin{enumerate}
-\item Initialize in the state $\Ket{0}^{\otimes n}$ state
-\item \dots
-  \item appendix
-  \end{enumerate}
-
-The gate set consists of the single qubit gates $\{X^{1/2}, Y^{1/2}, T\}$ with
-gates
-
-\begin{equation}
- sqrtX =
-\end{equation}
-
-and
-
-\begin{equation}
-  sqrtY = 
-\end{equation}
-
-being the ``square root of X'' and the ``square root of Y'' gates. They got
-their names from the facts that
-
-\begin{equation}
- sqrtX hoch 2 = X
-\end{equation}
-
-and
-
-\begin{equation}
-  sqrtY hoch 2 = Y
-\end{equation}
-
-and have been chosen as they can be implemented on near term devices. The
-circuit can be seperated into different layers, where each layer consists of one
-layer of CZ gates and one layer of random single qubit gates. The single qubit
-gates are chosen specifically, such that
-
-\begin{enumerate}
-  single qubit constraints....
+  \item Initialize in the state $\Ket{0}^{\otimes n}$.
+  \item Apply a Hadamard gate to each qubit.
+  \item Apply a random circuit with a stack of depth $d$, where each layer has
+    the following two clock cycles:
+    \begin{enumerate}
+      \item Apply a clock cycle of random single-qubit gates to all qubits.
+        \item Apply a clock cycle of two-qubits gates.
+    \end{enumerate}
 \end{enumerate}
 
+The gate set consists of the single qubit gates $\{\sqrt{X}, \sqrt{Y}, T\}$ with
+
+\begin{equation}
+  \sqrt{X} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+    1 & - i \\
+    - i & 1
+    \end{pmatrix}
+\end{equation}
+
+and
+
+\begin{equation}
+  \sqrt{Y} = \frac{1}{\sqrt{2}} \begin{pmatrix}
+    1 & -1  \\
+    1 & 1 
+  \end{pmatrix}
+\end{equation}
+
+being the ``square root of $X$'' and the ``square root of $Y$'' gates:
+
+\begin{align}
+  \sqrt{X}^2 &= (\frac{1}{\sqrt{2}} \begin{pmatrix}
+    1 & - i \\
+    - i & 1
+  \end{pmatrix})^2 \\
+  &= \begin{pmatrix}
+    0 & 1 \\
+    1 & 0
+  \end{pmatrix} \\
+  &= X
+\end{align}
+
+and
+
+\begin{align}
+  \sqrt{Y}^2 &= (\frac{1}{\sqrt{2}} \begin{pmatrix}
+    1 & -1 \\
+    1 & 1
+  \end{pmatrix})^2 \\
+  &= \begin{pmatrix}
+    0 & -i \\
+    i & 0
+  \end{pmatrix} \\
+  &= Y.
+\end{align}
+
+The circuit can be seperated into different layers, where each layer consists of one
+layer of $CZ$ gates and one layer of random single qubit gates. The single qubit
+gates are chosen such that each single-qubit gate on qubit $q$ in the current
+cycle differs from the single-qubit gate on $q$ at the previous cycle.
+
+The 2-qubit $CZ$ gates are applied as demonstrated in figure~\ref{fig:czgates}.
+Notice that it is not possible to apply a 2 qubit-gate to any two qubits in
+current quantum devvices but only to neighbouring qubits.
+
+\begin{figure}[H]
+  \centering
+  \label{fig:czgates}
+  \includegraphics[width=0.58\textwidth]{figures/cz_order}
+\end{figure}
 
 Boxio et al. could numerically show that random circuits generated this way
 generate output distribuions according to Porter Thomas after a square root
-number of cycles as illustrated in figure X
-
-FIGURE 9 BOXIO
+number of cycles in the number of qubits.
 
 \section{Exeperiments on Real Hardware}
 
 With an algorithm for the generation of random circuits and a metric for the
-quality of an execution of such circuits at hand, Google conducted a quantum
-supremacy experiment on their 54 qubit superconducting \textit{Sycamore}
-processor, shown in figure X.
+quality of an execution of such circuits at hand, a team from Google and the UCSB conducted a quantum
+supremacy experiment on the 54 superconducting qubit \textit{Sycamore}
+processor, shown in figure~\ref{sycamore}.
 
-FIGURE 1 from nature supremacy article
+\begin{figure}[H]
+  \centering
+  \label{fig:sycamore}
+  \includegraphics[width=0.58\textwidth]{figures/sycamore}
+\end{figure}
 
-For the experiments, they generated circuits with $n=10$ to $n=53$ qubits and
-$m=12$ to $m=20$ cycles. The full cycles generated according to the procedure
+For the experiments, circuits with $n=10$ to $n=53$ qubits and
+$m=12$ to $m=20$ cycles have been used. The full cycles generated according to the procedure
 given above can be classically simulated up to $n=53$ qubits with $m=14$ cycles
 in a reasonable amount of time. Beyond that regime, simplified circuit
-architectures, called \textit{elided} and \textit{patched}, which split the
-circuit into two sub circuits with only low entanglement in the elidid version,
-allowed the classical simulation for up to $n=53$ qubits with $m=20$ cycles to
+architectures, called \textit{elided} and \textit{patched}, in which the
+circuit is split into two sub circuits with only low entanglement in the elidid and not
+entanglement in the patched version, allowed the classical simulation for up to $n=53$ qubits with $m=20$ cycles to
 verify the fidelity of the Sycamore processor. For every circuit paramters, 20
-circuits have been generated for classical simulation and execution on the
-quantum processor. For each circuit, $0.5-2.5$ million samples have been drawn
+circuits have been generated. For each circuit, $0.5-2.5$ million samples have been drawn
 from the quantum processor.
 
-The team reports an average fidelity $F_{XEB} > 0.1\%$ with $5\sigma$ confidence
+\begin{figure}[H]
+  \centering
+  \label{fig:supremacy_results}
+  \includegraphics[width=\textwidth]{figures/supremacy_results}
+\end{figure}
+
+The team reports an average fidelity of $F_{XEB} > 0.1\%$ with $5\sigma$ confidence
 for the largest elided circuits. All results fit the extrapolated expected
 fidelity from smaller circuits, making the team conclude that similar fidelities
 would be achived for the full circuits. As classical simulations of these
-circuits would take up to 100000 years according to the team with a hybrid
-Schroedinger-Feynman algorithm. This would imply
-that quantum supremacy has been achived and the extended Church Turing thesis
-does has been disproven. The reported fidelities of the quantum supremacy for
-the different circuit sizes and depths are reported in figure X.
+circuits would take up to 100,000 years according to the team with a hybrid
+Schroedinger-Feynman algorithm, this would imply
+that quantum supremacy has been achived. The reported fidelities of the quantum supremacy for
+the different circuit sizes and depths are reported in figure~\ref{supremacy_results}.
 
-FIGURE 4 nature paper
-
-\section{Costs of Classical Simulations}
-Shortly after Google announced their results and claimed to have achived quantum
-supremacy, IBM challendeged the results and claimed the classical simulations
-for the full circuits on 53 qubits and up to 20 cycles could have been performed
+Shortly after these results have been announced, researchers from IBM claimed that the classical simulations
+for the full circuits on 53 qubits and 20 cycles could have been performed
 on the Summit supercomputer within a few days only with an optimized memory
-usage. These claims are still to be proven.
+usage. Experimental proof for these claims is still to be given.
 
-Even if these circuits can still be simulated within a few days, the quantum
-processor would still have an advantage over those computations by that it only
-takes 200ms to generate the 2 mio samples for those circuits from it. As quantum
+Even if these circuits can be simulated within a few days, the quantum
+processor would still outperform the classical simulation as it only
+takes about 200ms to generate the 2 million samples for those circuits from it. As quantum
 supremacy is a loosely defined term, the discussion might continue wheter
-quantum supremacy has been demonstrated by the Google team. Nevertheless, it is
+quantum supremacy has been demonstrated by the Google and UCSB team. Nevertheless, it is
 an impressive engineering achivement to build a quantum processor of 53 qubits
-which can execute quantum circuits consisting of up to XXX gates. For the
-future, the Google teams expects a double exponential grow of the computational
+which can execute quantum circuits consisting of up to 1,113 single-qubit and
+430 two-qubit gates. For the future, the Google teams expects a double exponential grow of the computational
 power of quantum computers as the classical simulation costs grow exponentially
 with the computational volume (gates and qubits) and quantum hardware
 improvements will probably follow a quantum processor equivalent of Moore's law.
 
-This study does not focus on quantum circuits running on quantum computers,
-though, but rather on the classical simulation of it. New and improved classical
-approximate simulations of quantum circuits with neural networks recently gained
-a lot of attention as they work suprisingly well on many instances. It is
-interesting to measure their performance and needed computaional resources on
-the RCS task to better understand their capabilites for the simulation of
-quantum systems which are hard to simulate with conservative classical methods.
+This study does not focus on quantum circuits running on physical quantum devices,
+but rather on the classical simulation of it. New and improved classical
+approximate simulations of quantum systems with neural networks recently proofed
+to work well on many problem instances. 
+Understanding their performance and needed computaional resources on
+the RCS task might provide useful insights about the capabilities and
+limitations of neural networks for the classical simulation of quantum systems.
 
 
