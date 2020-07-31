@@ -1,19 +1,14 @@
 \chapter{Quantum Computing}
 
-This chapter gives an introduction to the field of \textit{Quantum Computation}. It covers the 
-basics of qubits, quantum gates and circuits and a high level overview of quantum complexity classes. This chapter 
-is based on \cite{nielsen2002quantum} which is recommended as a reference for a deeper introduction 
-into the field. 
+This chapter gives an introduction to the field of \textit{Quantum Computation}. It covers the basics of qubits, quantum gates and circuits, and a high-level overview of quantum complexity classes. This chapter is based on \cite{nielsen2002quantum}, recommended as a reference for a more profound introduction into the field.
 
 \section{Qubits}
 
-While classical computers harness classical physical phenomena like 
-electrical current to perform calculations, quantum computers harness the properties of 
-\textit{quantum mechanics}. The simplest quantum mechanical system is a quantum bit, or
-\texit{qubit} for short. The qubit is the fundamental building block of a quantum computer. Its
-properties will be explained in this section.
+While classical computers harness classical physical phenomena like electrical current to perform calculations, quantum computers harness 
+\textit{quantum mechanical} effects. The simplest quantum mechanical system is a quantum bit, or
+\texit{qubit} for short. It is the fundamental building block of a quantum computer.
 
-Mathematically, a qubit can be described by a two dimensional complex valued unit vector,
+Mathematically, a qubit is a two-dimensional complex-valued unit vector,
 also called the \textit{state vector} or \textit{wave function} of the qubit:
 
 \begin{equation}
@@ -29,8 +24,8 @@ Rewriting $\Ket{\psi}$ as
 \end{equation}
 
 with $\theta, \rho, \gmma \in \mathbb{R}$
-allows for an intuitive interpration of a qubit as a point on the surface of the three dimensional unit sphere,
-also called the \textit{Bloch Sphere}, which is visualised in figure
+allows an intuitive interpration of a qubit as a point on the surface of the three-dimensional unit sphere,
+called the \textit{Bloch Sphere}, which is visualized in figure
 \ref{fig:blochsphere}. The factor $e^{i \gamma}$ in front is called a
 \textit{global phase} and can be ignored:
 
@@ -84,32 +79,30 @@ and
   \Ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}.
 \end{equation}
 
-These states correspond to the classical states $0$ and $1$ of a classical bit. Thus, yet another way of writing the wave
-function of a qubit, which is also the most practical one for quantum computation, is as a linear combination of the
+These states correspond to the classical states $0$ and $1$ of a classical bit. Thus, another way of writing the wave
+function of a qubit, which is also the most practical one for quantum computation, is a linear combination of the
 two computational basis states:
 
 \begin{equation}
   \Ket{\psi} = \alpha \cdot \Ket{0} + \beta \cdot \Ket{1}.
 \end{equation}
 
-A qubit whose amplitudes $\alpha$ and $\beta$ are both non-zero is in a so called \textit{superposition} of the two
-computational basis state. A qubit in a superposition can be interpreted as
- being in both states $\Ket{0}$ and $\Ket{1}$ at the same time.
-This property is one of the underlying reason why the classical simulation of
-quantum systems is computationally so hard and 
-one of the sources of the potential computational power of quantum computers.
+A qubit whose amplitudes $\alpha$ and $\beta$ are both non-zero is in a so-called \textit{superposition} of the two
+computational basis states. A qubit in a superposition can be interpreted as being in both states $\Ket{0}$ and $\Ket{1}$ at the same time.
+This property is one of the underlying reasons why the classical simulation of
+quantum systems is computationally so hard and one of the sources of the potential computational power of quantum computers.
 It is not possible to read the values of the amplitudes $\alpha$ and $\beta$
-directly, though.
+directly, however.
 
 The qubit can only be in a superposition as long as it is completely isolated
 from its environment. Such a state is called a \textit{coherent} state. As
-soon as the qubit interacts with its environment, as it is necessary in order to read
-its value, it collapeses randomly into one of the two computational basis
-states. All the information stored in the amplitudes before gets lost in this process.
+soon as the qubit interacts with its environment, as it is necessary to read
+its value, it collapses randomly into one of the two computational basis
+states. All the information stored in the amplitudes before it gets lost in this process.
 
-In a quantum computer the qubits are in a coherent state and potentially in a superposition during the computation. At the end of the computation, a so called
+In a quantum computer, the qubits are in a coherent state and potentially in a superposition during the computation. At the end of the computation, a so-called
 \textit{projective measurement} is performed to read the states of the individual qubits. A projective measurement is given
-by \textit{operators}, in our case $M_0 = \Ket{0}\Bra{0}$ and $M_1 = \Ket{1}\Bra{1}$. The probablities to observe a qubit in the $\Ket{0}$ or
+by \textit{operators}, in our case $M_0 = \Ket{0}\Bra{0}$ and $M_1 = \Ket{1}\Bra{1}$. The probabilities of observing a qubit in the $\Ket{0}$ or
 $\Ket{1}$ state are then defined by the amplitudes
 
 \begin{align}
@@ -182,17 +175,17 @@ and
 
 
 
-for the $\Ket{+}$ state. The same probablities hold for the
+for the $\Ket{+}$ state. The same probabilities hold for the
 $\Ket{-}$ state.
-Again, the state will be destroyed on measurement and be either $\Ket{0}$ or $\Ket{1}$ afterwards, depending on the measurement outcome.
+Again, the state will be destroyed on measurement and be either $\Ket{0}$ or $\Ket{1}$ afterward, depending on the measurement outcome.
 
-A qubit represents the simplest quantum system. The stochastic nature of quantum physics allows a qubit to be in a superposition of the
-two computational basist states $\Ket{0}$ and $\Ket{1}$. 
-Nevertheless, it is not possible to access such a superposition state directly
+A qubit represents the smallest possible quantum system. The stochastic nature of quantum physics allows a qubit to be in a superposition of the
+two computational basis states $\Ket{0}$ and $\Ket{1}$. 
+Nevertheless, it is impossible to access such a superposition state directly
 but only ever to observe a qubit in one of the two computational basis states.
 
 The next section will describe how combining multiple qubits into a bigger
-quantum system gives raise to an exponential growth of the state vector of such systems and how multiple qubits can be \textit{entangeled}
+quantum system gives rise to an exponential growth of the state vector of such systems and how multiple qubits can be \textit{entangeled}
 with each other.
 
 \section{Multiple Qubits and Entanglement}
@@ -221,10 +214,10 @@ n-dimensional qudit system is therefore given by a $2^n$ dimensional vector:
   \Ket{\psi} = \sum_{i=0}^{2^d}(a_i \Ket{i}).
 \end{equation}
 
-A classical simulation of a d-dimensional qudit system therefore has to keep
+Therefore, a classical simulation of a d-dimensional qudit system has to keep
 track of $2^d$ complex amplitudes. This makes it impossible to simulate quantum
 systems above a certain size. For the classical simulation of a system
-consisting of 500 qubits the dimension of the state vector is already larger
+consisting of 500 qubits, the state vector's dimension is already larger
 than the number of atoms in the universe.  
 
 As in the single qubit case, the probability to observe state $\Ket{n}$ is
@@ -242,7 +235,7 @@ An interesting property that can appear in multi qudit systems is
   \Ket{\psi} = \frac{\Ket{00} + \Ket{11}}{\sqrt{2}}.
 \end{equation}
 
-which can be created with a very simple quantum program as shown later in
+which can be created with a very simplistic quantum program as shown later in
 section \ref{sec:...}.
 Note that this state is a proper two qubit state as it fulfills the
 normalisation property
@@ -261,7 +254,7 @@ qubit as $\Ket{0}$ happens with probability:
          &= \frac{1}{2}
 \end{align}
 
-leaving the system in the post measurement state
+leaving the system in the post-measurement state
 
 \begin{align}
   \Ket{\psi\prime} &= \frac{(M_0 \otimes I) \psi}{\sqrt{p_1(0)}} \\
@@ -273,11 +266,11 @@ The same maths apply for the case of measuring the first qubit as $\Ket{1}$.
 
 Even if the state of the second qubit is not determined before, it will be
 either $\Ket{0}$ or $\Ket{1}$ from the moment on the \textit{other} qubit has been measured.
-The exponential growth of the state space dimesion and entanglement are two
+The exponential growth of the state space dimension and entanglement are two
 important properties of quantum systems which make them hard to simulate
-classicaly.
+classically.
 Known quantum algorithms with quantum speedups like Shor's algorithm
-create entanglement in clever ways to perform calculations in ways which seem
+create entanglement in smart ways to perform calculations in ways which seem
 to be impossible for classical computers.
 
 The next section introduces the notion of \textit{quantum gates} which allow to
@@ -289,21 +282,21 @@ It is physically possible to modify the state vector of a quantum system even
 when it is in a coherent state. This opens the theoretical possibility to perform
 calculations with them and build quantum computers.
 
-Mofifications happen by the application of so called \textit{quantum gates} to
-the state. Quantum physics allows the gates only to be linear and reversable. Thus,
+Modifications happen by the application of so-called \textit{quantum gates} to
+the state. Quantum physics allows the gates only to be linear and reversible. Thus,
 quantum gates can be mathematically described as unitary matrices. Gates vary in the number of
-qubits on which they act as well as in the effects they have on the qubits' state.
+qubits on which they act and the effects they have on the qubits' state.
 
-This chapter will introduce single and multi qubit gates and gives an overview
-over some common quantum operations.
+This chapter will introduce single and multi-qubit gates and gives an overview
+over some basic quantum operations.
 
 \subsection{Single Qubit Gates}
 
 Single qubit gates are linear mappings that can be applied to the state vector
-of a single qubit. Mathematically, single qubit gates can be described by $2
+of a single qubit. Mathematically, single-qubit gates can be described by $2
 \times 2$ unitary matrices. The fact that these matrices are unitary makes sure
 the state $\Ket{\phi} = G \Ket{\psi}$ after gate $G$ has been applied to state $\Ket{\psi}$ is a
-proper quantum state which preserves the normalisation constraint
+proper quantum state which preserves the normalization constraint
 $\alpha_{\Ket{\phi}}^2 + \beta_{\Ket{\phi}}^2 = 1$.
 
 An example of a single qubit gate is the NOT or $X$ gate, also denoted as:
@@ -330,10 +323,10 @@ or
   }
 \end{figure}
 
-The $X$ gate is the quantum analoge of
-the classical NOT gate. Similar to the classical version, the $X$ gate swaps the
+The $X$ gate is the quantum analog of
+the classical NOT gate. Like the classical version, the $ X $ gate swaps the
 states $\Ket{0}$ and $\Ket{1}$ when applied to them. It is even more general though, as it maps a
-single qubit state of the form
+single-qubit state of the form
 
 \begin{equation}
     \Ket{\psi} = \alpha \Ket{0} + \beta \Ket{1}
@@ -412,8 +405,7 @@ and back
   H \Ket{-} &= \Ket{1}.
 \end{align}
 
-The Hadamard gate is also a good example of how the Bloch Sphere visualisation can help to understand the 
-transformation of a qubit state. The application of the Hadamard gate to the $\Ket{+}$ is shown in figure X.
+The Hadamard gate is also a good example of how the Bloch Sphere visualization can help understand a qubit state's transformation. The application of the Hadamard gate to the $\Ket{+}$ is shown in figure X.
 
 
 \begin{figure}[H]
@@ -543,21 +535,20 @@ a universal finite gate set
 consisting of only a few gates is sufficient to construct arbitrary unitary
 transformations. This is the same as in the classical case where NAND gates
 suffice to build up arbitrary classical computation circuits and 
- good news for the facrication of quantum computers with reusable components.
+ good news for the fabrication of quantum computers with reusable components.
 
-However, single qubit gates are not sufficient to build all possible unitary transformations on multi qubit systems. 
-For this purpose, multi qubit gates are a necessity.
+However, single-qubit gates are not sufficient to build all possible unitary transformations on multi-qubit systems. 
+For this purpose, multi-qubit gates are a necessity.
 
 \subsection{Multi Qubit Gates}
 
 Single qubit gates are not enough to create universal gate sets for quantum
 computation. In order to run arbitrary quantum programs 
  \textit{controlled} gates are needed.
-Controlled quantum gates are simple extensions of single qubit gates. Every single qubit gate can be implemented as a controlled 
+Controlled quantum gates are simple extensions of single-qubit gates. Every single-qubit gate can be implemented as a controlled 
 version of it with one \textit{control} and one \textit{target} qubit. Only if
 the control qubit is in the $\Ket{1}$ state, the gate is applied to the target
-qubit. As the control qubit can be in a superposition state, it is possible 
-to apply and not apply the gate to the target qubit at the same time, so
+qubit. As the control qubit can be in a superposition state, it is possible to apply and not apply the gate to the target qubit at the same time, so
 to say.
 
 The propotypical two qubit gate is the controlled NOT or CNOT gate. It is the controlled version of the 
@@ -575,14 +566,9 @@ The matrix representation of the CNOT gate is the following:
     \end{pmatrix}
 \end{equation}
 
-The matrix can be read as follows: The first two colums describe that the vectors $\Ket{00}$ and $\Ket{01}$ won't change 
-when the gate is applied to these states. Only when the first qubit is in the $\Ket{1}$ state, the state of the second qubit 
-will be swapped, thus $\Ket{10}$ will be mapped to $\Ket{11}$ and $\Ket{11}$ to $\Ket{10}$. 
+The matrix can be read as follows: The first two columns describe that the vectors $\Ket{00}$ and $\Ket{01}$ will not change when the gate is applied to these states. Only when the first qubit is in the $\Ket{1}$ state will the state of the second qubit be swapped. Thus $\Ket{10}$ will be mapped to $\Ket{11}$ and $\Ket{11}$ to $\Ket{10}$. 
 
-This also shows how the matrix representation of generalised two qubit gates can be derived: As long as the 
-control qubit is off, the gate has no effect on the state. Thus, the matrix for
-the controlled gate is the same as the identity with 1s on the 
-diagonal and 0s elsewhere in the upper left corner. Only when the first qubit is in the $\Ket{1}$ state, the matrix differs from the identity. For example, the 
+This also shows how the matrix representation of generalized two-qubit gates can be derived: As long as the control qubit is off, it does not affect the state. Thus, the controlled gate matrix is the same as the identity with 1s on the diagonal and 0s elsewhere in the upper left corner. Only when the first qubit is in the $\Ket{1}$ state, the matrix differs from the identity. For example, the 
 controlled version of the Z gate
 
 \begin{equation}
@@ -617,10 +603,10 @@ indicating the control qubit:
   }
 \end{figure}
 
-With two qubit operations at hand, it is possible to build a universal gate set. A commonly used gate set 
-is the so called \textit{Clifford + T} set, consists of the gates $CNOT$, $H$, $S$ and
+With two-qubit operations at hand, it is possible to build a universal gate set. A commonly used gate set 
+is the so-called \textit{Clifford + T} set, consists of the gates $CNOT$, $H$, $S$ and
 $T$. The Solovay-Kitaev theorem guarantees that this set can efficiently
-approximate any unitary operation. In this study, another universal gate set will be used though, 
+approximate any unitary operation. In this study, another universal gate set will be used, though, 
 composed of the $CZ$, $\sqrt{X}$, $\sqrt{Y}$ and $T$ gates.
 
 The next sections will demonstrate how gates can be composed into \textit{quantum
@@ -628,18 +614,17 @@ circuits}, a notation for quantum programs.
 
 \section{Quantum Circuits}
 
-The standard model for computation in theoretical computer science is the Turing Machine. Inventend by 
+The standard model for computation in theoretical computer science is the Turing Machine. Invented by 
 Alan Turing in 1936 during World War Two, it is a powerful tool to understand the limits of (classical) 
 computation. The
 theoretical nature of the Turing machine gives it unlimited computational
-resources like memory though, which do not reflect the properties of realisable
+resources like memory though, which do not reflect the properties of realizable
 computer architectures.
 
-Another model of computation which does not suffer from this gap between theory
-and practical devices is the \textit{circuit model}. In the classical circuit model, each bit is represented by a wire and operations (or gates) are represented by different shapes acting on those wires. The circuit model is as powerful as a Turing Machine and the 
-model of choice in the field of quantum computing.
+Another computation model that does not suffer from this gap between theory
+and practical devices is the \textit{circuit model}. In the classical circuit model, each bit is represented by a wire, and operations (or gates) are represented by different shapes acting on those wires. The circuit model is as powerful as a Turing Machine and the model of choice in quantum computing.
 
-Quantum programs are described by quantum circuits. As in the classical case, each qubit is represented 
+Quantum circuits describe quantum programs. As in the classical case, each qubit is represented 
 by a wire and each gate by a rectangular on those wires. Figure
 \ref{fig:circuit0} describes a very simple quantum circuit which flips a single
 qubit starting in the $\Ket{0}$ state by applying a $X$ gate to it before
@@ -658,7 +643,7 @@ measuring it.
 \end{figure}
 
 The circuit is being read from left to right. Important to note though is that
-for the calcuation of the resulting state, the matrix representation of the
+for the calculation of the resulting state, the matrix representation of the
 gates are multiplied from the left side to the current state by simply following
 the rules of linear algebra.
 In the example above the final state of the program represented at the end of the circuit is:
@@ -749,8 +734,7 @@ calculated as:
 \end{align}
 
 This again matches with the intuition that applying a $Z$ gate to the $\Ket{+}$
-state leaves the first qubit in the $\Ket{-}$ state and the $X$ gate on the
-second qubit moves it from the $\Ket{0}$ to the $\Ket{1}$ state.
+state leaves the first qubit in the $\Ket{-}$ state, and the $X$ gate on the second qubit moves it from the $\Ket{0}$ to the $\Ket{1}$ state.
 
 The final state $\Ket{\psi_{final}}$ of the circuit is calculated by applying the $4 \times 4$ matrix
 representation of the controlled $H$ gate to $\Ket{-1}$. Notice that the second
@@ -764,11 +748,11 @@ qubit is the controlled qubit in this case:
                        &= \Ket{11}
 \end{align}
 
-The first qubit has been swaped from the $\Ket{-}$ to the $\Ket{1}$ state as the
-second qubis is in the $\Ket{1}$ state and thus the $H$ gate has been applied.
-The circuit \ref{fig:circuit1} thus maps the inital state $\Ket{00}$ to $\Ket{11}$.
+The first qubit has been swapped from the $\Ket{-}$ to the $\Ket{1}$ state as the
+second qubit is in the $\Ket{1}$ state and thus the $H$ gate has been applied.
+The circuit \ref{fig:circuit1} thus maps the initial state $\Ket{00}$ to $\Ket{11}$.
 
-Another simple yet interesting quantum circuit is shown in figure \ref{fig:circuit2}.
+Another simple yet fascinating quantum circuit is shown in figure \ref{fig:circuit2}.
 
 \begin{figure}[h]
   \centering
@@ -784,58 +768,54 @@ Another simple yet interesting quantum circuit is shown in figure \ref{fig:circu
 \end{figure}
 
 The Hadamard gate on the first qubit maps the system from the initial $\Ket{00}$
-into the $\Ket{+0}$ state. Afterwards, the first qubit, which is currently
+into the $\Ket{+0}$ state. Afterward, the first qubit, which is currently
 between the $\Ket{0}$ and $\Ket{1}$ state on the Bloch Sphere, is used as the
 control qubit in the $CNOT$ gate. This has an interesting effect on the second qubit
 as the $X$ gate is applied and not applied at the same time to it, entangling
 the two qubits with each other. The final state before measurement is then
 $\frac{\Ket{00} + \Ket{11}}{2}$ which has already been discussed in section X.
-The state is also known as one of the for \textit{Bell states} which represent maximally
-entangled two qubit states and which play an important role in the analysis of
+The state is also known as one of the for \textit{Bell states}, which represents maximally
+entangled two-qubit states and which plays an important role in the analysis of
 \textit{quantum communication}.
 
-This simple quantum circuit demonstrates how entanglement can be created by the
-application of controlled gates with qubits in superposition states.
-Entanglement plays an important role in the construction of so called random
-quantum circuits in recent quantum supremacy exeperiments. These kind of circuits will
-be discussed in chapter X after a short overview of the theoretical
+This simple quantum circuit demonstrates how entanglement can be created by applying controlled gates with qubits in superposition states.
+Entanglement plays an essential role in the construction of so-called random
+quantum circuits in recent quantum supremacy experiments. These kinds of circuits will
+be discussed in chapter X after a short overview of the theoretical,
 computational power of quantum computers.
 
 
 \section{Quantum Computational Complexity}
 
-It is important to understand the theoretical capabilities and limitations of quantum computers to understand for which kind of problems
+It is essential to understand the theoretical capabilities and limitations of quantum computers to understand which kind of problems
 they provide advantages over classical computers. For many years, it has been
-assumed that the extended Church Turing thesis, stating that a probablistic
+assumed that the extended Church Turing thesis, stating that a probabilistic
 Turing machine can efficiently simulate any realistic model of computation,
-holds. This thesis is challenged by quantum computers which potentially can
-solve specific problems exponentially faster than classical computers.
+holds. This thesis is challenged by quantum computers, potentially solving specific problems exponentially faster than classical computers.
 
 Though there is no hard proof yet, there is complexity theoretical evidence that the
-extended Church Turing thesis might not hold and that quantum computers can be
-realised which can solve specific problems proofable faster than classical
-computers. The class of problems which can be solve efficiently by a quantum
+extended Church Turing thesis might not hold, and that quantum computers can be
+realized which can solve specific problems provable faster than classical
+computers. The class of problems which can be solved efficiently by a quantum
 computer is called \textbf{BQP}, shorthand for \textit{bounded-error quantum
   polynomial time}. A decision problem is in BQP if there exists a quantum
 program that solves the decision problem in 2/3 of the cases and runs in
-polynomial time. This is the quantum analoge of the \textit{bounded-error
-  probablistic polynomial time} or \textbf{BPP} which is decidable by a
-probablistic Turing machine in polynomial time and believed to be the same as
+polynomial time. This is the quantum analog of the \textit{bounded-error
+  probabilistic polynomial time} or \textbf{BPP} which is decidable by a
+probabilistic Turing machine in polynomial time and believed to be the same as
 \textbf{P}.
 
-Currently, there are only a few problems known to be in BQP which are suspected
- not to be in P, providing evidence for the superiority of quantum computers. One
-of these problems is \textit{factorisation}, the problem to decompose a
+Currently, there are only a few problems known to be in BQP, which are suspected not to be in P, providing evidence for the superiority of quantum computers. One
+of these problems is \textit{factorisation}, the problem of decomposing a
 composite integer into its prime factors. This problem has been known to be in
-\textit{NP} before. It is also known, though, that factorisation is not an NP
-hard problem, indicating that quantum computers are probably not able to provide
-an exponential speedup for every problem which is not efficiently solvable on a
-classical computer. Indeed, classical algorithms might even exist which can
-solve factorisation on a classical computer efficiently that have not been
+\textit{NP} before. Though, it is also known that factorization is not an NP-hard problem, indicating that quantum computers are probably not able to provide
+an exponential speedup for every problem that is not efficiently solvable on a
+classical computer. Indeed, classical algorithms might even exist, which can
+solve factorization on a classical computer efficiently that has not been
 discovered yet.
 
-While BQP seems to include P and intersect with NP it can be shown that it is strictly
-included in PSPACE. The relationship of these complexity classes is visualised
+While BQP seems to include P and intersect with NP, it can be shown that it is strictly
+included in PSPACE. The relationship of these complexity classes is visualized
 in figure \ref{fig:complexityclasses}.
 
 \begin{figure}[h]
@@ -857,14 +837,14 @@ in figure \ref{fig:complexityclasses}.
   \label{fig:complexityclasses}
 \end{figure}
 
-While it is hard to proof some fundamental relationships between complexity
+While it is hard to prove some fundamental relationships between complexity
 classes like the famous $P = NP$ problem, it is believed that quantum computers
-can solve specific problems with practical applications like integer factorisation or the simulation of
+can solve specific problems with practical applications like integer factorization or the simulation of
 quantum systems up to exponentially faster than classical computers. The moment
-in time a physical quantum computer is able to outperform a classical computer
+in time a physical quantum computer can outperform a classical computer
 on a specific problem for the first time has been coined by John Preskill in
 2012 as \textit{quantum supremacy}. Recently, Google announced their quantum
 supremacy results with a 54 qubit quantum computer, further challenging the
-extended Church Turing thesis and providing the first physical evedince that it
+extended Church Turing thesis and providing the first physical evidence that it
 might be possible to build quantum computers with advantages over classical
 computers in the future.
