@@ -15,3 +15,35 @@
 \newenvironment{qtab}{\par\bigskip\bgroup\parindent32pt\obeylines}{\egroup\bigskip}
 
 % Add additional style definitions as required
+\tikzset{arrowed/.style={decorate,
+decoration={show path construction, 
+moveto code={},
+lineto code={
+\draw[#1] (\tikzinputsegmentfirst) --  (\tikzinputsegmentlast);
+},
+curveto code={},
+closepath code={},
+}},arrowed/.default={-stealth}}
+
+\pgfplotsset{gradient function/.initial=f,
+dx/.initial=0.01,dy/.initial=0.01}
+\pgfmathdeclarefunction{xgrad}{2}{%
+\begingroup%
+\pgfkeys{/pgf/fpu,/pgf/fpu/output format=fixed}%
+\edef\myfun{\pgfkeysvalueof{/pgfplots/gradient function}}%
+\pgfmathparse{(\myfun(#1+\pgfkeysvalueof{/pgfplots/dx},#2)%
+-\myfun(#1,#2))/\pgfkeysvalueof{/pgfplots/dx}}%
+ % \pgfmathsetmacro{\mysum}{\mysum+\myfun(\value{isum},#2)}%
+\pgfmathsmuggle\pgfmathresult\endgroup%
+}%
+\pgfmathdeclarefunction{ygrad}{2}{%
+\begingroup%
+\pgfkeys{/pgf/fpu,/pgf/fpu/output format=fixed}%
+\edef\myfun{\pgfkeysvalueof{/pgfplots/gradient function}}%
+\pgfmathparse{(\myfun(#1,#2+\pgfkeysvalueof{/pgfplots/dy})%
+-\myfun(#1,#2))/\pgfkeysvalueof{/pgfplots/dy}}%
+ % \pgfmathsetmacro{\mysum}{\mysum+\myfun(\value{isum},#2)}%
+\pgfmathsmuggle\pgfmathresult\endgroup%
+}%
+
+\pgfplotsset{compat=1.17}

@@ -1,0 +1,53 @@
+\message{ !name(rbm_rcs.tex)}%This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+%%%
+% LaTeX Template for Thesis submitted to AG-Bloemer
+% This is just a guideline - modify as you like :)
+% Last Update: 13-01-2017
+% In case of questions/problems/proposals you can write, call or visit me
+% http://cs.uni-paderborn.de/cuk/personal/sascha-brauer/
+%%%
+
+\documentclass{cukthesis} % add [german] if required
+
+\input{config/config.tex}
+\input{config/includes.tex}
+\input{config/defs.tex}
+
+\begin{document}
+
+\message{ !name(rbm_rcs.tex) !offset(-3) }
+
+
+\bibliographystyle{plain}
+
+\pagenumbering{roman}
+
+\input{pretext/titlepage.tex}
+
+\input{pretext/declaration.tex}
+
+\tableofcontents
+
+% If you have figures, uncomment this
+%\listoffigures
+
+% If you have algorithms, uncomment this
+%\listofalgorithms
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+% Input your files here!
+
+\input{chapters/notations.tex}
+\input{chapters/quantum_computing.tex}
+\input{chapters/rbm.tex}
+
+%%
+\bibliography{biblio}
+
+\appendix
+
+\end{document}
+
+\message{ !name(rbm_rcs.tex) !offset(-53) }
