@@ -8,11 +8,9 @@ can be applied to the classical simulation of quantum computing.
 
 The introduction to Boltzmann machines and restricted Boltzmann machines as well as the introduction 
 to Gibbs sampling are based on \cite{montufar2018restricted} and 
-\cite{fischer2012introduction} which are also recommended as a more throughout introduction 
-into the topic. The section on supervised learning and gradient descent methods is based on \cite{ruder2016overview}. The 
-reader who is already familiar with the concept of Boltzmann machines and how they can be trained in a supervised 
-manner can safely skip
-to section~\ref{sec:applicationToQuantumComputing} which is based on the work of J\'{o}nsson, Bauer and Carleo \cite{jnsson2018neuralnetwork}.
+\cite{fischer2012introduction} which provide a more throughout introduction 
+into the topic. The work of J\'{o}nsson, Bauer and Carleo \cite{jnsson2018neuralnetwork} is the 
+foundation of the last section of this chapter.
 
 \section{Characteristics}
 The concept of the Boltzmann machine has first been proposed in the 1980s as a
@@ -22,12 +20,12 @@ over vectors $\bm{d}_i \in \{0,1\}^n$ \cite{ackley1985learning}.
 A Boltzmann machine is a network of stochastic units (or neurons) $X=V \cup H$ which are segmented into
 \textit{visible} neurons $V=\{v_1, \dots, v_n\}$ and \textit{hidden} neurons $H=\{h_1, \dots, h_m\}$.
 The joint state of the visible neurons $\bm{v} = (v_1\dots v_n) \in \{0,1\}^n$ represents n-dimensional data
-points $\bm{d}_i \in \{0,1\}^n$ while hidden neurons increase the expressiveness of the Boltzmann machine by acting as non-linear feature 
+points $\bm{d}_i \in \{0,1\}^n$. The hidden neurons increase the expressiveness of the Boltzmann machine by acting as non-linear feature 
 detectors to model dependencies between the visible neurons \cite{hinton2010boltzmann}.
 
 The neurons are 
-connected to each other by weighted links $W_{ij}$ and poss biases $a_i$ (visible) or $b_i$ (hidden) respectively. In the
-general case, the neurons of a Boltzmann machine can be fully connected. A graphical representation of a fully connected Boltzmann machine is shown in figure~\ref{fig:boltzmannMachine}.
+connected to each other by weighted links $W_{ij}$ and poss biases $a_i$ (visible) or $b_i$ (hidden), respectively. In 
+general, the neurons of such a Boltzmann machine can be fully connected. A graphical representation of a fully connected Boltzmann machine is shown in figure~\ref{fig:boltzmannMachine}.
 
 \begin{figure}[H]
     \label{fig:boltzmannMachine}
@@ -50,24 +48,24 @@ general case, the neurons of a Boltzmann machine can be fully connected. A graph
         \draw (N-5) -- (N-7) node [] (E-6) {};
         \draw (N-5) -- (N-8) node [] (E-7) {};
     \end{tikzpicture}
-    \caption[Fully connected Boltzmann Machine]{Graphical representation of a fully connected Boltzmann machine with 5 visible neurons (yellow) $v_1$ to $v_5$
+    \caption[Fully Connected Boltzmann Machine]{Graphical representation of a fully connected Boltzmann machine with 5 visible neurons (yellow) $v_1$ to $v_5$
     and 3 hidden neurons (blue) $h_1$ to $h_3$. Each neuron posses a bias
     $a_1$ to $a_5$ and $b_1$ to $b_3$ respectively. The connection weight between two neurons $i$ and $j$
     is given by $W_{ij}$.}
 \end{figure}
 
 Each configuration $\bm{c}=(v_1,\dots,v_n,h_1,\dots,h_m)$ of neuron states
-of the Boltzmann machine is associated with an energy $E(\bm{c})$ value
-which is defined by the parameters $\mathcal{W}$, consisting of its weights and 
+of the Boltzmann machine is associated with an energy $E(\bm{c})$ value,
+which is defined by the parameters $\mathcal{W}$, consisting of the weights and 
 biases $\mathcal{W} = \{a_i, b_i, W_{ij}\}$:
 
 \begin{equation}
   E(\bm{c};\mathcal{W}) = - \sum_{v_i \in V} a_{i}v_{i} - \sum_{h_i \in H} b_{i}h_{i} - \sum_{x_i,x_j \in X} W_{x_i,x_j}x_{i}x_{j}.
 \end{equation}
 
-When sampling configurations from the Boltzmann machine (discussed in more detail in section~\ref{sec:gibbsSampling}) the 
-Boltzmann machines prefers low energy states over states with a high energy. The stationary probability
-of a configuration $\bm{c}$ with energy $E(\bm{c};\mathcal{W})$ is given by the so-called Gibbs-Boltzmann distribution \cite{gibbs_2010}:
+When sampling configurations from the Boltzmann machine (discussed in more detail in section~\ref{sec:gibbsSampling}), the 
+Boltzmann machine prefers low energy states over states with high energies. The \textit{stationary probability}
+of a configuration $\bm{c}$ with energy $E(\bm{c};\mathcal{W})$ is given by the so-called \textit{Gibbs-Boltzmann distribution} \cite{gibbs_2010}:
 
 \begin{equation}
    p(\bm{c};\mathcal{W}) = \frac{\mathrm{e}^{-E(\bm{c};\mathcal{W})}}{Z(\mathcal{W})},
@@ -79,8 +77,8 @@ where $Z(\mathcal{W})$ is the normalizing partition function
    Z(\mathcal{W}) = \sum_{\bm{c}\prime\in C} \mathrm{e}^{-E(\bm{c}\prime;\mathcal{W})}.
 \end{equation}
 
-In a training phase (discussed in section~\ref{sec:learning} ) the parameters of the Boltzmann machine can be adapted in such a way that 
-the marginal probability distribution of the visible neurons
+In a training phase (discussed in section~\ref{sec:learning} ), the parameters of the Boltzmann machine can be adapted in such a way that 
+the marginal probability distribution $p(\bm{v}; \mathcal{W})$ of the visible neurons
 
 \begin{equation}
     \label{eq:gbm}
@@ -91,21 +89,21 @@ which traces out the hidden unit
 states by summing over all possible configurations of them, resembles the probability 
 distribution of data points $\bm{d}_i$ in a training set $D=\{\bm{d}_1,\dots,\bm{d}_l\}$.
 
-For a fully connected Boltzmann machine, this representation consists of an exponential number of summands and cannot be calculated efficiently. So-called Restricted Boltzmann machines
-(RBM) have a specific architecture with a restricted connectivity, which allows the efficient calculation of the marginal probability. RBMs and their architectures will be explained in the next section.
+For a fully connected Boltzmann machine, this representation consists of an exponential number of summands and cannot be calculated efficiently. So-called \textit{Restricted Boltzmann Machines}
+have a specific architecture with a restricted connectivity, which allows the efficient calculation of the marginal probability.
 
-\section{Restricted Boltzmann machines}
-The so-called Restricted Boltzmann machine (RBM) is an important type of Boltzmann machine with 
+\section{Restricted Boltzmann Machines}
+The Restricted Boltzmann machine (RBM) is a type of Boltzmann machine with 
 a specific architecture and properties \cite{smolensky1986information}. Since their invention, RBMs have been applied to a variety 
-of machine learning tasks and played a 
+of machine learning tasks. They played a 
 key role in the development of deep learning architectures as building blocks of so-called 
 Deep Belief networks \cite{bengio2009learning, hinton2006fast}.
-RBMs are also the kind of Boltzmann machines which are being used in this study for the simulation 
+RBMs are also the kind of Boltzmann machines which are being used in this study of the simulation 
 of quantum circuits.
 
-In the restricted case, the neurons of the Boltzmann machine are separated into two layers,
+In its restricted form, the neurons of the Boltzmann machine are separated into two layers;
 one being the visible layer containing the visible neurons $v_i \in V$ and the other layer being the hidden layer containing the hidden neurons $h_j \in H$. Each neuron of the RBM 
-is only allowed to be connected to the neurons from the other layer. Intra-layer connections are not allowed, making the graph of the RBM bipartite, as shown in figure~\ref{fig:rbm}. 
+is only allowed to be connected to the neurons from the other layer. Intra-layer connections are not allowed. As a result, the graph of the RBM is bipartite, as shown in figure~\ref{fig:rbm}. 
 
 \begin{figure}[H]
     \label{fig:rbm}
@@ -149,7 +147,7 @@ is only allowed to be connected to the neurons from the other layer. Intra-layer
     from the same layer.}
 \end{figure}
 
-The marginal probability $p(\bm{v};\mathcal{W})$ of the visible neuron states in a RBM has the form
+The marginal probability $p(\bm{v};\mathcal{W})$ of the visible neuron states in a RBM has the form:
 
 \begin{align}
    p(\bm{v};\mathcal{W}) &= \sum_{\bm{h}_k \in \{0,1\}^m} p(\bm{v},\bm{h}_k;\mathcal{W})\\
@@ -161,31 +159,28 @@ The marginal probability $p(\bm{v};\mathcal{W})$ of the visible neuron states in
    &= \frac{\mathrm{e}^{\sum_{v_i}b_iv_i}}{Z(\mathcal{W})}\prod_{i=1}^m(1+\mathrm{e}^{b_i + \sum_{i=1}^nW_{ij}v_i}).
 \end{align}
 
-This quantity consists of only a polynomial number of terms in the number of hidden units of the RBM and can be calculated efficiently. This makes the RBM a compact representation of a probability distribution over vectors $\bm{d}_i \in D$ inferred from a dataset $D$.
+This quantity consists of only a polynomial number of terms in the number of hidden units of the RBM. Consequently, it can be calculated efficiently. This makes the RBM a compact representation of a probability distribution over vectors $\bm{d}_i \in D$ inferred from a dataset $D$.
 
 Even though the RBM has a limited connectivity between its units, it is a universal function approximator \cite{le2008representational}.
 It can model any distribution over $\{0,1\}^m$ arbitrary well with $m$ visible and $k+1$ hidden units, where 
-$k$ denotes the cardinality of the support set of the target distribution, that is, the number of input elements
+$k$ denotes the cardinality of the support set of the target distribution. That is the number of input elements
 from $\{0,1\}^m$ that have a non-zero probability of being observed. This also implies a worst-case 
-exponential number of hidden units for distributions with an extensive support set \cite{le2008representational}. It has been shown though that even fewer units can be sufficient depending on the patterns in the support set \cite{montufar2011refinements}.
+exponential number of hidden units for distributions with an extensive support set \cite{le2008representational}. Even fewer units can be sufficient depending on the patterns in the support set \cite{montufar2011refinements}.
 
 \section{Gibbs Sampling}
 \label{sec:gibbsSampling}
 
-Boltzmann machines are generative models representing probability distributions over their configurations. This means that it is possible to draw configurations from a Boltzmann machine
+Boltzmann machines are generative models that represent probability distributions over their configurations. This means that it is possible to draw configurations from a Boltzmann machine
 according to their (marginal) probabilities given in equations~\ref{eq:gbm} and \ref{eq:rbm}.
 
-Though it is required to calculate $Z(\mathcal{W})$ for the exact probabilities of each configuration,
-it is not necessary to calculate the energies for all the $2^{n+m}$ possible configurations of 
+Although it is required to calculate $Z(\mathcal{W})$ for the exact probabilities of each configuration,
+it is not necessary to calculate the energies for all $2^{n+m}$ possible configurations of 
 a Boltzmann machine to draw samples from it.
 
-Instead, Boltzmann machines can be seen as \textit{Markov chains} with a \textit{stationary probability
-distribution}. With a stochastic process called \textit{Gibbs sampling}, the samples can be drawn efficiently according to this stationary distribution for RBMs.
+Instead, Boltzmann machines can be seen as \textit{Markov chains} with a stationary probability
+distribution. With a stochastic process called \textit{Gibbs sampling}, the samples can be drawn efficiently according to this stationary distribution for RBMs.
 
-This section gives a short introduction into Markov chains, Gibbs sampling and how it can be applied 
-to draw configurations from an RBM.
-
-Gibbs sampling belongs to the class of so-called \textit{Metropolis-Hastings} algorithms and by that is 
+Gibbs sampling belongs to the class of so-called \textit{Metropolis-Hastings} algorithms. By that, it is 
 a \textit{Monte Carlo Markov Chain} (MCMC) algorithm \cite{hastings1970monte}. It is a simple algorithm to produce samples from the joint probability distribution of multiple random variables like neuron state configurations
 of a Boltzmann machine, which can be considered as a Markov chain.
 
@@ -199,7 +194,7 @@ $\bm{c}_j, \bm{c}_i, \bm{c}_{i-1}, \dots, \bm{c}_0 \in \Omega$ the \textit{Marko
                  & = P(\bm{c}^{(t+1)} = c_j \mid \bm{c}^{(t)} = \bm{c}_i) 
 \end{align}
 
-holds, meaning that the next state of the system only depends on the current state and not on the system's history. A Markov chain can be represented as a (finite) graph as the one shown in figure~\ref{fig:markov}.
+holds. This means that the next state of the system only depends on the current state and not on the system's history. A Markov chain can be represented as a (finite) graph, as shown in figure~\ref{fig:markov}.
 
 \begin{figure}[H]
     \label{fig:markov}
@@ -215,11 +210,11 @@ holds, meaning that the next state of the system only depends on the current sta
         \path[->] (s1) edge[loop right] node {$p_{11}$} (s1);
     
     \end{tikzpicture}
-    \caption[A Markov chain with two states]{A Markov chain with two states $c_0$ and $c_1$. The Markov chain is 
+    \caption[Markov Chain with two States]{A Markov chain with two states $c_0$ and $c_1$. The Markov chain is 
 described by the $2 \times 2$ matrix $\bm{P}=\begin{pmatrix} p_{00} & p_{01} \\ p_{10} & p_{11} \end{pmatrix}$.}
 \end{figure}
 
-In the case of Boltzmann machines the transition probabilities $p_{ij}$ are time independent and 
+In the case of Boltzmann machines, the transition probabilities $p_{ij}$ are time independent and 
 given by the ratios of configuration probabilities. For RBMs the transition probability $p_{ij}$ 
 from configuration $c_i$ to $c_j$ is given by:
 
@@ -231,13 +226,13 @@ which can be calculated efficiently as the $Z(\mathcal{W})$ terms from equation~
 
 In each time step $t$ during the Gibbs sampling, the state of a single randomly chosen neuron of the RBM is flipped
 so that the configurations $\bm{c}^{(t)}$ and $\bm{c}^{(t+1)}$ only differ in the state of one neuron. With 
-probability $p_{ij}$ configuration $\bm{c}_j$ is kept as the new configuration and with probability
+probability $p_{ij}$ configuration $\bm{c}_j$ is kept as the new configuration. With probability
 $1-p_{ij}$ the Boltzmann machine will stay in its current configuration $\bm{c}_i$. This corresponds to a random walk on the Markov chain defined by the RBM transition probabilities. The algorithm is given in 
 algorithm~\ref{alg:gibbs}.
 
 \begin{algorithm}[H]
     \label{alg:gibbs}
-    \caption{Gibbs Sampling}\label{euclid}
+    \caption{Gibbs Sampling}
     \begin{algorithmic}[1]
         \Require $bm(c)$: function returning the energy of a Boltzmann machine for configuration $c$
         \Require T: time steps
@@ -264,14 +259,12 @@ The Markov chain for configurations of a Boltzmann machine is known to converge 
 \end{equation}
 
 with $\bm{P} = (p_{ij})$ being the transition matrix of the Markov chain with the transition probabilities as its entries.
-Once the Markov chain reaches its stationary distribution, all subsequent states will be distributed according to this distribution.
-
-This means running Gibbs sampling for 
+Once the Markov chain reaches its stationary distribution, all subsequent states will be distributed according to this distribution. Running Gibbs sampling for 
 sufficiently many time steps $T$ will sample configurations according 
 to the Gibbs-Boltzmann distribution given in equation~\ref{eq:rbm}.
 
-Although Gibbs sampling is a straightforward algorithm, it is an important algorithm in the context of 
-Boltzmann machines. Different versions of Gibbs sampling have been developed for RBMs like 
+Although Gibbs sampling is a simple algorithm, it is an important algorithm in the context of 
+Boltzmann machines. Different versions of Gibbs sampling have been developed for RBMs, like 
 (persistent) contrastive divergence \cite{hinton2002training, tieleman2008training} or parallel tempering \cite{desjardins2010parallel}. In this study,
 Gibbs sampling will be used in its simplest version, as described in this chapter.
     
@@ -282,27 +275,26 @@ resemble the distribution of data points $\bm{d}_i$ in a dataset $D=\{\bm{d}_1,\
 or in a \textit{supervised} manner.
 
 In both cases the parameters $\mathcal{W} = \{\bm{a},\bm{b},\bm{W}\}$ of the Boltzmann machine are updated minimizing 
-an objective function $O(\mathcal{W})$ which depends on the parameters of the Boltzmann machine and 
-depicts the overlap of the current and the target distribution in iterative processes like 
-\textit{gradient descent} or \textit{stochastic reconfiguration}.
+an objective function $O(\mathcal{W})$, which depends on the parameters of the Boltzmann machine and 
+depicts the overlap of the current and the target distribution in an iterative process called \textit{gradient descent}.
 
-This section gives a brief introduction into supervised learning and the gradient descent method \textit{Adamax} \cite{kingma2014adam} and \textit{stochastic reconfiguration}, another optimization method for RBMs.
-
-Before the training phase, the Boltzmann machine is initialized with random parameters and a training set 
+Before the training phase, the Boltzmann machine is initialized with random parameters $\theta_i \in \mathcal{W}_0$ and a training set 
 $D=\{\bm{d}_1,\dots,\bm{d}_d\}$ is given. In the case of supervised learning of Boltzmann machines, the training set consists of tuples of configurations and their corresponding target energy values $\bm{d}_i= (\bm{c}_i, t_i)$.
 
-In the batch version of gradient descent, which is being used in this study, the training set $D$ is 
-split into subsets $D_1, \dots, D_l$, also called \textit{batches}.
+In the batch version of gradient descent, the training set $D$ is 
+split into subsets $D_1, \dots, D_l$, called \textit{batches}.
 
-For each such batch $D_i$, the average overlap $O(\bm{c}_j; \mathcal{W})$ for all $\bm{c}_j \in D_i$
-is computed. Afterwards, the gradients $\Delta O_{x}$ are calculated and the parameters updated into
+For each such batch $D_i$, the average negative log overlap $\langle L(\mathcal{W})\rangle$ for all $\bm{c}_j \in D_i$
+is computed. Afterwards, the gradients $\frac{\partial L}{\partial \delta_i}$ are calculated and the parameters updated into
 the direction of the steepest descent:
 
 \begin{equation}
     \label{eq:sgd}
-    \Theta_i = \Theta_i + \Delta O \dots.
+    \theta_i = \theta_i - \alpha \frac{\partial L}{\partial \delta_i}
 \end{equation}
 
+with \textit{learning rate} $\alpha \ll 1$ to keep the step sizes moderate. The learning rate prevents to big step sizes in steep 
+areas of the objective function $L(\mathcal{W})$
 This process is repeated for a defined number of iterations to minimize the objective function $O(\mathcal{W})$.
 A graphical representation of this process is shown in figure~\ref{fig:sgd}.
 
@@ -331,67 +323,101 @@ A graphical representation of this process is shown in figure~\ref{fig:sgd}.
         \end{axis}
     \end{tikzpicture}
 
-    \caption[Gradient descent]{Iterations of a gradient descent method. At each iteration, the randomly initialized parameters get updated in 
+    \caption[Gradient Descent]{Iterations of a gradient descent method. At each iteration, the randomly initialized parameters get updated in 
     direction of the steepest descent of the function to be optimized. After enough iterations, a minimum is of the function is reached.}
 \end{figure}
 
 The simple update rule in \ref{eq:sgd} has several drawbacks, however. First, The gradient and thus the step size will become smaller as closer the function approaches its minimum, leading to only small improvements and many steps necessary.
 Second, the function's shape will usually have (many) local minima, which should be avoided.
 Several variants of gradient descent have been developed to overcome these issues \cite{ruder2016overview}.
+Two of these methods are \textit{AdaMax} \cite{ruder2016overview} and \textit{Stochastic Reconfiguration} \cite{sorella1998green}.
 
-One successful such strategy which is used in this study is called \textit{AdaMax}, a special version 
+\subsection{Adamax}
+AdaMax is a special version 
 of \textit{Adam} \cite{kingma2014adam}.It combines the advantages of AdaGrad \cite{duchi2011adaptive} and RMSProp \cite{bengio2015rmsprop},
-two other popular gradient descent methods. It is computationally efficient, has little
+two other popular gradient descent methods. AdaMax is computationally efficient, has little
 memory requirements, and proves to be well suited for problems with much noise and sparse gradients.
 
-The algorithm updates exponential moving averages of the gradient ($mt$) and the squared gradient
-($vt$) where the hyper-parameters $\beta_1, \beta_2 \in [0, 1)$ control the exponential decay rates of these moving
+Instead of using the raw gradient, the algorithm updates exponential moving averages of the gradient ($mt$) and the squared gradient
+($vt$) to include more information about the shape of the error function into the parameter updates. The hyper-parameters $\beta_1, \beta_2 \in [0, 1)$ control the exponential decay rates of these moving
 averages. The moving averages themselves are estimates of the 1st moment (the mean) and the
-2nd raw moment of the gradient. The update rule for the parameters $\Theta_{ij}$ for Adamax are summarized in 
+2nd raw moment of the gradient. The update rule for the parameters $\theta_{ij}$ for Adamax are summarized in 
 algorithm~\ref{alg:adamax}.
 
 \begin{algorithm}
     \label{alg:adamax}
-    \caption{Adamax}\label{euclid}
+    \caption{Adamax}
     \begin{algorithmic}[1]
         \Require $\alpha$: step size
         \Require $\beta_1, \beta_2 \in [0,1)$: Exponential decay rates
-        \Require $f(\Theta)$: Stochastic objective function with parameters $Theta$
-        \Require $\Theta_0$: Initial parameter vector
+        \Require $f(\theta)$: Stochastic objective function with parameters $\theta_i \in \mathcal{W}$
+        \Require $\mathcal{W}_0$: Initial parameter vector
         \State $m_0 \gets 0$ (Initialize $1^{st}$ moment vector)
         \State $u_0 \gets 0$ (Initialize the exponential weighted infinity norm)
         \State $t \gets 0$ (Initialize time step)
-        \While {$\Theta_t$ not converged}
+        \While {$\theta_t$ not converged}
             \State $t\gets t+1$
-            \State $g_t \gets \nabla_{\Theta}f_t(\Theta_{t-1})$ (Get gradients w.r.t. objective function at time step $t$)
+            \State $g_t \gets \nabla_{\mathcal{W}}f_t(\mathcal{W}_{t-1})$ (Get gradients w.r.t. objective function at time step $t$)
             \State $m_t \gets \beta_1 \cdot m_{t-1} + (1-\beta_1) \cdot g_t$ (Update biased first moment estimate)
             \State $u_t \gets max(\beta_2 \cdot u_{t-1}, \vert{g_t})$ (Update the exponentially weighted infinity norm)
-            \State $\Theta_t \gets \Theta_{t-1} - (\alpha/ (1-\beta_1^t)) \cdot m_t/u_t$ (Update parameters)
+            \State $\mathcal{W}_t \gets \mathcal{W}_{t-1} - (\alpha/ (1-\beta_1^t)) \cdot m_t/u_t$ (Update parameters)
         \EndWhile
-        \State \textbf{return} $\Theta_t$ (Resulting parameters)
+        \State \textbf{return} $\theta_t$ (Resulting parameters)
     \end{algorithmic}
 \end{algorithm}
+
+\subsection{Stochastic Reconfiguration}
+Another popular gradient descent method to optimize the parameters of an RBM to represent quantum states is 
+\textit{Stochastic reconfiguration} \cite{}. The idea behind this method is that even a small change in the 
+parameters of the RBM might lead to a big change in the output distribution of the RBM. Instead of small steps
+ in the parameter space as in the pure version of gradient descent, the step size is kept small 
+with respect to the change in the output distribution represented by the RBM. Stochastic reconfiguration is equivalent 
+to the \textit{natural gradient descent} method \cite{}.
+
+The update rule for the parameters $W$ of the RBM in the Stochastic Reconfiguration (SR) method is:
+
+\begin{equation}
+    \theta_i^{\prime} = \theta_i - \alpha \bm{S}^{-1} \bm{f}
+\end{equation}
+
+with
+
+\begin{align}
+    \bm{f}_i &= \langle \Delta_i^* \frac{\partial O}{\partial \theta_i} \rangle - \langle \Delta_i^* \rangle \langle \frac{\partial O}{\partial \theta_i} \rangle \\
+    \bm{S}_{ij} &= \langle \Delta_i^* \Delta_j \rangle - \langle \Delta_i^* \rangle \langle \Delta_j \rangle
+\end{align}
+
+where $\langle x \rangle$ denotes the mean of a random variable $x$ and $\Delta_i$ denotes the log-derivative of 
+of the wave function $\Delta_i(\bm{c}) = \frac{1}{\psi(\bm{v})}\frac{\partial \psi(\bm{c})}{\partial \theta_i}$ with 
+respect to some paramter $\theta_i \in \mathcal{W}$.
+
+Using the covariance matrix $\bm{S}$ of the derivatives of the wave function keeps the KL divergence between 
+the RBM before and after the update low, leading to a smooth transition through the error landscape \cite{sorella1998green}.
+
+Both AdaMax and Stochastic reconfiguration are modifications to the standard gradient descent method which 
+try to reduce oscillations during the training and time to convergence by including more information about the 
+shape of the error function into the changes of the gradients. This study will compare both methods for the classical simulation of quantum computing with RBMs.
 
 \section{Application to Quantum Computing}
 \label{sec:applicationToQuantumComputing}
 Machine learning techniques have become a successful approach for the classical simulation
 of quantum systems \cite{carleo2017solving, deng2017quantum, carleo2018constructing}. 
-Carleo and Troyer \cite{carleo2017solving} have first given a compact presentation of the wavefunction of a many-body quantum system with an RBM.
+Carleo and Troyer \cite{carleo2017solving} were the first to give a compact presentation of the wavefunction of a many-body quantum system with an RBM.
 The same framework has later been used by J\'{o}nsson, Bauer, and Carleo for the classical simulation of the quantum Fourier and Hadamard transform \cite{jnsson2018neuralnetwork}. Their work gives a constructive approach on how the parameters of a complex-valued RBM representing the quantum state
 
 \begin{equation}
-   \Psi_{\mathcal{W}}(\bm{v}) = \frac{\mathrm{e}^{\sum_{v_i}b_iv_i}}{Z(\mathcal{W})}\prod_{i=1}^m(1+\mathrm{e}^{b_i + \sum_{i=1}^nW_{ij}v_i})
+   \Ket{\psi_{\mathcal{W}}(\bm{v})} = \frac{\mathrm{e}^{\sum_{v_i}b_iv_i}}{Z(\mathcal{W})}\prod_{i=1}^m(1+\mathrm{e}^{b_i + \sum_{i=1}^nW_{ij}v_i})
 \end{equation}
 
-can be adapted to apply a universal set of quantum gates to the quantum state $\Psi_{\mathcal{W}}$.
+can be adapted to apply a universal set of quantum gates to the quantum state $\Ket{\psi_{\mathcal{W}}}$.
 
-RBMs allow only an exact application of unitary gates diagonal in the computational basis. For non-diagonal 
-gates more hidden layers would be necessary, making the calculation of the quantum state intractable \cite{carleo2018constructing}. Nevertheless, it is possible to train a Boltzmann machine in a supervised fashion, so its parameters are adapted to apply a non-diagonal gate to its state approximately.
+RBMs allow an exact application only of unitary gates diagonal in the computational basis. For non-diagonal 
+gates more hidden layers would be necessary, making the calculation of the quantum state intractable \cite{carleo2018constructing}. Nevertheless, it is possible to train a Boltzmann machine in a supervised fashion, such that its parameters are adapted to apply a non-diagonal gate to its state approximately.
 
 The rules for the applications of diagonal and non-diagonal gates to an RBM state from 
-\cite{jnsson2018neuralnetwork} detailed in following two sections.
+\cite{jnsson2018neuralnetwork} laid out in following two sections.
 
-\subsection{Diagonal gates}
+\subsection{Diagonal Gates}
 
 Diagonal gates can be applied to an RBM quantum state by solving a set of linear equations. 
 This section describes the rules for the applications of single-qubit $Z$ rotations, controlled $Z$ rotations 
@@ -401,6 +427,7 @@ as well as the Pauli $X$, $Y$ and $Z$ gates.
 The action of the single $Z$ rotation of angle $\theta$ is given by the $2\times2$ unitary matrix
 
 \begin{equation}
+    R_l^Z=
     \begin{pmatrix}
         1 & 0 \\
         0 & \mathrm{e}^{i\theta}
@@ -408,12 +435,12 @@ The action of the single $Z$ rotation of angle $\theta$ is given by the $2\times
 \end{equation}
 
 Its action on qubit $l$ yields 
-$\langle \bm{v} \mid R_{l}^{z}(\theta) \mid \Psi_{W}  \rangle = 
-\mathrm{e}^{i\theta v_{l}} \Psi_{W}(\bm{v})
+$\langle \bm{v} \mid R_{l}^{Z}(\theta) \mid \psi_{W}  \rangle = 
+\mathrm{e}^{i\theta v_{l}} \Ket{\psi_{W}(\bm{v})}
 $
 . Considering a RBM machine with weights $\mathcal{W}^{\prime} = \{\alpha^{\prime},\beta^{\prime},W^{\prime}\}$, the action of the $R^{Z}(\theta)$
 gate is exactly reproduced if $\mathrm{e}^{v_{l}a_{l}}\mathrm{e}^{i\theta v_{l}} = \mathrm{e}^{v_{l}a\prime_{l}}$
-is satisfied, which is the case for
+is satisfied. This is the case for
 
 \begin{equation}
     a^{\prime}_{j} = a_{j} + \delta_{jl}i\theta.
@@ -426,6 +453,7 @@ The action of a controlled Z rotations acting on two given qubits $l$ and $m$ is
 the $4\times4$ unitary matrix:
 
 \begin{equation}
+    CZ =
     \begin{pmatrix}
         1 & 0 & 0 & 0 \\
         0 & 1 & 0 & 0 \\
@@ -437,8 +465,8 @@ the $4\times4$ unitary matrix:
 where $\theta$ is a given rotation angle. This gate is diagonal and can compactly be written as
 
 \begin{equation}
-    \langle \bm{v} \mid CZ(\theta) \mid \Psi_{W}  \rangle = 
-    \mathrm{e}^{i\theta v_{l}v_{m}}\Psi_{W}(v_{1} \dots v_{n}).
+    \langle \bm{v} \mid CZ(\theta) \mid \psi_{W}  \rangle = 
+    \mathrm{e}^{i\theta v_{l}v_{m}}\Ket{\psi_{W}(v_{1} \dots v_{n})}.
 \end{equation}
 
 As the RBM architecture does not allow direct interaction between visible neurons, the CZ gate
@@ -446,9 +474,9 @@ requires the insertion of a dedicated extra hidden unit $h_{c}$, which is connec
 to the qubits $l$ and $m$: 
 
 \begin{align}
-    \langle \bm{v} \mid CZ(\theta) \mid \Psi_{W}  \rangle &= 
+    \langle \bm{v} \mid CZ(\theta) \mid \psi_{W}  \rangle &= 
     \mathrm{e}^{\Delta a_{l} B_{l} + \Delta a_{m} Z_{m}} \sum_{h_{c}}\mathrm{e}^{W_{lc} B_{l} h_{c} + W_{mc} B_{m} h_{c}} \\
-    &= \mathrm{e}^{\Delta a_{l} B_{l} + \Delta a_{m} B_{m}} \times (1 + \mathrm{e}^{W_{lc} B_{l} + W_{mc}} B_{m}) \Psi_{W}(\mathcal{B}),
+    &= \mathrm{e}^{\Delta a_{l} B_{l} + \Delta a_{m} B_{m}} \times (1 + \mathrm{e}^{W_{lc} B_{l} + W_{mc}} B_{m}) \Ket{\psi_{W}(\bm{v})},
 \end{align}
 
 where the new weights $W_{lc}$ and $W_{mc}$ and visible units biases $a_{l}\prime= a_{l} + \Delta a_{l}$,
@@ -484,8 +512,8 @@ accordingly will apply a $CZ$ gate to its current state.
 The X gate just flips the qubit $l$ and the RBM amplitudes are:
 
 $
-    \langle \bm{v} \mid X_{l} \mid \Psi_{W}  \rangle = 
-    \langle v_{1} \dots \bar{v_{l}} \dots v_{N} \mid \Psi_{W} \rangle.
+    \langle \bm{v} \mid X_{l} \mid \psi_{W}  \rangle = 
+    \langle v_{1} \dots \bar{v_{l}} \dots v_{N} \mid \psi_{W} \rangle.
 $
 
 Since $\bar{v_{l}} = (1-v_{l})$, it must be satisfied that
@@ -500,7 +528,7 @@ and
    (1-B_{l}) a_{l} = B_{l} a_{l}\prime + C 
 \end{equation}
 
-hold for all the (two) possible values of $B_{l} = \{0,1\}$. The solution is simply:
+hold for all the (two) possible values of $B_{l} = \{0,1\}$. The solution to these equations is:
 
 \begin{equation}
    W_{lk}\prime = -W_{lk}
@@ -515,7 +543,7 @@ hold for all the (two) possible values of $B_{l} = \{0,1\}$. The solution is sim
 \end{equation}
 
 \begin{equation}
-   C = a_{l}
+   C = a_{l},
 \end{equation}
 
 whereas all the $a_{j}$ and the other weights $W_{jk}$ with $j \neq i$ are unchanged.
@@ -537,7 +565,7 @@ with respect to the $X$ gate:
 \end{equation}
 
 \begin{equation}
-   C = a_{l} + \frac{i \pi}{2}
+   C = a_{l} + \frac{i \pi}{2},
 \end{equation}
 
 whereas all the $a_{j}$ and other weights $W_{jk}$ with $j \neq l$ are unchanged.
@@ -550,7 +578,7 @@ only change necessary is to set the bias $a_l$ of the visible neuron $l$ to
     a_{l}\prime = a_{l} + i \pi.
 \end{equation}
 
-\subsection{Non-diagonal gates}
+\subsection{Non-diagonal Gates}
 
 Exact applications of non-diagonal gates to Boltzmann machine quantum states would require introducing a second hidden layer \cite{carleo2018constructing}. In contrast to an RBM with just one hidden layer, this would make the calculation of the represented quantum state inefficient.
 
@@ -568,65 +596,75 @@ For any non-diagonal unitary gate
     \end{pmatrix}
 \end{equation}
 
-applied to qubit $l$, samples from the state $\ket{\Phi(\bm{v})} = G_l\ket{\Psi(\bm{v})}$ can be drawn according to 
+applied to qubit $l$, samples from the state $\ket{\phi(\bm{v})} = G_l\ket{\psi(\bm{v})}$ can be drawn according to 
 
 \begin{equation}
-    | \ket{\Phi(\mathcal{B}_{\mathcal{B}_l = 0})} |^2 = 
-    \lvert  a \cdot \ket{\Psi(\mathcal{B}_{\mathcal{B}_l = 0})} +
-            c \cdot \ket{\Psi(\mathcal{B}_{\mathcal{B}_l = 1})}
+    \label{eq:prob1}
+    | \ket{\phi(\bm{v}_{\bm{v}_l = 0})} |^2 = 
+    \lvert  a \cdot \ket{\psi(\bm{v}_{\bm{v}_l = 0})} +
+            c \cdot \ket{\psi(\mathbb{v}_{\mathbb{v}_l = 1})}
     \rvert^2
 \end{equation}
 
 when the state of qubit $l$ is sampled to be 0 and 
 
 \begin{equation}
-    \lvert \ket{\Phi(\mathcal{B}_{\mathcal{B}_l = 1})} \rvert^2 = 
-    \lvert  b \cdot \ket{\Psi(\mathcal{B}_{\mathcal{B}_l = 0})} +
-            d \cdot \ket{\Psi(\mathcal{B}_{\mathcal{B}_l = 1})}
-    \rvert^2
+    \label{eq:prob2}
+    \lvert \ket{\phi(\bm{v}_{\bm{v}_l = 1})} \rvert^2 = 
+    \lvert  b \cdot \ket{\psi(\bm{v}_{\bm{v}_l = 0})} +
+            d \cdot \ket{\psi(\bm{v}_{\bm{v}_l = 1})}
+    \rvert^2.
 \end{equation}
 
-when the state is sampled to be 1. The sampling happens according to the squared norm
-$\lvert \Phi \rvert^2$ to draw the samples according to the probability distribution of the 
-corresponding quantum state.
+when the state is sampled to be 1. This way, the samples are drawn with respect to their 
+probabilities given by $\lvert \Ket{\phi} \rvert^2$.
 
-The samples are then being used to minimize the log-likelihood $L(\mathcal{W})$ of the overlap of the two quantum 
-states $\Psi$ and $\Phi$
+Afterward, the samples are used to minimize the log-likelihood $L(\mathcal{W})$ of the overlap of the two quantum 
+states $\psi$ and $\phi$, given by:
 
 \begin{align}
     L(\mathcal{W}) &= -\log{O(\mathcal{W})} \\
-                   &= -\log{\sqrt{\frac{\lvert \Braket{\Psi_{\mathcal{W}}|\Phi} \rvert^2}{\Braket{\Psi_{\mathcal{W}}|\Psi_{\mathcal{W}}} \Braket{\Phi|\Phi}}}}\\
-                   &= -\log{\sqrt{\Bigg\langle \frac{\Phi(\mathcal{B})}{\Psi_{\mathcal{W}}(\mathcal{B})} \bigg \rangle_{\Psi} \Bigg\langle \frac{\Psi_{\mathcal{W}}(\mathcal{B})}{\Phi(\mathcal{B})} \bigg \rangle_{\Phi}^{*}}}
+                   &= -\log{\sqrt{\frac{\lvert \Braket{\psi_{\mathcal{W}}|\phi} \rvert^2}{\Braket{\psi_{\mathcal{W}}|\psi_{\mathcal{W}}} \Braket{\phi|\phi}}}}\\
+                   &= -\log{\sqrt{\Bigg\langle \frac{\phi(\bm{v})}{\psi_{\mathcal{W}}(\bm{v})} \bigg \rangle_{\psi} \Bigg\langle \frac{\psi_{\mathcal{W}}(\bm{v})}{\phi(\bm{v})} \bigg \rangle_{\phi}^{*}}}
 \end{align}
 
 with
 
 \begin{equation}
-    \langle F(\mathcal{B})\rangle_A := \frac{\sum_{\mathcal{B}} F(\mathcal{B}) \lvert A(\mathcal{B}) \rvert^2}{\sum_{\mathcal{B}} \lvert A(\mathcal{B})\rvert^2}
+    \langle F(\bm{v})\rangle_A := \frac{\sum_{\bm{v}} F(\bm{v}) \lvert A(\bm{v}) \rvert^2}{\sum_{\bm{v}} \lvert A(\bm{v})\rvert^2}
 \end{equation}
 
-by some optimization method. The gradients of this function with respect to 
-the parameters of the Boltzmann machine have the form
+with some gradient descent method. For Boltzmann machines, the gradients $\frac{\partial L}{\partial \theta_i} = \partial_{p_i}L(\mathcal{W})$ are of the form:
 
 \begin{equation}
-   \partial_{p_k}L(\mathcal{W}) = \langle \mathcal{O}_k^*(\mathcal{B}) \rangle_{\Psi} - \frac{\langle \frac{\Phi(\mathcal{B})}{\Psi(\mathcal{B})} \mathcal{O}_k^*(\mathcal{B})\rangle_{\Psi}}{\langle \frac{\Phi(\mathcal{B})}{\Psi(\mathcal{B})} \rangle_{\Psi}}
+   \label{eq:lossgrad}
+   \partial_{p_i}L(\mathcal{W}) = \langle \mathcal{O}_k^*(\bm{v}) \rangle_{\psi} - \frac{\langle \frac{\phi(\bm{v})}{\psi(\bm{v})} \mathcal{O}_k^*(\bm{v})\rangle_{\psi}}{\langle \frac{\phi(\bm{v})}{\psi(\bm{v})} \rangle_{\psi}},
 \end{equation}
 
-with $\mathcal{O}_k(\mathcal{B}) = \partial_{p_k}\log{\Psi_{\mathcal{W}}(\mathcal{B})}$ being the variational derivatives of the RBMs wavefunction with respect to its parameters.
-These are simple to compute as well, since
+with $\mathcal{O}_k(\bm{v}) = \partial_{p_k}\log{\psi_{\mathcal{W}}(\bm{v})}$ being the variational derivatives of the RBMs wave function with respect to its parameters.
+These are simple to compute, since
 
 \begin{equation}
-    \partial_{a_i}\log{\Psi_{\mathcal{W}}(\bm{v})} = v_i
-\end{equation}
-
-\begin{equation}
-    \partial_{b_i}\log{\Psi_{\mathcal{W}}(\bm{v})} = h_i
+    \partial_{a_i}\log{\psi_{\mathcal{W}}(\bm{v})} = v_i
 \end{equation}
 
 \begin{equation}
-    \partial_{W_{ij}}\log{\Psi_{\mathcal{W}}(\bm{v})} = v_ih_j.
+    \partial_{b_i}\log{\psi_{\mathcal{W}}(\bm{v})} = h_i
 \end{equation}
 
-After the training, which happens for a predefined number of iterations on batches of the training set,
-the quantum state $\Psi_{\mathcal{W}}$ represented by the RBM approximates the target state $\Phi$. Using
-this approach and AdaMax as the optimization method, J\'{o}nsson et al. reported a per gate error of $10^{-3}$ \cite{jnsson2018neuralnetwork}.
+\begin{equation}
+    \partial_{W_{ij}}\log{\psi_{\mathcal{W}}(\bm{v})} = v_ih_j.
+\end{equation}
+
+The quantum state $\psi_{\mathcal{W}}$, represented by the RBM, approximates the target state $\phi$. 
+
+In summary, the procedure to apply non-diagonal quantum gates to a quantum state $\Ket{\psi(\mathcal{W})}$
+represented by an RBM is as follows:
+
+\begin{enumerate}
+    \item Draw samples $\bm{d}_i = (\bm{c}_i, t_i)$ with Gibbs sampling and transition probabilities given by equation~\ref{eq:prob1} and \ref{eq:prob2}.
+    \item Calculate the gradients $\frac{\partial L}{\partial \theta_i}$ of the loss function defined in equation~\ref{eq:lossgrad}.
+    \item Use a gradient descent method like AdaMax or SR to update the parameters $\theta_i \in \mathcal{W}$.
+\end{enumerate}
+
+This process is repeated for a predefined number of iterations. Using this approach and AdaMax as the optimization method, J\'{o}nsson et al. reported a per gate error of $10^{-3}$ \cite{jnsson2018neuralnetwork}.
