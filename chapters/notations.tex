@@ -1,6 +1,81 @@
-\chapter{Notations}
-\begin{itemize}
-   \item sets with capital letters as $X$, $V$, $H$
-   \item vectors have an arrow as $\vec{v}$ 
-   \item $i$ might either be an index or the imaginary number from the context
-\end{itemize}
+\chapter{Nomenclature and Notations}
+
+This chapter introduces mathematical notations and expressions used throughout 
+this study. Its focus is on linear algebra, the mathematical foundation of 
+\textit{quantum mechanics}. It is thought as a lookup reference for the following chapters.
+
+Vectors are represented in the \textit{Bra-ket} notation. \textit{Ket}-vectors $\Ket{\psi}$ denote 
+column vectors:
+
+\begin{equation}
+   \Ket{\psi} = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}.
+\end{equation}
+
+The \textit{bra} $\Bra{\psi}$ of a vector $\Ket{\psi}$ is its hermitian conjugate, 
+$\Bra{\psi} = \Ket{\psi}^{\dagger}$. It is the transpose of the vector with complex-conjugated 
+entries. For the ket vector $\Ket{\psi}$ above, the corresponding bra-vector would be:
+
+\begin{equation}
+   \Bra{\psi} = \begin{pmatrix}
+      \alpha^* & \beta^*
+   \end{pmatrix},
+\end{equation}
+
+where the complex-conjugate of some complex number $\alpha = a + b i$ is 
+defined as $\alpha^* = a - b i$. Using this notation, the \textit{inner product} of two vectors
+$\Ket{\psi}$ and $\Ket{\phi}$ can be written as:
+
+\begin{equation}
+   \Braket{\psi | \phi} = \sum_j \psi_j^* \phi_j.
+\end{equation}
+
+The \textit{outer product} $\Ket{\psi} \Bra{\phi}$ defines the matrix $A$ with entries 
+$a_{ij}$ given by:
+
+\begin{equation}
+   a_{ij} = \psi_i \phi^*_j.
+\end{equation}
+
+The class of matrices of special interest in quantum computing are \textit{unitary} matrices.
+A complex-valued square matrix $U$ is unitary if:
+
+\begin{equation}
+   U U^{\dagger} = U^{\dagger}U = I.
+\end{equation}
+
+Unitary matrices are norm preserving and thus represent rotations in the vector space.
+The \textit{tensor product} $\cdot \otimes \cdot$ of two matrices $A=\begin{pmatrix}
+   a_{11} & a_{12} \\ a_{21} & a_{22}
+\end{pmatrix}$ and $B= \begin{pmatrix}
+   b_{11} & b_{12} \\ b_{21} & b_22
+\end{pmatrix}$ is defined as:
+
+\begin{align}
+   A \otimes B &= \begin{pmatrix}
+      a_{11} B & a_{12} B \\ a_{21} B & a_{22} B
+   \end{pmatrix} \\
+   &= \begin{pmatrix}
+      a_{11} b_{11} & a_{11} b_{12} & a_{12} b_{11} & a_{12} b_{12} \\
+      a_{11} b_{21} & a_{11} b_{22} & a_{12} b_{21} & a_{12} b_{22} \\ 
+      a_{21} b_{11} & a_{21} b_{12} & a_{22} b_{11} & a_{22} b_{12} \\
+      a_{21} b_{21} & a_{21} b_{22} & a_{22} b_{21} & a_{22} b_{22}
+   \end{pmatrix}.
+\end{align}
+
+The dimensions of the tensor product of two matrices with dimensions $n_A \times m_A$ and $n_B \times m_B$ 
+is $n_An_B \times m_Am_B$. The tensor product for vectors is defined accordingly.
+The \textit{Kroenecker Delta} $\delta_{ij}$ sometimes occurs in quantum physics. It is defined as:
+
+\begin{equation}
+   \delta_{ij} =
+    \begin{cases}
+            1, &         \text{if } i=j,\\
+            0, &         \text{if } i\neq j.
+    \end{cases}.
+\end{equation}
+
+and by that defines the dot product of two vectors $\Ket{\psi_i}$ and $\Ket{\psi_j}$ from 
+a set of orthonormal vectors.
+
+
+
