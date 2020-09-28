@@ -1,0 +1,25 @@
+\chapter{Summary}
+
+This work gives an introduction into the field of quantum computing, lays out the theoretical framework 
+of random circuit sampling, and explains the math of restricted Boltzmann machines. RBMs are further used 
+in this study to simulate random circuit instances. Different training parameters are varied to understand their 
+influence on the RBMs capabilites to simulate random quantum circuits of different sizes. 
+
+The results of this work confirm that RBMs can be used as an alternative approach to the classical 
+simulation of quantum circuits. When trained with AdaMax and random restarts, the best performing RBMs
+have been able to approximate the resulting quantum state of 4-qubit random circuit instances with depth 
+of up to 20 cycles with an approximate per gate error of X. These findings compare to the results from 
+Johson et al which could achive a per gate error of X when training RBMs to the quantum Fourier transform \cite{}.
+
+Nevertheless, the performance of RBMs should be further verified on random circuit instances with more qubits. 
+For larger system sizes, the influence of the number of training iterations and training samples has to be further 
+analyzed. This will help to understand the computational resources needed to simulate quantum circuits 
+with a certain fidelity. Such insights would help to better understand the current state of the physical 
+implementations of quantum computers as RBMs could be used as a benchmark for NISQ devices (REALLY?).
+
+The software developed for this study is available as open source at \cite{}. It can easily be adapted to 
+train RBMs on different random circuit instances with varying system sizes on the Noctua Cluster or any other 
+computing hardware. It further allows the easy adaption of circuits on which the RBMs should be trained to 
+analyze not only random circuits but also other classes of quantum circuits in the future. The results of this 
+study might guide further research and suggest good choices of training parameters which can be further studied and 
+optimized.

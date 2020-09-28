@@ -1,0 +1,50 @@
+\chapter{Discussion}
+
+The results of the experiments show that RBMs are able to simulate small random circuit 
+instances with 4 qubits and a depth of up to 20 cycles accurately. The comparison of 
+Stochastic Reconfiguration and AdaMax as optimization algorithms suggests that 
+AdaMax is better suited for the given gate set and circuit structure. 
+
+Using SR with random restarts and applying the $CZ$ gate exactly had only small if any 
+impact on the resulting accuracy of the RBMs. This does not imply that this would also 
+hold for AdaMax. Indeed, prestudies suggested that random restarts might have a positive 
+impact on the RBM's accuracy when trained with AdaMax.
+
+The results further show that training iterations in the range of about 10.000 seem
+to be a good choice for high RBM accuracy and comparably low training time.
+
+Further, it seems that the more training samples are available, the better the RBM will 
+perform when trained with AdaMax. For this parameter, more experiments will be necessary 
+to understand how the number of good performing samples scales with the number of qubits. 
+In the conducted experiments, 303 samples were enough to sample each configuration of the 
+$2^n$ dimensional state space multiple times. Only for 8  samples, not the full state space
+had a chance to be observed for the training. The performance of the RBMs with 8 samples only 
+had been very low. Only if RBMs can achieve acceptable performance with a number of samples 
+that does not scale exponentially with the number of qubits, this approach is useful for 
+real world applications. Note, however, that this does not mean that the RBM has to simulate 
+the circuits with less samples perfectly. Understanding the level of noise achieved for 
+a specific size of samples will be a useful result to understand the capabilities of RBMs 
+for the simulation of random circuits and quantum computing in general.
+
+Testing RBMs on bigger random circuit instances could also help to compare the RBM performance
+directly to the Sycamore processor. For bigger instances, the distribution is more likely to 
+have the Porter-Thomas shape, potentially brining the cross entropy fidelity into the range between
+zero and one. For the given circuits, the entropy was always bigger than one and by that not giving 
+helpful insights. 
+
+This kind of research was already intended for this work. However, the performed experiments 
+on 4 qubit random circuits took already 8 weeks. Maintenance work on the Noctua Cluster 
+afterwards made it impossible to conduct more experiments on a wider range of qubits.
+Nevertheless, the software developed in the progress of this work is available open source 
+and as a Singularity Container. This makes it easy to adapt the code to conduct experiments 
+with other ranges of parameters and quantum circuits.
+
+The bad performance of the SR methods might be grounded in the algorithm getting stuck in 
+local minima. As the step size is kept small with respect to the change in the output distribution
+rather than in the parameter space this might explain why used with restarts it compares 
+not good with AdaMax. To further investigate this hypothesis, more experiments with different step 
+sizes for the SR algorithm have to be performed. Further insights might be gained when comparing 
+AdaMax on the same kind of circuits with and without restarts. AdaMax might be more likely to 
+get stuck in local minima when trained without restarts. If performances of RBMs trained this way 
+compare with RBMs trained with SR, this could hint that random restarts help AdaMax to overcome
+bad local optima while they don't help in SR to escape them.
