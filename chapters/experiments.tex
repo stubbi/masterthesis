@@ -33,8 +33,9 @@ applied in different manners as described above, the $T$ gate is a diagonal gate
 The $\sqrt{X}$ and $\sqrt{Y}$ gates are non-diagonal and are thus applied by adopting the parameters of the RBM in 
 a training phase. The training samples have been chosen $i.i.d$ uniformly at random. The number of samples has been chosen 
 in such a way that with a high probability $n, n^2, n^3, 2^n, 0.95 \times 2^n, 0.9 \times 2^n$ and $0.85 \times 2^n$ 
-respectively different samples are included in the training set. The number of samples is computed by the maths of the coupon collectors problem.
-The number of training iterations has been chosen as $1,000$, $10,000$, and $100,000$.
+respectively different samples are included in the training set. The training was performed on batches of the samples with 
+up to 10 samples per batch.
+The number of training iterations has been chosen as $1,000$, $10,000$, and $100,000$. 
 
 For each parameter setting, five RBMs have been trained on 20 different instances of random circuits of the same 
 size. The total variation distance as well as the cross-entropy fidelity have been used as a performance measure.
