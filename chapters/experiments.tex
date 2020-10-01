@@ -18,11 +18,11 @@ of quantum circuits. The experiments have been conducted on the Noctua Cluster a
 Several parameters of the RBM's training process have been varied. For the choice of the optimization algorithm, AdaMax and 
 Stochastic Reconfiguration are tested against each other. Performances of different numbers of training iterations 
 ,as well as training samples, are compared. Further, the CZ gate is applied in two fashions: Once 
-by following the rules from \cite{} by introducing an additional hidden unit to the RBM on each gate. In other 
+by following the rules from \cite{jnsson2018neuralnetwork} by introducing an additional hidden unit to the RBM on each gate. In other 
 experiments, the CZ gate is applied by training the parameters of the RBM the same way as for 
 non-diagonal gates. In the first case, the RBM is initialized without any hidden units. In the latter 
 case, it is initialized with so many hidden units that each pair of visible units is connected 
-by one hidden unit. 
+by one hidden unit. This corresponds to 6 hidden units for RBMs with 4 visible units.
 
 The training process is once performed with \textit{random restarts} and once without. 
 In the experiments with random restarts, the RBM is trained several times with a slight Gaussian noise modification to its 
@@ -33,7 +33,8 @@ applied in different manners as described above, the $T$ gate is a diagonal gate
 The $\sqrt{X}$ and $\sqrt{Y}$ gates are non-diagonal and are thus applied by adopting the parameters of the RBM in 
 a training phase. The training samples have been chosen $i.i.d$ uniformly at random. The number of samples has been chosen 
 in such a way that with a high probability $n, n^2, n^3, 2^n, 0.95 \times 2^n, 0.9 \times 2^n$ and $0.85 \times 2^n$ 
-respectively different samples are included in the training set. The training was performed on batches of the samples with 
+respectively different samples are included in the training set. In the case of 4 qubits, this corresponds to 
+8, 43, 47, 50, 54, and 303 samples. The training was performed on batches of the samples with 
 up to 10 samples per batch.
 The number of training iterations has been chosen as $1,000$, $10,000$, and $100,000$. 
 
