@@ -76,8 +76,8 @@ the averaged true output distributions of all circuits. With an increasing numbe
 true output distributions approach a Porter-Thomas shape, even though they are not exactly Porter-Thomas 
 distributed.
 The TVD of the average output of all RBMs considered 
-is X (sigma = X) for 5, X () for 10, X () for 15 and X () for 20 cycles. The corresponding cross-entropy is 
-X for 5, X for 10, X for 15 and X for 20 cycles.
+is 0.30 for 5, 0.34 for 10, 0.34 for 15 and 0.35 for 20 cycles. The corresponding cross-entropy is 
+0.16 for 5, 0.05 for 10, 0.04 for 15 and 0.00 for 20 cycles.
 
 \begin{figure}[H]
   \centering
@@ -123,7 +123,7 @@ and 100,000 iterations perform similar, with the lowest TVDs on these circuits a
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/tvd_heatmap.png}
+  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/tvd_heatmap.pdf}
   \caption[TVD of Stochastic Reconfiguration with Restarts Learned]{TVD of Stochastic 
   Reconfiguration with Restarts Learned for the combinations of iterations and samples tested.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit.}
@@ -190,6 +190,20 @@ Averaged over all gates, the training and test error both drop within the first 
 0.20 on the test data and about 0.27 on the training data. Afterward, the overlap slowly decreases to about 0.19 and 
 0.24 over the period of the 10,000 iterations.
 
+The training and test overlap follows similar pattern for 43, 50, and 54 samples. For 43 samples, the 
+overlap is less fluctuating for the $\sqrt{X}$ gate. It reaches lower values on the $\sqrt{Y}$ gate with 
+a final testing overlap of about 0.30. The overall overlap on all gates is also lower with about 0.25.
+
+For 50 samples, the final testing overlap is lower for the single qubit gates with about 0.24 on the $\sqrt{X}$
+and 0.28 on the $\sqrt{Y}$ gate. The final test overlap is with about 0.15 similar for the $CZ$ gate. On all gates, 
+the average final test overlap is about 0.23 with 50 samples.
+
+With 54 samples, the testing overlap on the $\sqrt{X}$ goes down to about 0.23. On the $\sqrt{Y}$ gate it goes 
+down to about 0.24, and to about 0.12 on the $CZ$ gate. Over all gate, the testing overlap reaches a value of about 
+0.20 after 10,000 iterations when trained with 50 samples.
+
+The graphs for 43, 50, and 54 qubits are included in the appendix.
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/avgOverlap_47.pdf}
@@ -234,8 +248,8 @@ Figure~\ref{fig:sr_no_restarts_avgPDF} shows the averaged output distribution of
 the averaged true output distributions of all circuits. As before, the 
 true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
 The TVD of the average output of all RBMs trained with SR without restarts
-is X (sigma = X) for 5, X () for 10, X () for 15 and X () for 20 cycles. The corresponding cross-entropy is 
-X for 5, X for 10, X for 15 and X for 20 cycles.
+is 0.34 for 5, 0.38 for 10, 0.34 for 15 and 0.38 for 20 cycles. The corresponding cross-entropy is 
+0.12 for 5, 0.00 for 10, 0.04 for 15 and 0.00 for 20 cycles.
 
 \begin{figure}[H]
   \centering
@@ -248,8 +262,8 @@ X for 5, X for 10, X for 15 and X for 20 cycles.
 
 In figure~\ref{sr_no_restarts_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
 TVD are selected and their outputs averaged. The averaged best output distribution for the SR methods without 
-random restarts and $CZ$ gates learned has a TVD of X () for 5, X () for 10, X () for 15, and X for 20 () 
-cycles. The cross-entropy fidelity is X for 5, X for 10, X for 15 and X for 20 cycles each. 
+random restarts and $CZ$ gates learned has a TVD of 0.07 for 5, 0.18 for 10, 0.21 for 15, and 0.21 for 20 
+cycles. The cross-entropy fidelity is 0.71 for 5, 0.37 for 10, 0.40 for 15 and 0.35 for 20 cycles each. 
 
 \begin{figure}[H]
   \centering
@@ -285,7 +299,7 @@ the exception that it is significantly higher for 8 samples.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/tvd_heatmap.png}
+  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/tvd_heatmap.pdf}
   \caption[TVD of Stochastic Reconfiguration without Restarts Learned]{TVD of Stochastic 
   Reconfiguration without Restarts Learned for the combinations of iterations and samples tested.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit.}
@@ -354,6 +368,12 @@ and stays at that level.
 Averaged over all gates, the overlap on the test data goes down to about 0.18 within the first 2,500 training iterations. 
 The test overlap goes down to about 0.25 in the same time. Both metrics stay at those values afterward.
 
+The training and test overlap follows similar pattern for 43, 50, and 54 samples with the 
+test overlap being closer to the training overlap with increasing number of samples. The overall
+testing overlap averaged over all gates approaches 0.2 for 54 samples.
+
+The graphs for 43, 50, and 54 qubits are included in the appendix.
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/avgOverlap_47.pdf}
@@ -390,8 +410,8 @@ Figure~\ref{fig:sr_exact_avgPDF} shows the averaged output distribution of all R
 the averaged true output distributions of all circuits. As in the cases before, the 
 true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
 The TVD of the average output of all RBMs 
-is X (sigma = X) for 5, X () for 10, X () for 15 and X () for 20 cycles. The corresponding cross-entropy is 
-X for 5, X for 10, X for 15 and X for 20 cycles.
+is 0.35 for 5, 0.33 for 10, 0.34 for 15 and 0.38 for 20 cycles. The corresponding cross-entropy is 
+0.20 for 5, 0.02 for 10, 0.06 for 15 and 0.00 for 20 cycles.
 
 \begin{figure}[H]
   \centering
@@ -404,8 +424,8 @@ X for 5, X for 10, X for 15 and X for 20 cycles.
 
 In figure~\ref{sr_exact_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
 TVD are selected and their outputs averaged once again. The averaged best output distribution 
-has a TVD of X () for 5, X () for 10, X () for 15, and X for 20 () 
-cycles. The cross-entropy fidelity is X for 5, X for 10, X for 15 and X for 20 cycles each. 
+has a TVD of 0.03 for 5, 0.13 for 10, 0.22 for 15, and 0.21 for 20 
+cycles. The cross-entropy fidelity is 1.00 for 5, 0.46 for 10, 0.33 for 15 and 0.40 for 20 cycles each. 
 
 
 \begin{figure}[H]
@@ -440,7 +460,7 @@ samples to be recognized.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/tvd_heatmap.png}
+  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/tvd_heatmap.pdf}
   \caption[TVD of Stochastic Reconfiguration with Restarts Exact]{TVD of Stochastic 
   Reconfiguration with Restarts Exact for the combinations of iterations and samples tested.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit.}
@@ -491,6 +511,26 @@ On the $\sqrt{Y}$ gate, the training overlap decreases to about 0.17 within the 
 and oscillates around that value from thereon. The test overlap decreases to about 0.28 within the first few
 iterations and slowly increases to about 0.3 throughout the training process.
 
+The training and test overlap follows similar pattern for 43, 50, and 54 samples.
+With 43 samples, the overlaps oscillate less for the $\sqrt{X}$ gate. The testing overlap is about 
+0.33 for 43 samples on the $\sqrt{X}$ while the training overlap oscillates around about 0.19.
+On the $\sqrt{Y}$ gate, the training overlap is at about 0.16 as for 47 samples. The testing overlap is 
+lower and reaches a value of about 0.23 after 10,000 iterations. The averaged testing overlap is higher than 
+for 47 samples with a value of about 0.27 and the training overlap is similar with a value of about 0.15.
+
+With 50 and 53 samples, the testing overlap is higher in both cases for the $\sqrt{X}$ gate than for 
+47 samples. It is at about 0.29 for 50 samples and about 0.33 for 53 samples. The training overlap is about 
+0.21 for 50 samples and about 0.25 for 53 samples on that gate.
+
+On the $\sqrt{Y}$ gate, the testing overlap is with a value of about 0.25 lower in both cases. The 
+training overlap on that gate is about 0.18 in both cases. Averaged over both gates, the training 
+overlap gets reduced to about 0.18 in both cases while the testing overlap goes down to about 0.25 
+throughout the 10,000 iterations.
+
+
+
+The graphs for 43, 50, and 54 qubits are included in the appendix.
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/avgOverlap_47.pdf}
@@ -529,8 +569,8 @@ Figure~\ref{fig:am_avgPDF} shows the averaged output distribution of all RBMs tr
 the averaged true output distributions of all circuits. As in the other cases, the 
 true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
 The TVD of the average output of all RBMs trained with AdaMax
-is X (sigma = X) for 5, X () for 10, X () for 15 and X () for 20 cycles. The corresponding cross-entropy is 
-X for 5, X for 10, X for 15 and X for 20 cycles.
+is 0.25 for 5, 0.30 for 10, 0.35 for 15 and 0.33 for 20 cycles. The corresponding cross-entropy is 
+0.20 for 5, 0.08 for 10, 0.06 for 15 and 0.04 for 20 cycles.
 
 \begin{figure}[H]
   \centering
@@ -543,8 +583,8 @@ X for 5, X for 10, X for 15 and X for 20 cycles.
 
 In figure~\ref{am_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
 TVD are selected and their outputs averaged once again. The averaged best output distribution 
-has a TVD of X () for 5, X () for 10, X () for 15, and X for 20 () 
-cycles. The cross-entropy fidelity is X for 5, X for 10, X for 15 and X for 20 cycles each. 
+has a TVD of 0.00 for 5, 0.00 for 10, 0.00 for 15, and 0.00 for 20 
+cycles. The cross-entropy fidelity is 0.65 for 5, 0.72 for 10, 0.94 for 15 and 0.77 for 20 cycles each. 
 
 \begin{figure}[H]
   \centering
@@ -573,7 +613,7 @@ Nevertheless, the TVD is lower in all but one cases with 54 samples than with 43
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/tvd_heatmap.png}
+  \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/tvd_heatmap.pdf}
   \caption[TVD of AdaMax with Restarts Learned]{TVD of Stochastic 
   Reconfiguration with Restarts Learned for the combinations of iterations and samples tested.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit.}
@@ -626,6 +666,14 @@ The log overlap looks different for the $CZ$ gate. After an initial drop of abou
 training overlap slowly decreases until it reaches a value close to 0 after about 10,000 iterations. The 
 training overlap takes a similar course. During the training process, it goes down to about 0.18 after 
 starting at about 0.33.
+
+The training and test overlap follow a similar course for 43, 50, and 54 samples. For 43 samples, the 
+testing overlap reaches values slightly above 0.15 for the $\sqrt{X}$ and $\sqrt{Y}$ gate. On the $CZ$ gates, 
+the overlap is only very slightly higher.
+
+For 50 and 54 samples, the testing error goes down to about 0.075 for the $\sqrt{X}$ and $\sqrt{Y}$ gates. 
+On the $CZ$ gates, the testing overlap goes down to about 0.15 over the course of the training. The graphs 
+for 43, 50, and 54 qubits are included in the appendix.
 
 \begin{figure}[H]
   \centering
