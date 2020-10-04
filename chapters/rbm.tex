@@ -28,7 +28,6 @@ connected to each other by weighted links $W_{ij}$ and poss biases $a_i$ (visibl
 general, the neurons of such a Boltzmann machine can be fully connected. A graphical representation of a fully connected Boltzmann machine is shown in figure~\ref{fig:boltzmannMachine}.
 
 \begin{figure}[H]
-    \label{fig:boltzmannMachine}
     \centering
     \begin{tikzpicture}[transform shape,line width=0.2pt]
         \foreach \x in {1,...,8}{%
@@ -52,6 +51,7 @@ general, the neurons of such a Boltzmann machine can be fully connected. A graph
     and 3 hidden neurons (blue) $h_1$ to $h_3$. Each neuron posses a bias
     $a_1$ to $a_5$ and $b_1$ to $b_3$ respectively. The connection weight between two neurons $i$ and $j$
     is given by $W_{ij}$.}
+    \label{fig:boltzmannMachine}
 \end{figure}
 
 Each configuration $\bm{c}=(v_1,\dots,v_n,h_1,\dots,h_m)$ of neuron states
@@ -106,7 +106,6 @@ one being the visible layer containing the visible neurons $v_i \in V$ and the o
 is only allowed to be connected to the neurons from the other layer. Intra-layer connections are not allowed. As a result, the graph of the RBM is bipartite, as shown in figure~\ref{fig:rbm}. 
 
 \begin{figure}[H]
-    \label{fig:rbm}
     \centering
     \begin{tikzpicture}[transform shape,line width=0.2pt]
     
@@ -145,6 +144,7 @@ is only allowed to be connected to the neurons from the other layer. Intra-layer
     \caption[Restricted Boltzmann Machine]{Graphical representation of a RBM with 5 visible neurons and 3 hidden ones. 
     There are only connections between the two layers and no connection between two neurons 
     from the same layer.}
+    \label{fig:rbm}
 \end{figure}
 
 The marginal probability $p(\bm{v};\mathcal{W})$ of the visible neuron states in a RBM has the form:
@@ -197,7 +197,6 @@ $\bm{c}_j, \bm{c}_i, \bm{c}_{i-1}, \dots, \bm{c}_0 \in \Omega$ the \textit{Marko
 holds. This means that the next state of the system only depends on the current state and not on the system's history. A Markov chain can be represented as a (finite) graph, as shown in figure~\ref{fig:markov}.
 
 \begin{figure}[H]
-    \label{fig:markov}
     \centering
     \begin{tikzpicture}[transform shape,line width=0.2pt]
     
@@ -212,6 +211,7 @@ holds. This means that the next state of the system only depends on the current 
     \end{tikzpicture}
     \caption[Markov Chain with two States]{A Markov chain with two states $c_0$ and $c_1$. The Markov chain is 
 described by the $2 \times 2$ matrix $\bm{P}=\begin{pmatrix} p_{00} & p_{01} \\ p_{10} & p_{11} \end{pmatrix}$.}
+    \label{fig:markov}
 \end{figure}
 
 In the case of Boltzmann machines, the transition probabilities $p_{ij}$ are time independent and 
@@ -231,7 +231,6 @@ $1-p_{ij}$ the Boltzmann machine will stay in its current configuration $\bm{c}_
 algorithm~\ref{alg:gibbs}.
 
 \begin{algorithm}[H]
-    \label{alg:gibbs}
     \caption{Gibbs Sampling}
     \begin{algorithmic}[1]
         \Require $bm(c)$: function returning the energy of a Boltzmann machine for configuration $c$
@@ -249,6 +248,7 @@ algorithm~\ref{alg:gibbs}.
         \Until{$t=T$}
         \State \textbf{return} $c^{(T)}$
     \end{algorithmic}
+    \label{alg:gibbs}
 \end{algorithm}
 
 The Markov chain for configurations of a Boltzmann machine is known to converge to its so-called 
@@ -299,7 +299,6 @@ This process is repeated for a defined number of iterations to minimize the obje
 A graphical representation of this process is shown in figure~\ref{fig:sgd}.
 
 \begin{figure}[H]
-    \label{fig:sgd}
     \centering
     
     \begin{tikzpicture}
@@ -325,6 +324,7 @@ A graphical representation of this process is shown in figure~\ref{fig:sgd}.
 
     \caption[Gradient Descent]{Iterations of a gradient descent method. At each iteration, the randomly initialized parameters get updated in 
     direction of the steepest descent of the function to be optimized. After enough iterations, a minimum is of the function is reached.}
+    \label{fig:sgd}
 \end{figure}
 
 The simple update rule in \ref{eq:sgd} has several drawbacks, however. First, The gradient and thus the step size will become smaller as closer the function approaches its minimum, leading to only small improvements and many steps necessary.
@@ -345,7 +345,6 @@ averages. The moving averages themselves are estimates of the 1st moment (the me
 algorithm~\ref{alg:adamax}.
 
 \begin{algorithm}
-    \label{alg:adamax}
     \caption{Adamax}
     \begin{algorithmic}[1]
         \Require $\alpha$: step size
@@ -364,6 +363,7 @@ algorithm~\ref{alg:adamax}.
         \EndWhile
         \State \textbf{return} $\theta_t$ (Resulting parameters)
     \end{algorithmic}
+    \label{alg:adamax}
 \end{algorithm}
 
 \subsection{Stochastic Reconfiguration}

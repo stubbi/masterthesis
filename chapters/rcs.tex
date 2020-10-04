@@ -86,10 +86,10 @@ the matrix product, as well as the tensor product of two unitaries, is a unitary
         } 
       }
     \end{equation}
-    \label{fig:circuitasunitary}
   \caption[Quantum Circuits as Unitaries]{Every Circuit can be described by one big unitary acting on $n$
     qubits. W.l.o.g. the resulting states corresponds to the first row of the
     unitary $U$.}
+    \label{fig:circuitasunitary}
 \end{figure}
 
 A quantum circuit consisting of gates chosen uniformly at random
@@ -114,7 +114,6 @@ $N=2^n$ are distributed according to
 as visualized in figure~\ref{fig:porterthomas}.
 
 \begin{figure}[H]
-  \label{fig:porterthomas}
   \centering
   \begin{tikzpicture}
     \begin{axis}[
@@ -122,13 +121,14 @@ as visualized in figure~\ref{fig:porterthomas}.
       ymin=0,
       xmax=1,
       ymax=1]
-      \addplot[blue, domain=0:1, thick] {e^(-5*x)};
+      \addplot[blue, domain=0:1, thick] {e^(-5*(1-x))};
     \end{axis}
   \end{tikzpicture}
   \caption[Output Distribution of Random Quantum Circuits]{Distribution $P(p_{x_j})$ of output probabilities $p_{x_j}$ of a
     quantum circuit. The distribution $P(p_{x_j})=e^{-Np}$ is distributed as
     Porter-Thomas. A lot of output strings will have a low probability to be
     observed and a few output strings will dominate the observed outputs \cite{Boixo2018supremacy}.}
+  \label{fig:porterthomas}
 \end{figure}
 
 As quantum computers suffer from decoherent noise \cite{Zeh:1970zz}, it is
@@ -161,7 +161,7 @@ The output of the noisy execution can be assumed to
 be statistically uncorrelated with the output of the perfect execution \cite{Boixo2018supremacy}. Thus,
 and since the output distribution for a fixed $x_j$ over many random circuit
 instances $U$ also has the shape of the Porter-Thomas distribution \cite{harrow2008random},
-$\mathbb{E}_U[\log{\frac{1}{p_U(x_j)}}] = -\mathbb{E}_U[\log{p_U(x_j)}]$ from equation~\ref{eq:expectedCrossDifference}can be computed independently as:
+$\mathbb{E}_U[\log{\frac{1}{p_U(x_j)}}] = -\mathbb{E}_U[\log{p_U(x_j)}]$ from equation~\ref{eq:expectedCrossDifference} can be computed independently as:
 
 \begin{align}
   -\mathbb{E}_U[\log{p_U(x_j)}] &\approx - \int_0^{\infty}Ne^{-NP}\log{p} \,dp \\
@@ -299,12 +299,12 @@ maximally entangled \cite{Boixo2018supremacy}. A single bit or phase flip introd
 
 \begin{figure}[H]
   \centering
-  \label{fig:rcs_noise}
   \includegraphics[width=0.58\textwidth]{figures/rcs_noise}
-  \caption[Effect of one Pauli Error on Random Circuits]{Blue: Output bitstrings of a random circuit ordered by their probabilities. Red: Averaged 
-  simulated output distribution with one Pauli error on all possible positions in a $5 \times 4$ qubits random circuit 
+  \caption[Effect of one Pauli-Error on Random Circuits]{Blue: Output bitstrings of a random circuit ordered by their probabilities. Red: Averaged 
+  simulated output distribution with one Pauli-error on all possible positions in a $5 \times 4$ qubits random circuit 
   with depth 40. The distribution is almost uniform and almost uncorrelated with the real output distribution. The small tild at 
-  the end can be explained by the fact that Z gates close to the end of the circuit do not have an effect on the output distribution \cite{Boixo2018supremacy}.}
+  the end can be explained by the fact that Z gates close to the end of the circuit do not have an effect on the output distribution. Figure taken from \cite{Boixo2018supremacy}.}
+  \label{fig:rcs_noise}
 \end{figure}
 
 In other words, it is not possible to infer any information about the output
@@ -432,18 +432,18 @@ The two-qubit $CZ$ gates are applied as demonstrated in figure~\ref{fig:czgates}
 
 \begin{figure}[H]
   \centering
-  \label{fig:czgates}
   \includegraphics[width=0.58\textwidth]{figures/cz_order}
   \caption[Order of $CZ$ Gate Applications in Random Circuits]{Order in which $CZ$ gates are applied to the qubits. As 
   the qubits are aligned on a 2D lattice, only neighboring qubits can be coupled through $CZ$ gates. 
   The pattern repeats every 8 cycles.}
+  \label{fig:czgates}
 \end{figure}
 
 Boxio et al. could numerically show that the output distribution of random circuits generated this way
 converge to Porter-Thomas after a square root
 number of cycles in the number of qubits \cite{Boixo2018supremacy}.
 
-\section{Experiments the Sycamore Processor}
+\section{Experiments on the Sycamore Processor}
 
 Built upon the theoretical framework of random circuit sampling,
 a team from Google and the UCSB conducted a quantum
@@ -452,9 +452,9 @@ processor, shown in figure~\ref{fig:sycamore} \cite{martines2019supremacy}.
 
 \begin{figure}[H]
   \centering
-  \label{fig:sycamore}
   \includegraphics[width=0.58\textwidth]{figures/sycamore}
-  \caption[The Sycamore processor]{The Sycamore processor used in the quantum supremacy experiments of Google and UCSB. It consists of 54 qubits of which one was malfunctioning \cite{martines2019supremacy}.}
+  \caption[The Sycamore processor]{The Sycamore processor used in the quantum supremacy experiments of Google and UCSB. It consists of 54 qubits of which one was malfunctioning. Picture taken from \cite{martines2019supremacy}.}
+  \label{fig:sycamore}
 \end{figure}
 
 For the experiments, they generated circuits with $n=10$ to $n=53$ qubits and
@@ -470,11 +470,12 @@ from the quantum processor \cite{martines2019supremacy}.
 
 \begin{figure}[H]
   \centering
-  \label{fig:supremacy_results}
   \includegraphics[width=\textwidth]{figures/supremacy_results}
   \caption[Cross Entropy Fidelity of the Sycamore Processor]{Results from the quantum supremacy experiments 
-  with the Sycamore processor \cite{martines2019supremacy}. The full circuits could only be simulated up to $n=53$ qubits and 
-  $m=12$ cycles. Experiments on elided and patched circuits match the values of the extrapolated cross entropy fidelity.}
+  with the Sycamore processor. The full circuits could only be simulated up to $n=53$ qubits and 
+  $m=12$ cycles. Experiments on elided and patched circuits match the values of the extrapolated cross entropy fidelity.
+  Figure taken from \cite{martines2019supremacy}.}
+  \label{fig:supremacy_results}
 \end{figure}
 
 The team reports an average circuit fidelity $ > 0.1\%$ with $5\sigma$ confidence

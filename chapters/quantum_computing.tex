@@ -24,8 +24,8 @@ Rewriting $\Ket{\psi}$ as
 \end{equation}
 
 with $\theta, \rho, \gamma \in \mathbb{R}$
-allows an intuitive interpration of a qubit as a point on the surface of the three-dimensional unit sphere,
-called the \textit{Bloch Sphere}, which is visualized in figure~\ref{fig:blochsphere}. The factor $e^{i \gamma}$ in front is called a
+allows an intuitive interpretation of a qubit as a point on the surface of the three-dimensional unit sphere.
+This sphere is also called the \textit{Bloch Sphere} and is visualized in figure~\ref{fig:blochsphere}. The factor $e^{i \gamma}$ in front is called a
 \textit{global phase} and can be ignored:
 
 \begin{equation}
@@ -33,7 +33,6 @@ called the \textit{Bloch Sphere}, which is visualized in figure~\ref{fig:blochsp
 \end{equation}
 
 \begin{figure}[H]
-  \label{fig:blochsphere}
   \centering
   \begin{tikzpicture}
 
@@ -63,6 +62,7 @@ called the \textit{Bloch Sphere}, which is visualized in figure~\ref{fig:blochsp
 
   \end{tikzpicture}
   \caption[The Bloch Sphere]{Bloch Sphere representation of a qubit state $\Ket{\psi}$. $\Ket{\psi}$ points to an arbitrary direction on the three dimensional unit sphere.}
+  \label{fig:blochsphere}
 \end{figure}
 
 The states on the north and south pole of the Bloch Sphere are called the
@@ -145,7 +145,7 @@ or
 \end{align}
 
 respectively, implying that the state of the qubit collapsed into one of the two computational
-basis states. Thus, any succinct measurement will result in the same outcome.
+basis states. Thus, any successive measurement will result in the same outcome.
 In order to perform multiple measurements on the same state, it has to be prepared multiple times.
 
 Two special qubit states, which often occur in the domain of quantum computation, are the $\Ket{-}$ and $\Ket{+}$ state defined as:
@@ -218,7 +218,7 @@ systems above a certain size. For the classical simulation of a system
 consisting of 500 qubits, the state vector's dimension is already larger
 than the number of atoms in the universe.  
 
-As in the single qubit case, the probability to observe state $\Ket{n}$ is
+As in the single-qubit case, the probability to observe state $\Ket{n}$ is
 given by $a_n^2$. It is also possible to only measure a subset of the qubits,
 leaving the other qubits in the normalized state:
 
@@ -285,14 +285,14 @@ qubits on which they act and the effects they have on the qubits' state.
 
 \subsection{Single-Qubit Gates}
 
-Single qubit gates are linear mappings that can be applied to the state vector
+Single-qubit gates are linear mappings that can be applied to the state vector
 of a single qubit. Mathematically, single-qubit gates can be described by $2
-\times 2$ unitary matrices. The fact that these matrices are unitary makes sure
+\times 2$ unitary matrices. The fact that these matrices are unitary guarantees that
 the state $\Ket{\phi} = G \Ket{\psi}$ after gate $G$ has been applied to state $\Ket{\psi}$ is a
 proper quantum state which preserves the normalization constraint
 $\alpha_{\Ket{\phi}}^2 + \beta_{\Ket{\phi}}^2 = 1$.
 
-An example of a single qubit gate is the NOT or $X$ gate, also denoted as:
+An example of a single-qubit gate is the NOT or $X$ gate, also denoted as:
 
 \begin{figure}[h]
   \centering
@@ -340,7 +340,7 @@ following matrix representation:
     \end{pmatrix}.
 \end{equation}
 
-A single qubit gate is applied to a quantum state by matrix multiplication:
+A single-qubit gate is applied to a quantum state by matrix multiplication:
 
 \begin{align}
   \Ket{\phi} &= X \Ket{\psi} \\
@@ -364,7 +364,7 @@ A single qubit gate is applied to a quantum state by matrix multiplication:
                \end{pmatrix}
 \end{align}
 
-Another example of a single qubit gate without any classical analog is the
+Another example of a single-qubit gate without any classical analog is the
 \textit{Hadamard gate} or $H$ gate, described by the unitary:
 
 \begin{equation}
@@ -400,17 +400,16 @@ The Hadamard gate is a good example of how the Bloch Sphere visualization can he
 
 \begin{figure}[H]
   \centering
-  \label{fig:blochH}
   \includegraphics[width=\textwidth]{figures/hadamard}
-  \caption[Hadamard Visualization]{Visualization of the Hadamard gate on the Bloch sphere, acting on the $\Ket{+}$ state \cite{nielsen2002quantum}.}
+  \caption[Hadamard Visualization]{Visualization of the Hadamard gate on the Bloch sphere, acting on the $\Ket{+}$ state. Graphic taken from \cite{nielsen2002quantum}.}
+  \label{fig:blochH}
 \end{figure}
 
 An overview of some common single-qubit gates is given in figure \ref{fig:singlegates}.
 
 \begin{table}[H]
-  \label{fig:singlegates}
   \centering
-  \begin{tabular}{c c c}uu
+  \begin{tabular}{c c c}
     Operator & Gate & Matrix \\[20pt]
     $X$ &  \Qcircuit @C=1em @R=.7em { & \gate{X} & \qw } & $\begin{pmatrix} 0 & 1 \\ 1 & 0\end{pmatrix}$ \\[20pt]
     $Y$ &  \Qcircuit @C=1em @R=.7em { & \gate{Y} & \qw } & $\begin{pmatrix} 0 & -i \\ i & 0\end{pmatrix}$ \\[20pt]
@@ -420,6 +419,7 @@ An overview of some common single-qubit gates is given in figure \ref{fig:single
     $T$ &  \Qcircuit @C=1em @R=.7em { & \gate{T} & \qw } & $\begin{pmatrix} 1 & 0 \\ 0 & e^{i\frac{\pi}{2}}\end{pmatrix}$ \\[20pt]
   \end{tabular}
   \caption[Overview of common single-qubit gates]{Overview of common single-qubit gates.}
+  \label{fig:singlegates}
 \end{table}
 
 There are indefinitely many possible quantum gates in theory. Still, 
@@ -435,7 +435,7 @@ For this purpose, multi-qubit gates are a necessity.
 \subsection{Multi-Qubit Gates}
 
 Single-qubit gates are not sufficient to create universal gate sets for quantum
-computation. In order to run arbitrary quantum programs, multi-qubit gates like
+computation. In order to run arbitrary quantum programs, multi-qubit gates such as
  \textit{controlled} gates are needed.
 Controlled quantum gates are simple extensions of single-qubit gates. Every single-qubit gate can be implemented as a controlled 
 version of it with one \textit{control} and one \textit{target} qubit. Only if
@@ -505,7 +505,7 @@ The standard model for computation in theoretical computer science is the Turing
 Alan Turing in 1936, it is a powerful tool to understand the limits of (classical) 
 computation. The
 theoretical nature of the Turing machine gives it unlimited computational
-resources, like infinite memory, which do not reflect the properties of realizable
+resources, such as infinite memory, which do not reflect the properties of realizable
 computer architectures.
 
 Another computation model that does not suffer from the gap between theory
@@ -523,13 +523,13 @@ measuring it.
       &  \lstick{\Ket{0}} & \qw & \gate{X} & \qw & \meter{0/1} 
     }
   }
-  \label{fig:circuit0}
   \caption[A Simple Quantum Circuit]{A simple quantum circuit applying an $X$ gate to a qubit initialized in the $\Ket{0}$ state before measuring it.}
+  \label{fig:circuit0}
 \end{figure}
 
 The circuit is being read from left to right. Important to note is that
 for calculating the resulting state, the matrix representation of the
-gates are multiplied from the left side to the current state $\Ket{\psi}$
+gates are multiplied from the left side to the current state $\Ket{\psi}$.
 In the example above the final state of the program represented at the end of the circuit is:
 
 \begin{align}
@@ -566,8 +566,8 @@ as in parallel, as demonstrated in figure~\ref{fig:circuit1}:
       & \lstick{\Ket{0}} & \qw & \gate{X} & \qw & \ctrl{-1} & \qw & \meter{0/1}
     }
   }
-  \label{fig:circuit1}
   \caption[A Quantum Circuit Acting on two Qubits]{A quantum circuit acting on two qubits. The effect of parallel applications of single-qubit gates is defined by the tensor product of the gates.}
+  \label{fig:circuit1}
 \end{figure}
 
 Note that, when calculating the state of the quantum program above, the state of the system 
@@ -645,8 +645,8 @@ Another simple quantum circuit, which entangles two qubits with each other, is s
       & \lstick{\Ket{0}} & \qw & \targ & \qw & \meter{0/1}
     }
   }
-  \label{fig:circuit2}
   \caption[Bell State Creation Circuit]{A quantum circuit to create maximally entangled 2-qubit states.}
+  \label{fig:circuit2}
 \end{figure}
 
 The Hadamard gate on the first qubit maps the system from the initial $\Ket{00}$
@@ -685,7 +685,7 @@ probabilistic Turing machine in polynomial time and widely believed to be the sa
 Currently, there are a few problems known to be in \textbf{BQP}, which are suspected not to be in \textbf{P}, providing evidence for the superiority of quantum computers. One
 of these problems is \textit{factorization}, the problem of decomposing a
 composite integer into its prime factors. This problem has been known to be in
-\textit{NP} before. Though, it is also known that factorization is not an \textbf{NP}-hard problem, indicating that quantum computers are not able to provide
+\textbf{NP} before. Though, it is also known that factorization is not an \textbf{NP}-hard problem, indicating that quantum computers are not able to provide
 an exponential speedup for every problem that is not efficiently solvable on a
 classical computer. Indeed, classical algorithms might even exist, which can
 solve factorization on a classical computer efficiently, which have not been
