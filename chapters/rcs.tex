@@ -24,23 +24,24 @@ classical computers on \textit{some} problem.
 
 There exist different proposals for quantum supremacy
 experiments \cite{shor1997factorisation, aaronson2013boson, Boixo2018supremacy}. Since quantum computers do not promise to outperform classical
-computers on every problem, as discussed in section~\ref{sec:quantumcomplexity}, but only provide a
-practical advantage for problems which lie in \textbf{BQP} and outside of
-\textbf{P}, quantum supremacy experiments must be based upon a strong theoretical foundation \cite{Bernstein93quantumcomplexity}.
+computers on every problem, as discussed in section~\ref{sec:quantum_computational_complexity}, 
+quantum supremacy experiments must be based upon a strong theoretical foundation \cite{Bernstein93quantumcomplexity}.
 
 One way to demonstrate quantum supremacy would be to run Shor's
 algorithm for integer factorization \cite{shor1997factorisation} on a physical quantum computer on some number which would not be feasible
-to decompose with known classical algorithms on existing supercomputers \cite{martinlopez2011experimental}. The issue with this approach is that many
-qubits are necessary to represent such numbers while today it is possible to
-build quantum processors with about 50 qubits of reasonable quality \cite{martines2019supremacy}.
+to decompose with known classical algorithms on existing supercomputers \cite{martinlopez2011experimental}. 
+For this approach, about 10,000 error-corrected qubits with full connectivity are necessary to factorize current 
+RSA keys with a length of 2048 bits \cite{Barker15nistspecial,shor1997factorisation}. Today it is possible to
+build quantum processors with about 50 noisy qubits of reasonable quality and restricted connectivity \cite{martines2019supremacy}.
 
 Another famous proposal for a quantum supremacy experiment is \textit{Boson Sampling} \cite{aaronson2013boson}, which is based on the
-fact that calculating the permutant of a matrix is computationally hard.
+fact that calculating the permanent of a matrix is computationally hard.
 
 The approach that a team from Google and UCSB took last year is called \textit{Random
   Circuit Sampling} (RCS) \cite{Boixo2018supremacy, martines2019supremacy}. In this approach, random quantum circuits of specific structures that create highly
 entangled states are run on a quantum processor and are simulated classically. For
-enough qubits and depth, performing the classical simulations would take years on the biggest existing supercomputers \cite{martines2019supremacy}. If the quantum computer can generate outputs
+enough qubits and depth, performing the classical simulations would take years on the biggest 
+existing supercomputers, according to Google \cite{martines2019supremacy}. If the quantum computer can generate outputs
 for such circuits which cannot be simulated classically anymore while their output can still be
 verified to be correct, this would demonstrate quantum supremacy. 
 
@@ -62,8 +63,8 @@ earlier.
 The first observation to understand the concept of RCS is that every quantum
 circuit acting on $n$ qubits can be described by a single $2^n$ dimensional
 unitary matrix \cite{nielsen2002quantum}, as illustrated in figure~\ref{fig:circuitasunitary}. This follows
-from the fact that quantum gates are described by unitary transformations and
-the matrix product, as well as the tensor product of two unitaries, is a unitary again.
+from the fact that quantum gates are described by unitary transformations.
+The matrix product, as well as the tensor product, of two unitaries is a unitary again.
 
 \begin{figure}[H]
   \begin{equation}
@@ -87,8 +88,8 @@ the matrix product, as well as the tensor product of two unitaries, is a unitary
       }
     \end{equation}
   \caption[Quantum Circuits as Unitaries]{Every Circuit can be described by one big unitary acting on $n$
-    qubits. W.l.o.g. the resulting states corresponds to the first row of the
-    unitary $U$.}
+    qubits. W.l.o.g. the resulting states corresponds to the first column of the
+    unitary $U$, assuming the circuit is initialized in the $\Ket{0}^{\otimes{n}}$ state.}
     \label{fig:circuitasunitary}
 \end{figure}
 
@@ -97,21 +98,22 @@ will act like a uniformly random unitary $U$ \cite{Boixo2018supremacy}. Since th
 initialized in the $\Ket{0}^{\otimes n}$ state, the amplitudes of the final
 quantum state of the circuit correspond to the first column of the random unitary $U$.
 
-This column's entries are complex numbers with real and imaginary parts
+The distribution of universal random quantum circuits converges to the uniform (Haar) measure with increasing depth \cite{Emerson_2003}. 
+This implies that the column's entries are complex numbers with real and imaginary parts
 distributed by an unbiased Gaussian with respect to the normalization constraints.
 The output probabilities of the random circuit are given by
 the squared norms of these entries.
 They are thus distributed as the square of
 a Gaussian which is an exponential distribution,
-also known as a Porter-Thomas \cite{Porter1956Fluctuations}. So the probabilities $p(x_j) =
-| \Braket{x_j | \psi_{RC}} | ^2$ to observe bitstrings $x_j \in \{x_j\}_{j=1}^N$ with
-$N=2^n$ are distributed according to
+also known as a Porter-Thomas distribution \cite{Porter1956Fluctuations}. The normalized probabilities $p_j := p(x_j) =
+| \Braket{x_j | \psi_{RC}} | ^2$ to observe bitstrings $x_j \in \{0,1\}^n$
+are distributed according to
 
 \begin{equation}
-  Pr(p) = e^{-Np}
+  Pr(Np_j) = e^{-Np_j}
 \end{equation}
 
-as visualized in figure~\ref{fig:porterthomas}.
+with $N=2^n$. The shape of this distribution is visualized in figure~\ref{fig:porterthomas}.
 
 \begin{figure}[H]
   \centering
@@ -124,8 +126,8 @@ as visualized in figure~\ref{fig:porterthomas}.
       \addplot[blue, domain=0:1, thick] {e^(-5*(1-x))};
     \end{axis}
   \end{tikzpicture}
-  \caption[Output Distribution of Random Quantum Circuits]{Distribution $P(p_{x_j})$ of output probabilities $p_{x_j}$ of a
-    quantum circuit. The distribution $P(p_{x_j})=e^{-Np}$ is distributed as
+  \caption[Output Distribution of Random Quantum Circuits]{Distribution $Pr(Np_j)$ of normalized output probabilities $Np_j$ of a
+    random quantum circuit. The distribution $Pr(Np_j)=e^{-Np_j}$ is distributed as
     Porter-Thomas. A lot of output strings will have a low probability to be
     observed and a few output strings will dominate the observed outputs \cite{Boixo2018supremacy}.}
   \label{fig:porterthomas}
@@ -140,31 +142,36 @@ The task is to understand how samples $S=\{x_1,\dots,x_m\}$ drawn from a perfect
 $U$ compare to a set $S^{\prime}=\{x_1^{\prime},\dots,x_m^{\prime}\}$ of samples drawn from a potentially noisy
 execution of $U$.
 
-A well motivated measure for the difference between the underlying
-probability distributions $p_U$ and $p_U^{\prime}$ of samples $S$ and $S^{\prime}$ is the \textit{cross entropy} \cite{kullback1951}, defined as
-
+A standard measure for the similarity of two probability distributions is the \textit{cross entropy} \cite{kullback1951}.
+It is equivalent to the negative of the log likelihood of the two distributions.
+The cross entropy of the underlying
+probability distributions $p_U$ and $p_U^{\prime}$ of samples taken from $S$ and $S^{\prime}$ respectively, is
 
 \begin{equation}
-  H(p_U^{\prime},p_U) = - \sum_{j=1}^Np_U^{\prime}(x_j|U) \log{p_U(x_j)}.
+  H(p_U^{\prime},p_U) = - \sum_{j=1}^Np_U^{\prime}(x_j|U) \log{p_U(x_j)},
 \end{equation}
+
+where $p_U^{\prime}(x_j|U)$ depicts the probability of $x_j$ in a noisy execution of circuit $U$.
 
 Of interest is the expected quality of the potentially noisy execution over
 different random circuit instances:
 
 \begin{align}
   \label{eq:expectedCrossDifference}
-  \mathbb{E}_U[H(p_U^{\prime},p_U)] &= -\mathbb{E}_U[\log{p_U(x_j)}]
+  \mathbb{E}_U[H(p_U^{\prime},p_U)] &= -\mathbb{E}_U[\log{p_U(x_j)}] \\
                                     &= \mathbb{E} \left[\sum_{j=1}^Np_U^{\prime}(x_j|U)\log{\frac{1}{p_U(x_j)}}\right]
 \end{align}
 
-The output of the noisy execution can be assumed to
-be statistically uncorrelated with the output of the perfect execution \cite{Boixo2018supremacy}. Thus,
+The output of a worst-case (polynomial-time classical) noisy execution can be assumed to
+be statistically uncorrelated with the output of the perfect execution \cite{Boixo2018supremacy}. 
+For independent probability distributions $A$ and $B$, $\mathbb{E}[AB] = \mathbb{E}[A] \mathbb{E}[B]$. Thus,
 and since the output distribution for a fixed $x_j$ over many random circuit
 instances $U$ also has the shape of the Porter-Thomas distribution \cite{harrow2008random},
-$\mathbb{E}_U[\log{\frac{1}{p_U(x_j)}}] = -\mathbb{E}_U[\log{p_U(x_j)}]$ from equation~\ref{eq:expectedCrossDifference} can be computed independently as:
+$\mathbb{E}_U[\log{\frac{1}{p_U(x_j)}}] = -\mathbb{E}_U[\log{p_U(x_j)}]$ from equation~\ref{eq:expectedCrossDifference} 
+in this case can be computed as:
 
 \begin{align}
-  -\mathbb{E}_U[\log{p_U(x_j)}] &\approx - \int_0^{\infty}Ne^{-NP}\log{p} \,dp \\
+  -\mathbb{E}_U[\log{p_U(x_j)}] &\approx - \int_0^{\infty}Ne^{-Np}\log{p} \,dp \\
                                 &= \log{N} + \gamma,
 \end{align}
 
@@ -213,16 +220,16 @@ to extrapolate the cross entropy difference $\Delta H(p_A)$ of $A_U$ to the quan
 precision based on samples of its cross entropy difference on smaller circuit
 instances which can still be simulated classically \cite{Boixo2018supremacy}.
 
-Another justification for the cross entropy difference is that the $l_1$ distance between the uniform and Porter-Thomas distribution
+Another justification for the cross entropy difference is that the $l_1$ distance between the uniform distribution $p$ and Porter-Thomas distribution $q$
 
 \begin{align}
   l_1(p,q) &= \| p-q\|_1 \\
-           &= \sum_{j=1}^N \mid p_i - q_i \mid
+           &= \sum_{j=1}^N \mid p_i - q_i \mid \\
+           &= \frac{2}{e}
 \end{align}
 
-is $\frac{2}{e}$ and thus independent of the number of qubits $n$. Therefore, a
-constant number of samples is sufficient to calculate the cross entropy $H(p_U)$
-difference.
+and thus independent of the number of qubits $n$. Therefore, a
+constant number of samples is sufficient to calculate the cross entropy difference $H(p_U)$.
 
 Experimentally, the cross entropy difference
 
@@ -238,7 +245,8 @@ entropy
   1 \geq \alpha > C
 \end{equation}
 
-is greater than the average performance $C$ of the best known classical algorithm $A^*$:
+is greater than the average performance $C$ of the best known classical algorithm $A^*$ with 
+output distribution $p^*$:
 
 \begin{equation}
   C = \mathbb{E}_U[\Delta H(p^*)] .
@@ -247,7 +255,7 @@ is greater than the average performance $C$ of the best known classical algorith
 In the regime where perfect simulations are possible, $C=1$ and quantum
 supremacy cannot be achieved \cite{Boixo2018supremacy}. For sufficiently many qubits, perfect simulations
 will not be possible anymore and $1 > C \geq 0$ with $C$ decreasing exponentially
-with the number of gates $g>>n$. For a typical set of samples $S_{exp}$ drawn from the
+with the number of gates $g\gg n$. For a typical set of samples $S_{exp} = \{x_1^{exp}, \dots , x_m^{exp}\}$ drawn from the
 execution of a quantum circuit, the central limit theorem implies that:
 
 \begin{equation}
@@ -285,7 +293,7 @@ after the execution of a random circuit $U$ can be represented as
   \rho = \tilde{\alpha} U \Ket{\psi_0} \Bra{\psi_0} U^{\dagger} + (1- \tilde{\alpha}) \sigma
 \end{equation}
 
-with $\tilde{\alpha}$ being the circuit \textit{fidelity} and noise term $\sigma$ being an orthogonal state to the true state with
+with $\tilde{\alpha}$ being the circuit \textit{fidelity} and noise term $\sigma$ being an orthogonal mixed state to the true state with
 $\Bra{\psi_0}U^{\dagger}\sigma U \Ket{\psi_0} = 0$.
 The corresponding average cross entropy difference is:
 
@@ -300,9 +308,9 @@ maximally entangled \cite{Boixo2018supremacy}. A single bit or phase flip introd
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.58\textwidth]{figures/rcs_noise}
-  \caption[Effect of one Pauli-Error on Random Circuits]{Blue: Output bitstrings of a random circuit ordered by their probabilities. Red: Averaged 
+  \caption[Effect of one Pauli-Error on Random Circuits]{Blue ("no errors"): Output bitstrings of a random circuit ordered by their probabilities. Red ("One Pauli error"): Averaged 
   simulated output distribution with one Pauli-error on all possible positions in a $5 \times 4$ qubits random circuit 
-  with depth 40. The distribution is almost uniform and almost uncorrelated with the real output distribution. The small tild at 
+  with depth 40. The distribution is almost uniform and almost uncorrelated with the real output distribution. The small tilt at 
   the end can be explained by the fact that Z gates close to the end of the circuit do not have an effect on the output distribution. Figure taken from \cite{Boixo2018supremacy}.}
   \label{fig:rcs_noise}
 \end{figure}
@@ -332,8 +340,10 @@ the single and two-qubit gate and errors of a quantum device:
 \end{equation}
 
 with $r_1, r_2 \ll 1$ being the Pauli error rates for one and two-qubit gates, $r_{init},
-r_{mes} \ll 1$ the initialisation and measurement error and $g_1,g_2 \gg 1$ being the
-numbers of one and two-qubit gates. This relation has been numerically confirmed by
+r_{mes} \ll 1$ the initialisation and measurement error, and $g_1,g_2 \gg 1$ being the
+numbers of one and two-qubit gates. The Pauli error rates depict the 
+probability with which any of the 15 possible 1-qubit gates is applied at any position in the circuit.
+The initialization e This relation has been numerically confirmed by
 Boixo et al. \cite{Boixo2018supremacy}, indicating that the relation between the
 cross entropy difference and the circuit fidelity can be used to extrapolate the
 cross entropy difference of a quantum device to the quantum supremacy regime \cite{Boixo2018supremacy}.
@@ -342,7 +352,8 @@ So, even on the RCS task, a noisy quantum computer is able to demonstrate quantu
 supremacy, by calculating the fidelity of the quantum computer on random circuit instances still possible to simulate
 classically, which can be extrapolated to the supremacy regime using
 equation~\ref{eq:extrapolate}.
-If the fidelity is greater zero in the regime where no classical simulation is possible anymore,
+If the fidelity is greater than zero in the regime where no efficient classical simulation achieves
+a non-zero fidelity,
 quantum supremacy has been demonstrated \cite{Boixo2018supremacy}.
 
 \section{Random Circuit Design}
@@ -362,7 +373,7 @@ architectures like superconducting qubits such as Google's Sycamore
 processor, the qubits are laid out on a 2D lattice, allowing two-qubit gates only
 to be applied to neighboring qubits on that lattice \cite{barends2014logic}. Circuits on fully
 connected architectures of logarithmic depths are known to be translatable into
-circuits of depth $\sqrt{n}$ on 2D lattices \cite{beals2013efficient}. Boxio et al. used numerical
+circuits of depth $\sqrt{n}$ on 2D lattices \cite{beals2013efficient}. Boixo et al. used numerical
 simulations to optimize strategies to generate random circuits with minimized
 time to converge to a Porter-Thomas distribution, leading to the following algorithm \cite{Boixo2018supremacy}:
 
@@ -433,13 +444,13 @@ The two-qubit $CZ$ gates are applied as demonstrated in figure~\ref{fig:czgates}
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.58\textwidth]{figures/cz_order}
-  \caption[Order of $CZ$ Gate Applications in Random Circuits]{Order in which $CZ$ gates are applied to the qubits. As 
+  \caption[Order (1 to 8) of $CZ$ Gate Applications in Random Circuits]{Order in which $CZ$ gates are applied to the qubits. As 
   the qubits are aligned on a 2D lattice, only neighboring qubits can be coupled through $CZ$ gates. 
   The pattern repeats every 8 cycles.}
   \label{fig:czgates}
 \end{figure}
 
-Boxio et al. could numerically show that the output distribution of random circuits generated this way
+Boixo et al. could numerically show that the output distribution of random circuits generated this way
 converge to Porter-Thomas after a square root
 number of cycles in the number of qubits \cite{Boixo2018supremacy}.
 
@@ -464,7 +475,7 @@ in a reasonable amount of time. Beyond that regime, simplified circuit
 architectures, called \textit{elided} and \textit{patched}, were used. These circuits
 are split into two sub-circuits with only weak entanglement in the elided and no
 entanglement in the patched version. Such circuits can be classically simulated for up to $n=53$ qubits with $m=20$ cycles to
-verify the fidelity of the Sycamore processor. For every circuit parameters, 20
+verify the fidelity of the Sycamore processor. For every setting of the circuit parameters, 20
 circuits have been generated. For each circuit, $0.5-2.5$ million samples have been drawn
 from the quantum processor \cite{martines2019supremacy}.
 
@@ -497,9 +508,10 @@ processor would still outperform the classical simulation as it only
 takes about 200ms to generate the 2 million samples for those circuits from it. As quantum
 supremacy is a loosely defined term, the discussion might continue whether
 quantum supremacy has been demonstrated by the Google and UCSB team. Nevertheless, 
-the results proof that it is possible to build a quantum processor of 53 qubits
+the results prove that it is possible to build a quantum processor of 53 qubits
 which can execute quantum circuits consisting of up to 1,113 single-qubit and
-430 two-qubit gates. For the future, the Google team expects a double exponential growth of the computational
+430 two-qubit gates with a single- and two-qubit gate fidelity greater than 99\% \cite{martines2019supremacy}.
+For the future, the Google team expects a double exponential growth of the computational
 power of quantum computers as the classical simulation costs grow exponentially
 with the computational volume (gates and qubits) and quantum hardware
 improvements will probably follow a quantum processor equivalent of Moore's law \cite{martines2019supremacy}.
