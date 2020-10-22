@@ -1,82 +1,88 @@
 \chapter{Introduction}
 
-Programmable computers are able to solve a wide range of problems.
-While they can solve some of these problems efficiently, 
+Computers can be programmed to solve a wide range of problems.
+While they can solve some problems efficiently, 
 other problems require exponential time or memory. One example of 
-a problem that cannot be solved efficiently with real-world 
-applications is the simulation of quantum systems. Simulating 
-the physics of many-body quantum systems would help in the design 
-of new materials and drug discovery.
+a problem that cannot be solved efficiently that has real-world 
+applications is the simulation of quantum systems \cite{nielsen2002quantum}.  
+Such simulations could help in the design 
+of new materials and in drug discovery \cite{8585034}.
 
-The computational complexity of simulating quantum systems 1981 led 
-Richard Feyman to propose the concept of a quantum computer. Quantum 
+The computational complexity of simulating quantum systems led 
+Richard Feynman in 1982 to propose the concept of a quantum computer \cite{feynman1982simulating}. Quantum 
 computers work fundamentally different from classical computers by 
-harnessing quantum physics for computation. Quantum computers would be 
-able to simulate quantum systems efficiently.
+harnessing quantum physics for computation. Large-scale quantum computers have the potential
+to simulate the physics of quantum systems efficiently \cite{Zalka_1998}.
 
-Since then, researchers are trying to physically build quantum devices
-and to understand their computational capabilities and limitations. In 1994, 
-Peter Shor could prove that a quantum computer is able to solve the 
-factorization problem efficiently. While most of today's internet security 
-is based on the assumption, that it takes thousands of years to find the 
-prime factors of big integers, quantum computers could break these 
-security protocols.
+Since Feynman's proposal in 1982, researchers are making progress in building small-scale 
+quantum devices and in understanding their computational capabilities and limitations.
+Among the discoveries of the potential of quantum computing is Shor's algorithm \cite{shor1997factorisation}: 
+In 1994, Peter Shor gave a quantum algorithm that is able to solve the 
+factorization problem efficiently. This makes quantum computers a potential thread to 
+today's internet security protocols. Most of these protocols are based on the assumption 
+that the factorization problem cannot be solved efficiently and that it would take thousands of years to find the 
+prime factors of the public encryption keys.
 
-Last year, researchers from Google and the UCSB claimed to have built a 
-53 qubits quantum processor and performed a calculation on it that could not be 
-performed on a classical computer. This moment was already highly anticipated 
-and coined "quantum supremacy" by John Preskill in 2012. In their experiments, 
-the quantum circuit calculates the output probabilities of samples taken from 
-random quantum circuits. The underlying problem statement is specifically tailored 
-to the demonstration of quantum supremacy.
-
+\paragraph{Near-term Quantum Computing and Quantum Supremacy.}
 Even though error-corrected large-scale quantum computers are probably still 
 years away, so-called noisy-intermediate scale 
 quantum (NISQ) devices represent the first generation of quantum devices.
 Studying their capabilities and limits could enable us to harness possible advantages 
 of quantum computers already today and further understand the limits of 
-large scale quantum computers.
+large scale quantum computers \cite{Preskill_2018}.
 
-To understand the capabilities of such NISQ devices, we also have to understand 
-the limits of classical computation. The recent success of machine learning in 
-many domains lead Carleo and Troyer in 2016 to apply restricted Boltzmann machines (RBMs)
-to simulate the wave-function of many-body quantum systems classically. In 2018, 
-Johnson et al adapted the framework to simulate small quantum programs with 
-RBMs. Recently, Carleo and X used the same approach to simulate the QAOA algorithm 
-with up to 53 qubits.
+In 2019, researchers from Google and the UCSB built a 
+53 qubit quantum processor and performed a calculation on it that they claimed could not be 
+performed on a classical computer \cite{martines2019supremacy}. This moment was already highly anticipated 
+as "quantum supremacy", a term coined by John Preskill in 2012 \cite{preskill2012quantum}. In their experiments, 
+the quantum circuit calculates the output probabilities of samples taken from 
+random quantum circuits. The underlying problem statement is specifically tailored 
+to the demonstration of quantum supremacy \cite{Boixo2018supremacy}.
 
+\paragraph{Machine Learning for the Classical Simulation of Quantum Computing.}
+To understand the capabilities of such NISQ devices, one also has to understand 
+the limits of classical computation. Following the recent success of machine learning in 
+many domains, in 2017 Carleo and Troyer applied restricted Boltzmann machines (RBMs)
+to simulate the wave-function of many-body quantum systems classically \cite{carleo2017solving}.
+Their results showed that RBMs are able to give a compact representations of the wave functions 
+of different many-body quantum systems. In 2018, 
+J\'{o}nsson et al adapted the framework to simulate small quantum programs with 
+RBMs \cite{jnsson2018neuralnetwork}. Recently, Medvidovic and Carleo used the 
+same approach for a noisy simulation of the QAOA algorithm with up to 53 qubits \cite{medvidovic2020classical}.
+
+\paragraph{Structure of this Thesis.}
 This study investigates the abilities of RBMs to simulate the random circuit sampling 
-experiments conducted last year on the Sycamore processor. Understanding the
+experiments conducted in Google's experiments on the Sycamore processor. Understanding the
 fidelities with which RBMs can simulate random circuits might help to understand
 the limits of classical computation. The software developed as part of this thesis 
 might further help to study algorithms designed for NISQ devices. It is published as 
-an open source library.
+an open source library at \cite{NQS2020}.
 
 This study is structured as follows: First, a convention on the used mathematical 
 symbols is given.
 
-In the following chapter, quantum computing is introduced. Starting with a single qubit,
+In chapter~\ref{sec:quantum_computing}, quantum computing is introduced. Starting with a single qubit,
 the mathematical framework of many-quantum systems is derived. The notion and application 
 of quantum gates is explained before sample quantum circuits are shown.
 
-The chapter about random circuit sampling builds up on the introduction into quantum computing.
+Chapter~\ref{sec:rcs} about random circuit sampling builds up on the introduction into quantum computing.
 The definition of quantum supremacy and different proposals to demonstrate it are given. The 
-Cross-Entropy fidelity, the main metric in the random circuit sampling experiments, and how 
+cross entropy fidelity, the main metric in the random circuit sampling experiments, and how 
 it translates into the quantum supremacy regime is mathematically justified. The design of 
 the random circuits is explained and an algorithm to generate them is described. In the last
 part of the chapter, the experiments and their results by the teams of Google and the UCSB on 
 their Sycamore quantum processor are discussed.
 
-In chapter 5, the concept of the Boltzmann machine is introduced. General as well as restricted 
-Boltzmann machines, as they are used in the experiments, are explained. The chapter further 
-lines out how the parameters of a restricted Boltzmann machine can be adapted in an iterative 
+In chapter~\ref{sec:rbm}, the concept of the Boltzmann machine is introduced. General as well as restricted 
+Boltzmann machines, as they are used in the experiments in chapter~\ref{sec:experiments}, are explained. The chapter further 
+outlines how the parameters of a restricted Boltzmann machine can be adapted in an iterative 
 training process such that samples drawn from the RBM are distributed according to probability 
 distributions implied by a set of training samples. The last part of the chapter details how 
 RBMs can be used for the classical simulation of quantum circuits.
 
-After the theoretical framework has been laid out, the experiments are described. Details of 
+After the theoretical framework has been laid out, the experiments are described in chapter~\ref{sec:experiments}. Details of 
 the experimental setup are given and the results of the different training strategies for the 
 RBM are shown.
 
-In the following chapter, the results are discussed. Highlights and limitations of the 
+In the last two chapters, the results are discussed. Highlights and limitations of the 
 experiments and their results are described. Directions for future research are proposed.
