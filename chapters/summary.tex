@@ -1,24 +1,26 @@
 \chapter{Summary}
 
-This work gives an introduction into the field of quantum computing, lays out the theoretical framework 
-of random circuit sampling, and explains the math of restricted Boltzmann machines. RBMs are further used 
-in this study to simulate random circuit instances. Different training parameters are varied to understand their 
-influence on the RBMs capabilites to simulate random quantum circuits of different sizes. 
+This thesis gives an introduction into the field of quantum computing, lays out the theoretical framework 
+of random circuit sampling, and explains restricted Boltzmann machines (RBMs). RBMs are further used 
+to simulate random circuit instances classically. Different training parameters are varied to understand their 
+influence on the RBMs capabilities to simulate random quantum circuits of different sizes. 
 
-The results of this work confirm that RBMs can be used as an alternative approach to the classical 
-simulation of quantum circuits. When trained with AdaMax and random restarts, the best performing RBMs
-have been able to approximate the resulting quantum state of 4-qubit random circuit instances with depth 
+The outcomes confirm prior results that RBMs are able to give compact representations of quantum circuits. 
+They further proof that RBMs are able to sample from the output distributions of random circuits. 
+When trained with AdaMax and random restarts, the best performing RBMs
+have been able to approximate the resulting quantum state of 4-qubit random circuit instances with a depth 
 of up to 20 cycles accurately. 
 
-Nevertheless, the performance of RBMs should be further verified on random circuit instances with more qubits. 
+Nevertheless, the performance of RBMs should be further studied on random circuit instances with more qubits. 
 For larger system sizes, the influence of the number of training iterations and training samples has to be further 
-analyzed. This will help to understand the computational resources needed to simulate quantum circuits 
-with a certain fidelity. Such insights would help to better understand the current state of the physical 
-implementations of quantum computers as RBMs could be used as a benchmark for NISQ devices (REALLY?).
+analyzed. This will help in the understanding of the computational resources required to simulate quantum circuits 
+with targeted fidelities. Such insights would help to better understand the current state of physical 
+implementations of quantum computers. Further, RBMs could be used to simulate and analyse NISQ algorithms
+when no physical device is available.
 
-The software developed for this study is available as open source at \cite{}. It can easily be adapted to 
-train RBMs on different random circuit instances with varying system sizes on the Noctua Cluster or any other 
-computing hardware. It further allows the easy adaption of circuits on which the RBMs should be trained to 
-analyze not only random circuits but also other classes of quantum circuits in the future. The results of this 
-study might guide further research and suggest good choices of training parameters which can be further studied and 
+The software developed for this study is available as open source at \cite{NQS2020}. It can easily be adapted to 
+train RBMs on random circuit instances with varying system sizes on the Noctua Cluster or any other 
+computing hardware. It further provides an interface to simulate any quantum circuit given in the QASM format.
+
+The results of this thesis suggest good choices of training parameters which should be further studied and 
 optimized.
