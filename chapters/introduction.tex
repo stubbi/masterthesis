@@ -1,26 +1,28 @@
 \chapter{Introduction}
 
+\paragraph{The Relevance of Quantum Computing.}
 Computers can be programmed to solve a wide range of problems.
 While they can solve some problems efficiently, 
-other problems require exponential time or memory. One example of 
-a problem that cannot be solved efficiently that has real-world 
-applications is the simulation of quantum systems \cite{nielsen2002quantum}.  
+other problems require exponential time or memory. The simulation 
+of quantum physical systems in such that problem which requires 
+exponential resources \cite{nielsen2002quantum}.  
 Such simulations could help in the design 
 of new materials and in drug discovery \cite{8585034}.
 
 The computational complexity of simulating quantum systems led 
-Richard Feynman in 1982 to propose the concept of a quantum computer \cite{feynman1982simulating}. Quantum 
-computers work fundamentally different from classical computers by 
+Richard Feynman to propose the concept of a quantum computer \cite{feynman1982simulating} in 1982. 
+Quantum computers work fundamentally different from classical computers by 
 harnessing quantum physics for computation. Large-scale quantum computers have the potential
 to simulate the physics of quantum systems efficiently \cite{Zalka_1998}.
 
 Since Feynman's proposal in 1982, researchers are making progress in building small-scale 
-quantum devices and in understanding their computational capabilities and limitations.
-Among the discoveries of the potential of quantum computing is Shor's algorithm \cite{shor1997factorisation}: 
-In 1994, Peter Shor gave a quantum algorithm that is able to solve the 
-factorization problem efficiently. This makes quantum computers a potential thread to 
+quantum devices and understanding their computational capabilities and limitations.
+
+Among the discoveries of the potential of the computation power of quantum computers is Shor's algorithm \cite{shor1997factorisation}: 
+In 1994, Peter Shor discovered a quantum algorithm that is able to solve the 
+factorization problem in polynomial time. This makes quantum computers a potential thread to 
 today's internet security protocols. Most of these protocols are based on the assumption 
-that the factorization problem cannot be solved efficiently and that it would take thousands of years to find the 
+that the factorization problem cannot be solved efficiently, and that it would take thousands of years to find the 
 prime factors of the public encryption keys.
 
 \paragraph{Near-term Quantum Computing and Quantum Supremacy.}
@@ -28,61 +30,103 @@ Even though error-corrected large-scale quantum computers are probably still
 years away, so-called noisy-intermediate scale 
 quantum (NISQ) devices represent the first generation of quantum devices.
 Studying their capabilities and limits could enable us to harness possible advantages 
-of quantum computers already today and further understand the limits of 
-large scale quantum computers \cite{Preskill_2018}.
+of quantum computers already today. Moreover, it might be of further help understanding
+the limits of large scale quantum computers \cite{Preskill_2018}.
 
-In 2019, researchers from Google and the UCSB built a 
-53 qubit quantum processor and performed a calculation on it that they claimed could not be 
-performed on a classical computer \cite{martines2019supremacy}. This moment was already highly anticipated 
-as "quantum supremacy", a term coined by John Preskill in 2012 \cite{preskill2012quantum}. In their experiments, 
-the quantum circuit calculates the output probabilities of samples taken from 
-random quantum circuits. The underlying problem statement is specifically tailored 
+In 2019, researchers from Google and the university of Santa Barbara (UCSB), California, built a 
+53 qubit quantum processor, called Sycamore. They performed a calculation on it that they claimed could not be 
+performed on a classical computer \cite{martines2019supremacy}. This moment was highly anticipated 
+as "quantum supremacy", a term coined by John Preskill in 2012 \cite{preskill2012quantum}. In the experiments, 
+samples from random quantum circuits were drawn with the Sycamore processor.
+The random circuit sampling experiment was specifically tailored 
 to the demonstration of quantum supremacy \cite{Boixo2018supremacy}.
 
 \paragraph{Machine Learning for the Classical Simulation of Quantum Computing.}
 To understand the capabilities of such NISQ devices, one also has to understand 
 the limits of classical computation. Following the recent success of machine learning in 
-many domains, in 2017 Carleo and Troyer applied restricted Boltzmann machines (RBMs)
-to simulate the wave-function of many-body quantum systems classically \cite{carleo2017solving}.
-Their results showed that RBMs are able to give a compact representations of the wave functions 
+many scientific and industrial domains, in 2017, Carleo and Troyer applied restricted Boltzmann machines (RBMs),
+one class of recurrent neural networks,
+to simulate the wave function of many-body quantum systems classically \cite{carleo2017solving}.
+Their results showed that RBMs are able to offer a compact representation of the wave functions 
 of different many-body quantum systems. In 2018, 
 J\'{o}nsson et al adapted the framework to simulate small quantum programs with 
 RBMs \cite{jnsson2018neuralnetwork}. Recently, Medvidovic and Carleo used the 
-same approach for a noisy simulation of the QAOA algorithm with up to 53 qubits \cite{medvidovic2020classical}.
+same approach for a noisy simulation of the quantum approximate optimization algorithm 
+(QAOA) algorithm with up to 53 qubits \cite{medvidovic2020classical}.
 
-\paragraph{Structure of this Thesis.}
-This study investigates the abilities of RBMs to simulate the random circuit sampling 
-experiments conducted in Google's experiments on the Sycamore processor. Understanding the
-fidelities with which RBMs can simulate random circuits might help to understand
+\paragraph{Scope of the Thesis.}
+This thesis investigates the abilities of RBMs to simulate the random circuit sampling 
+experiments conducted in Google's supremacy experiments on the Sycamore processor \cite{martines2019supremacy}. 
+The objective of this thesis is to examine if RBMs are able to sample from the output distribution 
+of small random circuit instances.
+
+Stochastic Reconfiguration (SR) \cite{sorella1998green} and 
+AdaMax \cite{kingma2014adam} are compared as two different optimization algorithms for the 
+adaption of the RBM's parameters. Both methods have successfully been used before to train RBMs 
+for the representation of quantum system states before \cite{jnsson2018neuralnetwork}, \cite{carleo2017solving}, \cite{carleo2018constructing}, \cite{medvidovic2020classical}.
+A direct comparison of both methods is yet missing. 
+
+Additionally, a range of training samples and training iterations 
+is tested to gain insights into the training process and the required computational resources. 
+These parameters have not been reported in related works. One goal of this thesis is 
+to act as a reference for suitable training parameters. 
+
+Total variation distance (TVD) and the cross entropy fidelity are used as 
+performance metrics. This allows for an empirical comparison of TVD and cross entropy fidelity 
+on small random circuits.
+
+Understanding the
+fidelities with which RBMs can simulate quantum circuits could help to understand
 the limits of classical computation. The software developed as part of this thesis 
-might further help to study algorithms designed for NISQ devices. It is published as 
-an open source library at \cite{NQS2020}.
+might further help to study algorithms designed for NISQ devices. To support 
+further research, it is published as 
+an open source library on GitHub \cite{NQS2020}.
+The experiments are conducted on the Noctua cluster located at the 
+university of Paderborn, Germany \cite{noctua2020}.
 
-This study is structured as follows: First, a convention on the used mathematical 
-symbols is given.
+\paragraph{Structure of the Thesis.}
+This thesis consists of three parts: 
+In the first part (chapter~\ref{sec:notation}-~\ref{sec:rbm}), the mathematical 
+notation is introduced and the theoretical framework is explained. In the 
+following part (chapter~\ref{sec:experiments}), 
+the experimental setup is described and the results are presented. 
+In the last part (chapter~\ref{sec:discussion}), the results are discussed and 
+ideas for future research are given.
 
-In chapter~\ref{sec:quantum_computing}, quantum computing is introduced. Starting with a single qubit,
-the mathematical framework of many-quantum systems is derived. The notion and application 
-of quantum gates is explained before sample quantum circuits are shown.
+Chapter~\ref{sec:notation} introduces the mathematical notation used throughout this 
+thesis.
 
-Chapter~\ref{sec:rcs} about random circuit sampling builds up on the introduction into quantum computing.
-The definition of quantum supremacy and different proposals to demonstrate it are given. The 
-cross entropy fidelity, the main metric in the random circuit sampling experiments, and how 
-it translates into the quantum supremacy regime is mathematically justified. The design of 
-the random circuits is explained and an algorithm to generate them is described. In the last
-part of the chapter, the experiments and their results by the teams of Google and the UCSB on 
-their Sycamore quantum processor are discussed.
+In chapter~\ref{sec:quantum_computing}, the foundations of quantum computing are introduced. 
+Starting with a single qubit in section~\ref{sec:qubits}, the mathematical framework of multi-qubit systems is derived
+in section~\ref{sec:multiplequbitsandentanglement}. The notation and applications 
+of quantum gates are explained in section~\ref{sec:quantum_gates}, before small quantum circuits are shown
+in section~\ref{sec:quantum_circuits}. The chapter closes with an overview of quantum complexity 
+theory in section~\ref{sec:quantum_computational_complexity}.
 
-In chapter~\ref{sec:rbm}, the concept of the Boltzmann machine is introduced. General as well as restricted 
-Boltzmann machines, as they are used in the experiments in chapter~\ref{sec:experiments}, are explained. The chapter further 
-outlines how the parameters of a restricted Boltzmann machine can be adapted in an iterative 
-training process such that samples drawn from the RBM are distributed according to probability 
-distributions implied by a set of training samples. The last part of the chapter details how 
-RBMs can be used for the classical simulation of quantum circuits.
+Chapter~\ref{sec:rcs} explains the concepts of random circuit sampling as a quantum supremacy experiment.
+First, the definition of quantum supremacy and different proposals for possible experiments 
+are given in section~\ref{sec:quantum_supremacy}. 
+In section~\ref{sec:cross_entropy} and~\ref{sec:supremacy_regime}, the 
+cross entropy fidelity, the main metric of random circuit sampling, is derived.
+The structure of the considered random circuits is explained in section~\ref{sec:random_circuit_design}.
+In the last part of the chapter (section~\ref{sec:experiments_sycamore}), the supremacy experiment conducted by Google and the UCSB 
+and its results are discussed.
 
-After the theoretical framework has been laid out, the experiments are described in chapter~\ref{sec:experiments}. Details of 
-the experimental setup are given and the results of the different training strategies for the 
-RBM are shown.
+In chapter~\ref{sec:rbm}, the concept of the Boltzmann machine is introduced. 
+Starting with general Boltzmann machines in section~\ref{sec:gbm}, restricted 
+Boltzmann machines are motivated and explained in section~\ref{sec:rbms}.
+Sections~\ref{sec:gibbsSampling} and ~\ref{sec:learning} explain how 
+Boltzmann machines can be trained to resemble the probability distribution implied by a given set of samples.
+The chapter closes with section~\ref{sec:applicationToQuantumComputing}, which explains
+how restricted Boltzmann machines can be applied to the simulation of quantum circuits.
 
-In the last two chapters, the results are discussed. Highlights and limitations of the 
-experiments and their results are described. Directions for future research are proposed.
+
+The experiments and obtained results are described in chapter~\ref{sec:experiments}. 
+The experimental setup is detailed in section~\ref{sec:setup}. The results 
+for the different training strategies are presented in section~\ref{sec:results}.
+
+The thesis closes with a discussion of the results in chapter~\ref{sec:discussion}.
+Highlights and limitations of the experiments are described. 
+Directions for future research are proposed.
+
+
