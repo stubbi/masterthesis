@@ -4,9 +4,9 @@
 Computers can be programmed to solve a wide range of problems.
 While they can solve some problems efficiently, 
 other problems require exponential time or memory. The simulation 
-of quantum physical systems in such that problem which requires 
+of quantum physical systems is such a problem that requires 
 exponential resources \cite{nielsen2002quantum}.  
-Such simulations could help in the design 
+These simulations could help in the design 
 of new materials and in drug discovery \cite{8585034}.
 
 The computational complexity of simulating quantum systems led 
@@ -33,7 +33,7 @@ Studying their capabilities and limits could enable us to harness possible advan
 of quantum computers already today. Moreover, it might be of further help understanding
 the limits of large scale quantum computers \cite{Preskill_2018}.
 
-In 2019, researchers from Google and the university of Santa Barbara (UCSB), California, built a 
+In 2019, researchers from Google and the University of Santa Barbara (UCSB), California, built a 
 53 qubit quantum processor, called Sycamore. They performed a calculation on it that they claimed could not be 
 performed on a classical computer \cite{martines2019supremacy}. This moment was highly anticipated 
 as "quantum supremacy", a term coined by John Preskill in 2012 \cite{preskill2012quantum}. In the experiments, 
@@ -46,13 +46,13 @@ To understand the capabilities of such NISQ devices, one also has to understand
 the limits of classical computation. Following the recent success of machine learning in 
 many scientific and industrial domains, in 2017, Carleo and Troyer applied restricted Boltzmann machines (RBMs),
 one class of recurrent neural networks,
-to simulate the wave function of many-body quantum systems classically \cite{carleo2017solving}.
+to simulate wave functions of different many-body quantum systems classically \cite{carleo2017solving}.
 Their results showed that RBMs are able to offer a compact representation of the wave functions 
 of different many-body quantum systems. In 2018, 
 J\'{o}nsson et al adapted the framework to simulate small quantum programs with 
 RBMs \cite{jnsson2018neuralnetwork}. Recently, Medvidovic and Carleo used the 
 same approach for a noisy simulation of the quantum approximate optimization algorithm 
-(QAOA) algorithm with up to 53 qubits \cite{medvidovic2020classical}.
+(QAOA) with up to 53 qubits \cite{medvidovic2020classical}.
 
 \paragraph{Scope of the Thesis.}
 This thesis investigates the abilities of RBMs to simulate the random circuit sampling 
@@ -63,7 +63,7 @@ of small random circuit instances.
 Stochastic Reconfiguration (SR) \cite{sorella1998green} and 
 AdaMax \cite{kingma2014adam} are compared as two different optimization algorithms for the 
 adaption of the RBM's parameters. Both methods have successfully been used before to train RBMs 
-for the representation of quantum system states before \cite{jnsson2018neuralnetwork}, \cite{carleo2017solving}, \cite{carleo2018constructing}, \cite{medvidovic2020classical}.
+for the representation of quantum system states \cite{jnsson2018neuralnetwork}, \cite{carleo2017solving}, \cite{carleo2018constructing}, \cite{medvidovic2020classical}.
 A direct comparison of both methods is yet missing. 
 
 Additionally, a range of training samples and training iterations 
@@ -82,16 +82,16 @@ might further help to study algorithms designed for NISQ devices. To support
 further research, it is published as 
 an open source library on GitHub \cite{NQS2020}.
 The experiments are conducted on the Noctua cluster located at the 
-university of Paderborn, Germany \cite{noctua2020}.
+University of Paderborn, Germany \cite{noctua2020}.
 
 \paragraph{Structure of the Thesis.}
 This thesis consists of three parts: 
-In the first part (chapter~\ref{sec:notation}-~\ref{sec:rbm}), the mathematical 
+In the first part (chapter~\ref{sec:notation} to ~\ref{sec:rbm}), the mathematical 
 notation is introduced and the theoretical framework is explained. In the 
 following part (chapter~\ref{sec:experiments}), 
 the experimental setup is described and the results are presented. 
-In the last part (chapter~\ref{sec:discussion}), the results are discussed and 
-ideas for future research are given.
+In the last part (chapter~\ref{sec:discussion}), the results are summarized and discussed.
+Furthermore, ideas for future research are given.
 
 Chapter~\ref{sec:notation} introduces the mathematical notation used throughout this 
 thesis.
@@ -114,12 +114,11 @@ and its results are discussed.
 
 In chapter~\ref{sec:rbm}, the concept of the Boltzmann machine is introduced. 
 Starting with general Boltzmann machines in section~\ref{sec:gbm}, restricted 
-Boltzmann machines are motivated and explained in section~\ref{sec:rbms}.
+Boltzmann machines are explained in section~\ref{sec:rbms}.
 Sections~\ref{sec:gibbsSampling} and ~\ref{sec:learning} explain how 
 Boltzmann machines can be trained to resemble the probability distribution implied by a given set of samples.
 The chapter closes with section~\ref{sec:applicationToQuantumComputing}, which explains
 how restricted Boltzmann machines can be applied to the simulation of quantum circuits.
-
 
 The experiments and obtained results are described in chapter~\ref{sec:experiments}. 
 The experimental setup is detailed in section~\ref{sec:setup}. The results 
