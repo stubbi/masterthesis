@@ -1,26 +1,28 @@
 \chapter{Conclusion and Discussion}
 \label{sec:discussion}
 
-The results of the experiments show that RBMs are able to simulate random circuit 
-instances with 4 qubits and a depth of up to 20 cycles accurately. The comparison of 
+The results of the experiments show that RBMs are able to accurately simulate random circuit 
+instances with 4 qubits and a depth of up to 20 cycles. The comparison of 
 Stochastic Reconfiguration (SR) and AdaMax as optimization algorithms suggests that 
 AdaMax is better suited for the given gate set and circuit structure with the chosen training 
-parameters. 
+parameters. Further, a few training iterations were sufficient to apply non-diagonal 
+single-qubit gates to the state represented by the RBMs. The more training samples
+were available, the better the RBMs resembled the output distributions.
 
 \paragraph{Performance of Stochastic Reconfiguration.}
-The bad performance of the SR methods might be grounded in the algorithm getting stuck in 
-local minima. The oscillation for SR could be explained by the algorithm finding an 
-optimum for one training batch which does not generalize well to the other training samples.
+The low TVDs achieved by the SR methods might be grounded in the algorithm finding 
+local minima which are only optimal for a subset of the data. The oscillation for SR could be explained by the algorithm finding an 
+optimum for one training batch, which does not generalize well to the other training samples.
 This would also explain why there is no oscillations for SR with restarts on 8 samples. In that
 cases, all training samples are inside the same batch. Increasing the batch size or reducing the 
 number of hidden units could improve the performance of the SR algorithm.
 
 \paragraph{Effects of Random Restarts.}
 Using SR with random restarts had only small if any 
-impact on the resulting accuracy of the RBMs. However, the testing and training overlap 
+impact on the resulting accuracy of the RBMs. However, the testing and training overlaps 
 look different during the training process. Without the restarts, there is not much 
 oscillation in these metrics. This supports the assumption that with restarts, the 
-RBM is overfitting the current training batch which does not generalize well to training 
+RBM is overfitting the current training batch, which does not generalize well to training 
 samples in other batches. This does not imply that this would also 
 hold for AdaMax. Indeed, pre-studies suggested that random restarts might have a positive 
 impact on the RBM's accuracy when trained with AdaMax.
@@ -40,7 +42,7 @@ quantum systems.
 \paragraph{Influence of the Number of Training Samples.}
 In the conducted experiments, 303 samples were enough to sample each configuration of the 
 $2^n$ dimensional state space multiple times. Only for 8  samples, not the full state space
-had a chance to be observed for the training. The performance of the RBMs with 8 samples only 
+had a chance to be observed for the training. The performance of the RBMs trained with 8 samples
 had been very low. Only if RBMs can achieve acceptable performance with a number of samples 
 that does not scale exponentially with the number of qubits, this approach would be useful for 
 real-world applications. 
@@ -55,21 +57,26 @@ be drawn that way.
 \paragraph{Cross Entropy Difference as a Performance Metric.}
 Acceptable performance does not require perfect simulations. Noisy simulations with 
 fidelities in the range of that from the Sycamore processor could help to understand the 
-capabilities and limits of NISQ devices. For 10 qubits, for instance, the cross-entropy fidelity
+capabilities and limits of NISQ devices. For 10 qubits, for instance, the cross entropy fidelity
 of the Sycamore processor was estimated to be around 0.4. On the 4 qubit circuits with 
-15 cycles, the fidelity of the best performing RBM is at about 0.9.
+15 cycles, the fidelity of the best performing RBM is at about 0.9. Comparing the fidelities 
+of the Sycamore processor and RBMs on the same number of qubits will be a 
 
-Nevertheless, the results also show that there is no direct link between the cross-entropy
+Nevertheless, the results also show that there is no direct link between the cross entropy
 fidelity and the total variation distance. Under the assumption that the output strings of 
-the circuit are Porter-Thomas distributed, the cross-entropy fidelity is a suitable metric
+the circuit are Porter-Thomas distributed, the cross entropy fidelity is a suitable metric
 when not all $2^n$ amplitudes can be accessed directly. This is the case for quantum devices, 
 where it is only possible to infer the outcome probabilities by drawing samples from the computer.
 As the distribution of the circuit might differ from the Porter-Thomas distribution, 
-the fidelity can only be a lower bound for the fidelity of a quantum circuit simulation.
-For AdaMax, the cross-entropy between the RBM's output and the exact output was 
-higher when also the cross-entropy between the exact output and a perfect Porter-Thomas 
-distribution was higher. Additionally, for the cross entropy difference to be an accurate 
-metric, a depolarizing noise chanel in the quantum computation is assumed. This assumption 
+the fidelity can only be a lower bound for the total variation distance of a quantum circuit simulation
+and the true output distribution.
+
+For AdaMax, the cross entropy fidelity between the RBM's output and the exact output was 
+generally higher when also the cross entropy fidelity between the exact output and a perfect Porter-Thomas 
+distribution was higher. 
+
+Additionally, for the cross entropy difference to be an accurate 
+metric, a depolarizing noise chanel in the execution of the quantum circuit is assumed. This assumption 
 might not hold for the application of quantum gates to the state represented by a RBM.
 
 \paragraph{Future Research.}
