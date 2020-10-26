@@ -1,25 +1,17 @@
 \chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
-This thesis gives an introduction into the field of quantum computing, lays out the theoretical framework 
-of random circuit sampling, and explains restricted Boltzmann machines (RBMs). RBMs are further used 
-to simulate random circuit instances classically. Different training parameters are varied to understand their 
-influence on the RBMs capabilities to simulate random quantum circuits of different sizes. 
 
-The outcomes confirm prior results that RBMs are able to give compact representations of quantum circuits. 
-They further proof that RBMs are able to sample from the output distributions of random circuits. 
-When trained with AdaMax and random restarts, the best performing RBMs
-have been able to approximate the resulting quantum state of 4-qubit random circuit instances with a depth 
-of up to 20 cycles accurately. 
-
-Nevertheless, the performance of RBMs should be further studied on random circuit instances with more qubits. 
-For larger system sizes, the influence of the number of training iterations and training samples has to be further 
-analyzed. This will help in the understanding of the computational resources required to simulate quantum circuits 
-with targeted fidelities. Such insights would help to better understand the current state of physical 
-implementations of quantum computers. Further, RBMs could be used to simulate and analyse NISQ algorithms
-when no physical device is available.
-
-The software developed for this study is available as open source at \cite{NQS2020}. It can easily be adapted to 
-train RBMs on random circuit instances with varying system sizes on the Noctua Cluster or any other 
-computing hardware. It further provides an interface to simulate any quantum circuit given in the QASM format.
-
-The results of this thesis suggest good choices of training parameters which should be further studied and 
-optimized.
+This thesis is the first to study the abilities of restricted Boltzmann machines (RBMs)
+to sample from the output distribution of random quantum circuits. 
+Variations of Stochastic Reconfiguration and AdaMax are compared for a range of training samples 
+and iterations. Total variation distance (TVD) and cross entropy difference are measured 
+and compared as performance metrics.
+The results show that RBMs are able to simulate random quantum circuits with 4 qubits 
+and a depth of up to 20 cycles accurately. When trained with AdaMax, the best performing 
+RBMs were able to approximate the true output distributions with a TVD of 0.01 on all circuits.
+The non-diagonal single-qubit gates could be applied within less than 100 training iterations. 
+The accuracy of the RBMs had been higher the more training samples were available.
+The software developed in the progress of this thesis is publicly available on GitHub. 
+It can be adapted to simulate random circuits with a wider range of qubits. It 
+further provides a simple interface to run quantum circuits given in the QASM format. This thesis
+can act as a reference for suitable training parameters of the RBMs, which have not been 
+included in related works.
