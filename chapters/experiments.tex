@@ -38,9 +38,9 @@ up to 10 samples per batch.
 The number of training iterations has been chosen as 1,000, 10,000, and 100,000. 
 
 For each parameter setting, five RBMs have been trained on 20 different instances of random circuits of the same 
-size. The total variation distance (TVD) as well as the cross-entropy fidelity have been used as a performance measure.
+size. The total variation distance (TVD) as well as the cross entropy fidelity have been used as a performance measure.
 The total variation distance measures the sum of absolute differences of two probability distributions. 
-It is a more direct measure than the cross-entropy fidelity as later is an upper bound on the TVD \cite{bouland2018quantum}.
+It is a more direct measure than the cross entropy fidelity as later is an upper bound on the TVD \cite{bouland2018quantum}.
 The training parameters have first been tested on random circuit instances with 4 qubits and 
 5, 10, 15, and 20 cycles each. 
 
@@ -63,7 +63,7 @@ on the Noctua cluster over 8 weeks. In each run, the total variation distance (T
 between the RBM's output probability and the true output probabilities have been measured.
  The log overlaps of the RBM's state and the distribution on the training and test sets have been recorded during the training process. This allows for a detailed comparison
 of the different training methods and the influence of the different training parameters on the 
-accuracy of the RBM. Further, the cross-entropy fidelity on the circuits' mean outcome probabilities
+accuracy of the RBM. Further, the cross entropy fidelity on the circuits' mean outcome probabilities
 has been calculated. The following four sections present the results of the 4 training setups.
 
 \subsection{Stochastic Reconfiguration with Random Restarts and CZ-Gates Learned}
@@ -79,7 +79,7 @@ the averaged true output distributions of all circuits. With an increasing numbe
 true output distributions approach a Porter-Thomas shape, even though they are not exactly Porter-Thomas 
 distributed.
 The TVD of the average output of all RBMs considered 
-is 0.30 for 5, 0.34 for 10, 0.34 for 15, and 0.35 for 20 cycles. The corresponding cross-entropy is 
+is 0.30 for 5, 0.34 for 10, 0.34 for 15, and 0.35 for 20 cycles. The corresponding cross entropy is 
 0.16 for 5, 0.05 for 10, 0.04 for 15, and 0.00 for 20 cycles.
 
 \begin{figure}[H]
@@ -94,7 +94,7 @@ is 0.30 for 5, 0.34 for 10, 0.34 for 15, and 0.35 for 20 cycles. The correspondi
 In figure~\ref{fig:sr_restarts_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
 TVD are selected and their outputs are averaged. The averaged best output distribution for the SR methods with 
 random restarts and $CZ$ gates learned has a TVD of 0.06 for 5, 0.15 for 10, 0.19 for 15, and 0.24 for 20
-cycles. The cross-entropy fidelity is 0.65 for 5, 0.47 for 10, 0.39 for 15, and 0.31 for 20 cycles each. 
+cycles. The cross entropy fidelity is 0.65 for 5, 0.47 for 10, 0.39 for 15, and 0.31 for 20 cycles each. 
 
 \begin{figure}[H]
   \centering
@@ -106,7 +106,7 @@ cycles. The cross-entropy fidelity is 0.65 for 5, 0.47 for 10, 0.39 for 15, and 
 \end{figure}
 
 Figure~\ref{fig:sr_restarts_tvd} and figure~\ref{fig:sr_restarts_fxeb} give a more detailed overview of the influence of the 
-number of training samples and training iterations on the TVD and cross-entropy fidelity. 
+number of training samples and training iterations on the TVD and cross entropy fidelity. 
 
 There is no correlation between the number of training
 iterations and the performance of the RBMs. For 5 cycles, a higher number of training samples correlates
@@ -133,12 +133,12 @@ and 100,000 iterations perform similar, with the lowest TVDs on these circuits b
   \label{fig:sr_restarts_tvd}
 \end{figure}
 
-A lower TVD does not always correlate with a higher cross-entropy fidelity as figure~\ref{fig:sr_restarts_fxeb}
+A lower TVD does not always correlate with a higher cross entropy fidelity as figure~\ref{fig:sr_restarts_fxeb}
 shows. On 5 cycles, the highest fidelity is achieved with 303 samples and 10,000 iterations, on 10 cycles 
 with 303 samples and 100,000 iterations. On 15 cycles, 8 samples and 1,000 iterations led to the best performance, 
-and 47 samples with 100,000 iterations on 20 cycles. Overall, there is a tendency for a higher cross-entropy fidelity 
+and 47 samples with 100,000 iterations on 20 cycles. Overall, there is a tendency for a higher cross entropy fidelity 
 when trained with more samples for 5 and 10 cycles. For 15 cycles, there is no clear correlation between the 
-cross-entropy fidelity and the training parameters. For circuits with 20 cycles, 47 samples achieved the highest 
+cross entropy fidelity and the training parameters. For circuits with 20 cycles, 47 samples achieved the highest 
 fidelity for all number of training samples.
 
 \begin{figure}[H]
@@ -250,7 +250,7 @@ Figure~\ref{fig:sr_no_restarts_avgPDF} shows the averaged output distribution of
 the averaged true output distributions of all circuits. As before, the 
 true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
 The TVD of the average output of all RBMs trained with SR without restarts
-is 0.34 for 5, 0.38 for 10, 0.34 for 15, and 0.38 for 20 cycles. The corresponding cross-entropy is 
+is 0.34 for 5, 0.38 for 10, 0.34 for 15, and 0.38 for 20 cycles. The corresponding cross entropy is 
 0.12 for 5, 0.00 for 10, 0.04 for 15, and 0.00 for 20 cycles.
 
 \begin{figure}[H]
@@ -265,7 +265,7 @@ is 0.34 for 5, 0.38 for 10, 0.34 for 15, and 0.38 for 20 cycles. The correspondi
 In figure~\ref{fig:sr_no_restarts_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
 TVD are selected and their outputs averaged. The averaged best output distribution for the SR methods without 
 random restarts and $CZ$ gates learned has a TVD of 0.07 for 5, 0.18 for 10, 0.21 for 15, and 0.21 for 20 
-cycles. The cross-entropy fidelity is 0.71 for 5, 0.37 for 10, 0.40 for 15, and 0.35 for 20 cycles each. 
+cycles. The cross entropy fidelity is 0.71 for 5, 0.37 for 10, 0.40 for 15, and 0.35 for 20 cycles each. 
 
 \begin{figure}[H]
   \centering
@@ -278,7 +278,7 @@ cycles. The cross-entropy fidelity is 0.71 for 5, 0.37 for 10, 0.40 for 15, and 
 \end{figure}
 
 Figure~\ref{fig:sr_no_restarts_tvd} and figure~\ref{fig:sr_no_restarts_fxeb} give a more detailed overview of the influence of the 
-number of training samples and training iterations on the TVD and cross-entropy fidelity achieved by 
+number of training samples and training iterations on the TVD and cross entropy fidelity achieved by 
 the RBMs. Also here, there seems to be no correlation between the number of training
 iterations and the performance of the RBMs. 
 
@@ -308,12 +308,12 @@ the exception that it is significantly higher for 8 samples.
   \label{fig:sr_no_restarts_tvd}
 \end{figure}
 
-As in the case with restarts, a lower TVD does not always correlate with a higher cross-entropy fidelity as 
+As in the case with restarts, a lower TVD does not always correlate with a higher cross entropy fidelity as 
 figure~\ref{fig:sr_no_restarts_fxeb}
 implies. For 5 cycles, the highest fidelity is achieved with 303 samples and 10,000 iterations, on 10 cycles 
 with 43 samples and 1,000 iterations, with 47 samples and 100,000 iterations on 15 cycles, and with 303 samples and 
 0,000 iterations on 20 cycles. There is no clear tendency that shows a correlation between 
-the number of training iterations, samples, and cross-entropy fidelity.
+the number of training iterations, samples, and cross entropy fidelity.
 
 \begin{figure}[H]
   \centering
@@ -413,7 +413,7 @@ Figure~\ref{fig:sr_exact_avgPDF} shows the averaged output distribution of all R
 the averaged true output distributions of all circuits. As in the cases before, the 
 true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
 The TVD of the average output of all RBMs 
-is 0.35 for 5, 0.33 for 10, 0.34 for 15, and 0.38 for 20 cycles. The corresponding cross-entropy is 
+is 0.35 for 5, 0.33 for 10, 0.34 for 15, and 0.38 for 20 cycles. The corresponding cross entropy is 
 0.20 for 5, 0.02 for 10, 0.06 for 15, and 0.00 for 20 cycles.
 
 \begin{figure}[H]
@@ -428,7 +428,7 @@ is 0.35 for 5, 0.33 for 10, 0.34 for 15, and 0.38 for 20 cycles. The correspondi
 In figure~\ref{fig:sr_exact_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
 TVD are selected. Their outputs are averaged. The averaged best output distribution 
 has a TVD of 0.03 for 5, 0.13 for 10, 0.22 for 15, and 0.21 for 20 
-cycles. The cross-entropy fidelity is 1.00 for 5, 0.46 for 10, 0.33 for 15, and 0.40 for 20 cycles each. 
+cycles. The cross entropy fidelity is 1.00 for 5, 0.46 for 10, 0.33 for 15, and 0.40 for 20 cycles each. 
 
 
 \begin{figure}[H]
@@ -442,7 +442,7 @@ cycles. The cross-entropy fidelity is 1.00 for 5, 0.46 for 10, 0.33 for 15, and 
 \end{figure}
 
 Figure~\ref{fig:sr_exact_tvd} and figure~\ref{fig:sr_exact_fxeb} detail the influence of the 
-number of training samples and training iterations on the TVD and cross-entropy fidelity achieved by 
+number of training samples and training iterations on the TVD and cross entropy fidelity achieved by 
 the RBMs. 
 
 For 5 cycles, a higher number of training samples 
@@ -470,13 +470,13 @@ samples.
   \label{fig:sr_exact_tvd}
 \end{figure}
 
-Figure~\ref{fig:sr_no_restarts_fxeb} shows the average cross-entropy fidelity achieved. On 5 and 10
+Figure~\ref{fig:sr_no_restarts_fxeb} shows the average cross entropy fidelity achieved. On 5 and 10
 cycles, the highest fidelity is achieved with 303 samples and 100,000 iterations. 
 For 15 cycles, the highest fidelity is achieved with 50 samples on 100,000 iterations and 
 303 samples and 10,000 iterations.
 For 20 cycles, the highest fidelity is achieved on RBMs trained with 47 samples for 100,000 iterations.
 There is no clear tendency that shows a correlation between 
-the number of training iterations or samples and the cross-entropy fidelity.
+the number of training iterations or samples and the cross entropy fidelity.
 
 \begin{figure}[H]
   \centering
@@ -570,7 +570,7 @@ Figure~\ref{fig:am_avgPDF} shows the averaged output distribution of all RBMs tr
 the averaged true output distributions of all circuits. As in the other cases, the 
 true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
 The TVD of the average output of all RBMs trained with AdaMax
-is 0.25 for 5, 0.30 for 10, 0.35 for 15, and 0.33 for 20 cycles. The corresponding cross-entropy is 
+is 0.25 for 5, 0.30 for 10, 0.35 for 15, and 0.33 for 20 cycles. The corresponding cross entropy is 
 0.20 for 5, 0.08 for 10, 0.06 for 15, and 0.04 for 20 cycles.
 
 \begin{figure}[H]
@@ -585,7 +585,7 @@ is 0.25 for 5, 0.30 for 10, 0.35 for 15, and 0.33 for 20 cycles. The correspondi
 In figure~\ref{fig:am_avgBestPDF}, only the output distribution of the best performing RBMs with respect to the 
 TVD are selected. Their outputs are averaged once again. The averaged best output distribution 
 has a TVD of 0.00 for 5, 0.00 for 10, 0.00 for 15, and 0.00 for 20 
-cycles. The cross-entropy fidelity is 0.65 for 5, 0.72 for 10, 0.94 for 15 and 0.77 for 20 cycles each. 
+cycles. The cross entropy fidelity is 0.65 for 5, 0.72 for 10, 0.94 for 15 and 0.77 for 20 cycles each. 
 
 \begin{figure}[H]
   \centering
@@ -598,7 +598,7 @@ cycles. The cross-entropy fidelity is 0.65 for 5, 0.72 for 10, 0.94 for 15 and 0
 \end{figure}
 
 Figure~\ref{fig:am_tvd} and figure~\ref{fig:am_fxeb} give a more detailed overview of the influence of the 
-number of training samples and training iterations on the TVD and cross-entropy fidelity.
+number of training samples and training iterations on the TVD and cross entropy fidelity.
 
 Except for the case of 8 samples, for AdaMax a higher number of training samples as well as a higher 
 number of training iterations corresponds to a lower TVD. For 5 and 10 cycles, the TVD is lowest
@@ -621,7 +621,7 @@ Nevertheless, the TVD is lower with 54 samples than with 43 samples in all but o
   \label{fig:am_tvd}
 \end{figure}
 
-Figure~\ref{fig:am_fxeb} shows the average cross-entropy fidelity achieved. In contrast to the case 
+Figure~\ref{fig:am_fxeb} shows the average cross entropy fidelity achieved. In contrast to the case 
 of TVD, a higher number of training samples and training iterations does not correlate with higher 
 fidelities. Only in the case of 5 cycles, this correlation can be observed for 10,000 and 100,000 iterations.
 
