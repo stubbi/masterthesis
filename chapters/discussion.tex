@@ -13,7 +13,7 @@ The more training samples were available, the better the RBMs resembled the targ
 
 \paragraph{Performance of Stochastic Reconfiguration.}
 The high TVDs of RBMs trained with the SR methods might be grounded in the algorithm finding 
-local minima which are only optimal for a subset of the state space. The oscillation for SR could be explained by the algorithm finding an 
+local minima. These might be optimal only for a subset of the state space. The oscillation for SR could be explained by the algorithm finding an 
 optimum for one training batch, which does not generalize well to the other training samples.
 This would also explain why there is no oscillations for SR with restarts on 8 samples. In that
 cases, all training samples are inside the same batch. Increasing the batch size or reducing the 
@@ -56,8 +56,8 @@ quantum circuits.
 
 \paragraph{Influence of the Number of Training Samples.}
 In the conducted experiments, 303 samples were enough to sample each configuration of the 
-$2^n$ dimensional state space multiple times. Only for 8  samples, not the full state space
-had a chance to be observed for the training. The performance of the RBMs trained with 8 samples
+$2^n$ dimensional state space multiple times. Only for 8  samples, the full state space
+could not be observed during the training. The performance of the RBMs trained with 8 samples
 had been very low. Only if RBMs can achieve acceptable performance with a number of samples 
 that does not scale exponentially with the number of qubits, this approach would be useful for 
 real-world applications. 
@@ -69,32 +69,30 @@ samples. This might have given clearer insights into the relation between the ra
 state space observed and the resulting RBM performance. For future research, the samples should
 be drawn that way.
 
-\paragraph{Cross Entropy Difference as a Performance Metric.}
-Acceptable performance does not require perfect simulations. Noisy simulations with 
+\paragraph{RBMs for the Classical Simulation of NISQ algorithms.}
+Noisy simulations with 
 fidelities in the range of that from the Sycamore processor could help to understand the 
-capabilities and limits of NISQ devices using RBMs on classical computing hardware. For 10 qubits, for instance, the cross entropy difference
+capabilities and limits of NISQ devices using RBMs on classical computing hardware. 
+For 10 qubits, for instance, the cross entropy difference
 of the Sycamore processor was estimated to be around 0.4. On the 4 qubit circuits with 
 15 cycles, the fidelity of the best performing RBM is at about 0.9. 
 If RBMs are able to simulate quantum circuits with a similar accuracy as the Sycamore 
 processor on a larger number of qubits with acceptable computational requirements, this 
 would make RBMs a suitable simulation framework to test NISQ algorithms.
 
-Nevertheless, the results also show that there is no direct link between the cross entropy
-fidelity and the total variation distance. Under the assumption that the output strings of 
-the circuit are Porter-Thomas distributed, the cross entropy difference is a suitable metric
-when not all $2^n$ amplitudes can be accessed directly. This is the case for quantum devices, 
-where it is only possible to infer the outcome probabilities by drawing samples from the computer.
-As the distribution of the circuit might differ from the Porter-Thomas distribution, 
-the fidelity can only be a lower bound for the total variation distance of a quantum circuit simulation
-and the true output distribution.
-
-For AdaMax, the cross entropy difference between the RBM's output and the exact output was 
-generally higher when also the cross entropy difference between the exact output and a perfect Porter-Thomas 
-distribution was higher. 
-
-Additionally, for the cross entropy difference to be an accurate 
-metric, a depolarizing noise chanel in the execution of the quantum circuit is assumed. This assumption 
-might not hold for the application of quantum gates to the state represented by a RBM.
+\paragraph{Cross Entropy Difference as a Performance Metric.}
+The cross entropy difference was specifically designed to measure the 
+ability of an algorithm or device to sample from the output distributions of 
+random circuits. In the conducted experiments, it was also possible to 
+calculate the TVD between the RBM's output and the true output distributions of 
+the random circuit instances. The results show that a low TVD did not guarantee a 
+high cross entropy distance. The reasons for this could be twofold: First, the 
+cross entropy distance assumes a depolarizing noise model of the quantum computation. 
+Such a model might not be applicable to RBMs. Second, the considered circuits have been 
+close to Porter-Thomas, but did not generate perfect Porter-Thomas output distributions.
+These two reasons might explain that the cross entropy distance and TVD did not 
+always correlate in the conducted experiments. Nevertheless, the cross entropy distance 
+was highest for RBMs trained with AdaMax, which also reached the lowest TVDs.
 
 \paragraph{Future Research.}
 Understanding the ability of RBMs to simulate random circuits with a wider range of qubits 
@@ -109,15 +107,15 @@ This makes it easy to adapt the code to conduct experiments
 with other ranges of parameters and quantum circuits. For the given kind of random circuit 
 sampling experiments, everything is set up to perform more experiments on a broader range of 
 qubits. Such experiments could further investigate the empirical relation of TVD and cross entropy 
-fidelity. Additionally, they could help to establish a relation between the number of samples and 
-the performance of the RBMs.
+distance. Additionally, they could help to establish a relation between the number of samples and 
+the accuracy of the RBMs' simulations.
 
 The framework can also be easily used to simulate other NISQ algorithms. This could help to 
 understand such algorithms when no physical device is available and how the algorithm
 behaves with different levels of noise in the computation.
 
 This thesis is the first to apply RBMs to the simulation of random circuit instances. 
-The developed software is publicly available on GitHub and can be used to simulate arbitrary quantum 
+The developed software is publicly available on GitHub \cite{NQS2020} and can be used to simulate arbitrary quantum 
 circuits provided in the QASM format. The results from 
 this thesis give a reference for suitable training parameters which have not been included in related works.
 
