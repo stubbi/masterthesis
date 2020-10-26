@@ -37,7 +37,16 @@ RSA keys with a length of 2048 bits \cite{Barker15nistspecial,shor1997factorisat
 build quantum processors with merely about 50 noisy qubits of reasonable quality and restricted connectivity \cite{martines2019supremacy}.
 
 Another famous proposal for a quantum supremacy experiment is \textit{Boson Sampling} \cite{aaronson2013boson}, which is based on the
-fact that calculating the permanent of a matrix is computationally hard.
+fact that calculating the permanent of a matrix is computationally hard. This experiment requires less 
+physical resources than necessary for a full quantum computing setup. A special case of 
+Boson Sampling is Gaussian Boson Sampling, which has been co-developed by researchers 
+from the University of Paderborn, Germany \cite{Hamilton2017}. In Gaussian Boson Sampling, squeezed states are injected 
+into every input mode, instead of applying single photons as in the case of standard 
+boson sampling.
+
+Instantaneous quantum polynomial-time (IQP) quantum circuits are a third candidate to demonstrate 
+quantum supremacy. Such circuits are provable hard to simulate classically, even in the presence of 
+noise \cite{Bremner2017}.
 
 The approach that a team from Google and UCSB took last year is called \textit{Random
   Circuit Sampling} (RCS) \cite{Boixo2018supremacy, martines2019supremacy}. In this approach, random quantum circuits of specific structures that create highly
@@ -99,7 +108,7 @@ The matrix product, as well as the tensor product, of two unitaries is a unitary
 A quantum circuit consisting of gates chosen uniformly at random
 will act like a uniformly random unitary $U$ \cite{Boixo2018supremacy}. Since the input state of the circuit can be assumed to be
 initialized in the $\Ket{0}^{\otimes n}$ state, the amplitudes of the final
-quantum state of the circuit correspond to the first column of the random unitary $U$.
+quantum state of the circuit can be assumed to correspond to the first column of the random unitary $U$.
 
 The distribution of universal random quantum circuits converges to the uniform (Haar) measure with increasing depth \cite{Emerson_2003}. 
 This implies that the column's entries are complex numbers with real and imaginary parts
@@ -125,11 +134,16 @@ with $N=2^n$. The shape of this distribution is visualized in figure~\ref{fig:po
       xmin=0,
       ymin=0,
       xmax=1,
-      ymax=1]
+      ymax=1,
+      xlabel={$Np_j$},
+      ylabel={$Pr(Np_j)$},
+      xticklabels={},
+      yticklabels={}
+      ]
       \addplot[blue, domain=0:1, thick] {e^(-5*(1-x))};
     \end{axis}
   \end{tikzpicture}
-  \caption[Output Distribution of Random Quantum Circuits]{Distribution $Pr(Np_j)$ of normalized output probabilities $Np_j$ of a
+  \caption[Output Distribution of Random Quantum Circuits]{Shape of the distribution $Pr(Np_j)$ of normalized output probabilities $Np_j$ of a
     random quantum circuit. The distribution $Pr(Np_j)=e^{-Np_j}$ is distributed as
     Porter-Thomas. A lot of output strings will have a low probability to be
     observed and a few output strings will dominate the observed outputs \cite{Boixo2018supremacy}.}
@@ -145,7 +159,16 @@ The task is to understand how samples $S=\{x_1,\dots,x_m\}$ drawn from a perfect
 $U$ compare to a set $S^{\prime}=\{x_1^{\prime},\dots,x_m^{\prime}\}$ of samples drawn from a potentially noisy
 execution of $U$.
 
-A standard measure for the similarity of two probability distributions is the \textit{cross entropy} \cite{kullback1951}.
+Ideally, all output probabilities of the whole state space would be available. In that case, 
+the total variation distance (TVD) could measure the closeness of the perfect and the potentially noisy 
+execution. Unfortunately, for quantum circuits in the supremacy regime, the state space is too big 
+to calculate this metric. Additionally, the amplitudes cannot be accessed directly in a quantum computer. 
+A double exponential number of measurements would be necessary to estimate all outcome probabilities.
+On a subset of the whole state space, the TVD could only ever proof that the two distributions are apart, but 
+could not show closeness of the two. 
+This makes it impossible to use the TVD to measure the accuracy of the execution of a quantum circuit.
+
+Another measure for the similarity of two probability distributions is the \textit{cross entropy} \cite{kullback1951}.
 It is equivalent to the negative of the log likelihood of the two distributions.
 The cross entropy of the underlying
 probability distributions $p_U$ and $p_U^{\prime}$ of samples taken from $S$ and $S^{\prime}$ respectively, is
@@ -215,6 +238,13 @@ defined as the \textit{cross entropy difference} \cite{Boixo2018supremacy}:
 The cross entropy difference is zero for an algorithm sampling from the uniform
 distribution and one for an algorithm sampling from the underlying Porter-Thomas
 distribution of the circuit.
+
+As shown shortly, the cross entropy difference can be estimated with a constant 
+number of samples, independent of the number of qubits. It interpolates between 
+a worst case (uniform random) and a perfect execution (Porter-Thomas) and assumes 
+a decoherent noise channel in the execution of the quantum circuit. 
+The cross entropy difference is related to the TVD by Pinsker's inequality. Nevertheless, 
+a high cross entropy difference does not automatically imply a low TVD \cite{bouland2018quantum}.
 
 In order to calculate $\Delta H(p_A)$, 
 a perfect simulation of the random circuit is necessary as the values of $p_U(x_j)$ have to be known. This is not possible in the quantum
@@ -312,7 +342,7 @@ maximally entangled \cite{Boixo2018supremacy}. A single bit or phase flip introd
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.58\textwidth]{figures/rcs_noise}
-  \caption[Effect of one Pauli-Error on Random Circuits]{Blue ("no errors"): Output bitstrings of a random circuit ordered by their probabilities. Red ("One Pauli error"): Averaged 
+  \caption[Effect of one Pauli-Error on Random Circuits]{Blue ("No errors"): Output bitstrings of a random circuit ordered by their probabilities. Red ("One Pauli error"): Averaged 
   simulated output distribution with one Pauli-error on all possible positions in a $5 \times 4$ qubits random circuit 
   with depth 40. The distribution is almost uniform and almost uncorrelated with the real output distribution. The small tilt at 
   the end can be explained by the fact that Z gates close to the end of the circuit do not have an effect on the output distribution. Figure taken from \cite{Boixo2018supremacy}.}
