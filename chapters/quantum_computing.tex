@@ -186,7 +186,7 @@ and
 
 for the $\Ket{+}$ state. The same probabilities hold for the
 $\Ket{-}$ state.
-Again, the state will be destroyed on measurement and be either $\Ket{0}$ or $\Ket{1}$ afterward, depending on the measurement outcome.
+Again, the state will collapse on measurement and be either $\Ket{0}$ or $\Ket{1}$ afterward, depending on the measurement outcome.
 
 \section{Multiple Qubits and Entanglement}
 \label{sec:multiplequbitsandentanglement}
@@ -219,7 +219,7 @@ Therefore, a classical simulation of a n-dimensional qubit system has to keep
 track of $2^n$ complex amplitudes. This makes it impossible to simulate quantum
 systems above a certain size. For the classical simulation of a system
 consisting of 500 qubits, the state vector's dimension is already larger
-than the number of atoms in the universe.  
+than the number of atoms in the observable universe.  
 
 As in the single-qubit case, the probability to observe state $\Ket{n}$ is
 given by $a_n^2$. It is also possible to only measure a subset of the qubits,
@@ -247,7 +247,7 @@ Nevertheless, there are no two single-qubit states $\Ket{a}$
 and $\Ket{b}$ such that $\Ket{\psi} = \Ket{a} \Ket{b}$. The two qubits of
 $\Ket{\psi}$ are \textit{entangled} with each other. Measuring one of the qubits
 immediately determines the state of the other qubit, i.e. measuring the first
-qubit as $\Ket{0}$ happens with probability:
+qubit as $\Ket{0}$ happens with probability
 
 \begin{align}
   p_1(0) &= \Bra{\psi} (M_0 \otimes I)^{\dagger} (M_o \otimes I) \Ket{\psi} \\
@@ -255,7 +255,7 @@ qubit as $\Ket{0}$ happens with probability:
          &= \frac{1}{2},
 \end{align}
 
-leaving the system in the post-measurement state:
+leaving the system in the post-measurement state
 
 \begin{align}
   \Ket{\psi\prime} &= \frac{(M_0 \otimes I) \psi}{\sqrt{p_1(0)}} \\
@@ -294,7 +294,7 @@ of a single qubit. Mathematically, single-qubit gates can be described by $2
 \times 2$ unitary matrices. The fact that these matrices are unitary guarantees that
 the state $\Ket{\phi} = G \Ket{\psi}$ after gate $G$ has been applied to state $\Ket{\psi}$ is a
 proper quantum state which preserves the normalization constraint
-$\alpha_{\Ket{\phi}}^2 + \beta_{\Ket{\phi}}^2 = 1$.
+$\mid \alpha_{\Ket{\phi}} \mid ^2 + \mid \beta_{\Ket{\phi}}\mid ^2 = 1$.
 
 An example of a single-qubit gate is the NOT or $X$ gate, also denoted as:
 
@@ -426,7 +426,7 @@ An overview of some common single-qubit gates is given in figure \ref{fig:single
   \label{fig:singlegates}
 \end{table}
 
-There are indefinitely many possible quantum gates in theory. Still, 
+There are infinitely many possible quantum gates in theory. Still, 
 a universal finite gate set 
 consisting of a few gates is sufficient to construct arbitrary unitary
 transformations \cite{kitaev2002classical}. This is the same as in the classical case where NAND gates
@@ -571,7 +571,7 @@ as in parallel, as demonstrated in figure~\ref{fig:circuit1}:
       & \lstick{\Ket{0}} & \qw & \gate{X} & \qw & \ctrl{-1} & \qw & \meter{0/1}
     }
   }
-  \caption[A Quantum Circuit Acting on two Qubits]{A quantum circuit acting on two qubits. The effect of parallel applications of single-qubit gates is defined by the tensor product of the gates.}
+  \caption[A Quantum Circuit Acting on Two Qubits]{A quantum circuit acting on two qubits. The effect of parallel applications of single-qubit gates is defined by the tensor product of the gates.}
   \label{fig:circuit1}
 \end{figure}
 
@@ -602,7 +602,7 @@ first $H$ gate on the first qubit is calculated as:
                     &= \Ket{+0}.
 \end{align}
 
-As expected, applying a $H$ gate to the first
+As expected, applying an $H$ gate to the first
 qubit, it should be in the $\Ket{+}$ state while the second qubit remains in
 the $\Ket{0}$ state.
 
@@ -691,7 +691,7 @@ probabilistic Turing machine in polynomial time and widely believed to be the sa
 Currently, there are a few problems known to be in \textbf{BQP}, which are suspected not to be in \textbf{P}, providing evidence for the superiority of quantum computers. One
 of these problems is \textit{factorization}, the problem of decomposing a
 composite integer into its prime factors. This problem has been known to be in
-\textbf{NP} before. Though, it is also known that factorization is not an \textbf{NP}-hard problem, indicating that quantum computers are not able to provide
+\textbf{NP} before. Though, it is also believed that factorization is not an \textbf{NP}-hard problem, indicating that quantum computers might not able to provide
 an exponential speedup for every problem that is not efficiently solvable on a
 classical computer. Indeed, classical algorithms might even exist, which can
 solve factorization on a classical computer efficiently, which have not been
@@ -716,7 +716,7 @@ in figure \ref{fig:complexityclasses}.
     \draw (2.5,-1) node {\large \textbf{BQP?}};
 
   \end{tikzpicture}
-  \caption[Relation of Complexity Classes to each other]{Relation of Complexity Classes to each other.}
+  \caption[Relation of Complexity Classes to Each Other]{Relation of Complexity Classes to each other.}
   \label{fig:complexityclasses}
 \end{figure}
 

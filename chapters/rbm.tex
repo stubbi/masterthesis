@@ -193,8 +193,8 @@ $\Omega=\{0,1\}^{m+n}$) and for which for all time steps $t$ and for all configu
 $\bm{c}_j, \bm{c}_i, \bm{c}_{i-1}, \dots, \bm{c}_0 \in \Omega$ the \textit{Markov property}
 
 \begin{align}
-    p_{ij}^{(t)} &:= P(\bm{c}^{(t+1)} = c_j \mid \bm{c}^{(t)} = \bm{c}_i, \dots, \bm{c}^{(0)} = c_0) \\
-                 & = P(\bm{c}^{(t+1)} = c_j \mid \bm{c}^{(t)} = \bm{c}_i) 
+    p_{ij}^{(t)} &:= P(\bm{c}^{(t+1)} = \bm{c}_j \mid \bm{c}^{(t)} = \bm{c}_i, \dots, \bm{c}^{(0)} = \bm{c}_0) \\
+                 & = P(\bm{c}^{(t+1)} = \bm{c}_j \mid \bm{c}^{(t)} = \bm{c}_i) 
 \end{align}
 
 holds. This means that the next state of the system only depends on the current state and not on the system's history. A Markov chain can be represented as a (finite) graph, as shown in figure~\ref{fig:markov}.
@@ -212,7 +212,7 @@ holds. This means that the next state of the system only depends on the current 
         \path[->] (s1) edge[loop right] node {$p_{11}$} (s1);
     
     \end{tikzpicture}
-    \caption[Markov Chain with two States]{A Markov chain with two states $c_0$ and $c_1$. The Markov chain is 
+    \caption[Markov Chain with Two States]{A Markov chain with two states $c_0$ and $c_1$. The Markov chain is 
 described by the $2 \times 2$ matrix $\bm{P}=\begin{pmatrix} p_{00} & p_{01} \\ p_{10} & p_{11} \end{pmatrix}$.}
     \label{fig:markov}
 \end{figure}
@@ -236,16 +236,16 @@ algorithm~\ref{alg:gibbs}.
 \begin{algorithm}[H]
     \caption{Gibbs Sampling}
     \begin{algorithmic}[1]
-        \Require $bm(c)$: function returning the energy of a Boltzmann machine for configuration $c$
+        \Require $bm(\bm{c})$: function returning the energy of a Boltzmann machine for configuration $\bm{c}$
         \Require T: time steps
         \State $t\gets 0$
-        \State $c^{(0)} \gets randomize(\{0,1\}^{m+n})$ (random initialization)
+        \State $\bm{c}^{(0)} \gets randomize(\{0,1\}^{m+n})$ (random initialization)
         \Repeat
             \State $r \gets random(m+n)$
-            \State $E_i \gets bm(c^{(t)})$
-            \State $E_j \gets bm(\{c_1,\dots,\bar{c_r},\dots,c_{m+n}\})$
+            \State $E_i \gets bm(\bm{c}^{(t)})$
+            \State $E_j \gets bm(\{\bm{c}_1,\dots,\bar{\bm{c}_r},\dots,\bm{c}_{m+n}\})$
             \If{$random(1) < \frac{E_i}{E_j}$}
-                \State $c^{(t+1)} \gets \{c_1,\dots,\bar{c_r},\dots,c_{m+n}\}$
+                \State $\bm{c}^{(t+1)} \gets \{\bm{c}_1,\dots,\bar{\bm{c}_r},\dots,\bm{c}_{m+n}\}$
             \EndIf
             \State $t\gets t+1$
         \Until{$t=T$}
@@ -371,11 +371,11 @@ algorithm~\ref{alg:adamax}.
 
 \subsection{Stochastic Reconfiguration}
 Another popular gradient descent method to optimize the parameters of an RBM to represent quantum states is 
-\textit{Stochastic reconfiguration} \cite{}. The idea behind this method is that even a small change in the 
+\textit{Stochastic reconfiguration} \cite{sorella1998green}. The idea behind this method is that even a small change in the 
 parameters of the RBM might lead to a big change in the output distribution of the RBM. Instead of small steps
  in the parameter space as in the pure version of gradient descent, the step size is kept small 
 with respect to the change in the output distribution represented by the RBM. Stochastic reconfiguration is equivalent 
-to the \textit{natural gradient descent} method \cite{}.
+to the \textit{natural gradient descent} method \cite{amari1998natural}.
 
 The update rule for the parameters $W$ of the RBM in the Stochastic Reconfiguration (SR) method is:
 
@@ -670,4 +670,5 @@ represented by an RBM is as follows:
     \item Use a gradient descent method like AdaMax or SR to update the parameters $\theta_i \in \mathcal{W}$.
 \end{enumerate}
 
-This process is repeated for a predefined number of iterations. Using this approach and AdaMax as the optimization method, J\'{o}nsson et al. reported a per gate error of $10^{-3}$ \cite{jnsson2018neuralnetwork}.
+This process is repeated for a predefined number of iterations. Using this approach and AdaMax as the optimization method, J\'{o}nsson et al. reported a per gate error of $10^{-3}$ 
+for the tested kind of quantum circuits \cite{jnsson2018neuralnetwork}.
