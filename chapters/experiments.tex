@@ -14,23 +14,23 @@ many-body systems \cite{netket2019}, has been extended to simulate quantum circu
 software is published on GitHub as an open-source tool for the classical simulation 
 of quantum circuits \cite{NQS2020}. The experiments have been conducted on the Noctua Cluster at the University of Paderborn, Germany.
 
-Several parameters of the RBM's training process have been varied. For the choice of the optimization algorithm, AdaMax and 
-Stochastic Reconfiguration are tested against each other. Performances of different numbers of training iterations 
+Several parameters of the \gls{rbm}'s training process have been varied. For the choice of the optimization algorithm, AdaMax and 
+\gls{sr} are tested against each other. Performances of different numbers of training iterations 
 as well as training samples are compared. Further, the controlled-Z ($CZ$) gate is applied in two fashions: Once, 
-by following the rules from \cite{jnsson2018neuralnetwork} by introducing an additional hidden unit to the RBM on each gate. 
+by following the rules from \cite{jnsson2018neuralnetwork} by introducing an additional hidden unit to the \gls{rbm} on each gate. 
 This approach is referred to as an \textit{exact} application of the $CZ$ gate. In other 
-experiments, the CZ gate is applied by training the parameters of the RBM the same way as for 
-non-diagonal gates. In the first case, the RBM is initialized without any hidden units. In the latter 
+experiments, the CZ gate is applied by training the parameters of the \gls{rbm} the same way as for 
+non-diagonal gates. In the first case, the \gls{rbm} is initialized without any hidden units. In the latter 
 case, it is initialized with so many hidden units that each pair of visible units is connected 
-by one hidden unit. This corresponds to 6 hidden units for RBMs with 4 visible units.
+by one hidden unit. This corresponds to 6 hidden units for \gls{rbm}s with 4 visible units.
 
 The training process is once performed with \textit{random restarts} and once without. 
-In the experiments with random restarts, the RBM is trained several times with a slight Gaussian noise modification to its 
+In the experiments with random restarts, the \gls{rbm} is trained several times with a slight Gaussian noise modification to its 
 current parameters. The best performing resulting parameters are chosen as the after gate parameters. 
 
 The gate set of the circuits consists of the $T$, $\sqrt{X}$, $\sqrt{Y}$, and $CZ$ gate. While the $CZ$ gate is 
-applied in different manners as described above, the $T$ gate is a diagonal gate and can be applied exactly to the RBM state.
-The $\sqrt{X}$ and $\sqrt{Y}$ gates are non-diagonal and are thus applied by adopting the parameters of the RBM in 
+applied in different manners as described above, the $T$ gate is a diagonal gate and can be applied exactly to the \gls{rbm} state.
+The $\sqrt{X}$ and $\sqrt{Y}$ gates are non-diagonal and are thus applied by adopting the parameters of the \gls{rbm} in 
 a training phase. The training samples have been chosen $i.i.d$ uniformly at random. 
 With a high probability $n, n^2, n^3, 2^n, 0.95 \times 2^n, 0.9 \times 2^n$ and $0.85 \times 2^n$,
 respectively, different samples are included in the training set. In the case of 4 qubits, this corresponds to 
@@ -38,102 +38,102 @@ respectively, different samples are included in the training set. In the case of
 up to 10 samples per batch.
 The number of training iterations has been chosen as 1,000, 10,000, and 100,000. 
 
-For each parameter setting, 5 RBMs have been trained on 20 different instances of random circuits of the same 
-size. The total variation distance (TVD) as well as the cross entropy difference have been used as a performance measure.
+For each parameter setting, 5 \gls{rbm}s have been trained on 20 different instances of random circuits of the same 
+size. The \gls{tvd} as well as the cross entropy difference have been used as a performance measure.
 The training parameters have first been tested on random circuit instances with 4 qubits and 
 5, 10, 15, and 20 cycles each. 
 
-The resulting experiments are \textit{AdaMax-restarts-learned}, \textit{SR-restarts-learned}, 
-\textit{SR-restarts-exact} and \textit{SR-no-restarts-learned}. 
+The resulting experiments are \textit{AdaMax-restarts-learned}, \textit{sr-restarts-learned}, 
+\textit{sr-restarts-exact} and \textit{sr-no-restarts-learned}. 
 
-The study compares three different setups for SR with one setup for RBMs trained with 
-AdaMax. The reason to vary the parameters for SR but not for AdaMax is twofold:
+The study compares three different setups for \gls{sr} with one setup for \gls{rbm}s trained with 
+AdaMax. The reason to vary the parameters for \gls{sr} but not for AdaMax is twofold:
 First, limited access to the cluster did not allow to test all possible parameter combinations. Second,
 pre-studies, conducted as part of this study, suggested that AdaMax without random restarts 
-was inferior to SR concerning the TVD between the RBMs state and the true output distribution of the 
-circuits tested. RBMs trained with AdaMax repeatedly could not reduce the 
+was inferior to \gls{sr} concerning the \gls{tvd} between the \gls{rbm}s state and the true output distribution of the 
+circuits tested. \gls{rbm}s trained with AdaMax repeatedly could not reduce the 
 log overlap below a certain threshold during the training.
 
 \section{Results}
 \label{sec:results}
 
 In total, 33,600 classical simulations of random quantum circuits have been performed 
-on the Noctua cluster over 8 weeks. In each run, the total variation distance (TVD)
-between the RBM's output probability and the true output probabilities have been measured.
- The log overlaps of the RBM's state and the distribution on the training and test sets have been recorded during the training process. This allows for a detailed comparison
+on the Noctua cluster over 8 weeks. In each run, the \gls{tvd}
+between the \gls{rbm}'s output probability and the true output probabilities have been measured.
+ The log overlaps of the \gls{rbm}'s state and the distribution on the training and test sets have been recorded during the training process. This allows for a detailed comparison
 of the different training methods and the influence of the different training parameters on the 
-accuracy of the RBM. Further, the cross entropy difference on the circuits' mean outcome probabilities
+accuracy of the \gls{rbm}. Further, the cross entropy difference on the circuits' mean outcome probabilities
 has been calculated. The following four sections present the results of the 4 training setups.
 
 \subsection{Stochastic Reconfiguration with Random Restarts and CZ-Gates Learned}
 
-Stochastic Reconfiguration (SR) has been successfully used to train RBMs to represent the wave function 
-of many-body quantum systems before \cite{carleo2017solving,medvidovic2020classical}. In this study, SR has been applied with random restarts 
+\gls{sr} has been successfully used to train \gls{rbm}s to represent the wave function 
+of many-body quantum systems before \cite{carleo2017solving,medvidovic2020classical}. In this study, \gls{sr} has been applied with random restarts 
 and without. 
-This section summarizes the results of RBMs that have been trained with the SR optimizer and five random 
+This section summarizes the results of \gls{rbm}s that have been trained with the \gls{sr} optimizer and five random 
 restarts.
 
-Figure~\ref{fig:sr_restarts_avgPDF} shows the averaged output distribution of all RBMs and 
+Figure~\ref{fig:sr_restarts_avgPDF} shows the averaged output distribution of all \gls{rbm}s and 
 the averaged true output distributions of all circuits. With an increasing number of cycles, the 
 true output distributions approach a Porter-Thomas shape, even though they are not exactly Porter-Thomas 
 distributed.
-The TVD of the average output of all RBMs considered 
+The \gls{tvd} of the average output of all \gls{rbm}s considered 
 is 0.30 for 5, 0.34 for 10, 0.34 for 15, and 0.35 for 20 cycles. The corresponding cross entropy is 
 0.16 for 5, 0.05 for 10, 0.04 for 15, and 0.00 for 20 cycles.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/avgPDF.pdf}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-learned/avgPDF.pdf}
   \caption[Scaled Average Output Probabilities of All RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned]{
-    Scaled average output probabilities of Stochastic Reconfiguration with restarts and the $CZ$ gates learned. The true 
+    Scaled average output probabilities of all \gls{rbm}s trained with Stochastic Reconfiguration with random restarts and $CZ$ gates learned. The true 
     output distribution approaches a Porter-Thomas shape with increasing number of cycles.}
   \label{fig:sr_restarts_avgPDF}
 \end{figure}
 
-In figure~\ref{fig:sr_restarts_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
-TVD are selected and their outputs are averaged. The averaged best output distribution for the SR methods with 
-random restarts and $CZ$ gates learned has a TVD of 0.06 for 5, 0.15 for 10, 0.19 for 15, and 0.24 for 20
+In figure~\ref{fig:sr_restarts_bestPDF}, only the output distribution of the best performing \gls{rbm}s with respect to the 
+\gls{tvd} are selected and their outputs are averaged. The averaged best output distribution for the \gls{sr} methods with 
+random restarts and $CZ$ gates learned has a \gls{tvd} of 0.06 for 5, 0.15 for 10, 0.19 for 15, and 0.24 for 20
 cycles. The cross entropy difference is 0.65 for 5, 0.47 for 10, 0.39 for 15, and 0.31 for 20 cycles each. 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/avgBestPDF.pdf}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-learned/avgBestPDF.pdf}
   \caption[Scaled Average Output Probabilities of Best Performing RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned]{
-    Scaled average output probabilities of Stochastic Reconfiguration with restarts and the $CZ$ gate learned. Only RBMs with lowest
-    TVD for each circuit are considered.}
-  \label{fig:sr_restarts_bestPDF}
+    Scaled average output probabilities of the best performing \gls{rbm}s trained with Stochastic Reconfiguration with random restarts and $CZ$ gates learned. The true 
+    output distribution approaches a Porter-Thomas shape with increasing number of cycles.}
+  \label{fig:sr_restarts_bestPDF} 
 \end{figure}
 
 Figure~\ref{fig:sr_restarts_tvd} and figure~\ref{fig:sr_restarts_fxeb} give a detailed overview of the influence of the 
-number of training samples and training iterations on the TVD and cross entropy difference. 
+number of training samples and training iterations on the \gls{tvd} and cross entropy difference. 
 
 There is no correlation between the number of training
-iterations and the performance of the RBMs. For 5 cycles, a higher number of training samples correlates
-with a lower TVD, independent of the number of training iterations. The RBMs perform best on 
+iterations and the performance of the \gls{rbm}s. For 5 cycles, a higher number of training samples correlates
+with a lower \gls{tvd}, independent of the number of training iterations. The \gls{rbm}s perform best on 
 circuits with a depth of 5 cycles when trained with 100,000 iterations and 303 samples. In that case, 
-it achieves a mean TVD of $0.50$. The mean TVD is similar when trained with 303 samples and 1,000 iterations, 
-where it is $0.51$. When trained with fewer samples, the TVD is generally lowest when trained with 1,000 
+it achieves a mean \gls{tvd} of $0.50$. The mean \gls{tvd} is similar when trained with 303 samples and 1,000 iterations, 
+where it is $0.51$. When trained with fewer samples, the \gls{tvd} is generally lowest when trained with 1,000 
 iterations and highest when trained with 10,000 iterations for all number of samples tested. 
 
-For 10 cycles, RBMs trained for 1,000 training iterations achieve the lowest TVDs in the range of 43 to 
-54 samples. For 303 samples, 100,000 iterations lead to the lowest TVD (0.59). Except for the 
-case of 47 samples, 10,000 iterations correlate with the highest TVD.
+For 10 cycles, \gls{rbm}s trained for 1,000 training iterations achieve the lowest \gls{tvd}s in the range of 43 to 
+54 samples. For 303 samples, 100,000 iterations lead to the lowest \gls{tvd} (0.59). Except for the 
+case of 47 samples, 10,000 iterations correlate with the highest \gls{tvd}.
 
-For 15 and 20 cycles, again, 10,000 training iterations correlate with the lowest TVD in most cases. 1,000
-and 100,000 iterations perform similar, with the lowest TVDs on these circuits being achieved with 50 samples and 
-100,000 iterations on 15 cycles ($0.62$), and 47 samples with 100,000 iterations on 20 cycles (TVD of $0.68$).
+For 15 and 20 cycles, again, 10,000 training iterations correlate with the lowest \gls{tvd} in most cases. 1,000
+and 100,000 iterations perform similar, with the lowest \gls{tvd}s on these circuits being achieved with 50 samples and 
+100,000 iterations on 15 cycles ($0.62$), and 47 samples with 100,000 iterations on 20 cycles (\gls{tvd} of $0.68$).
 For 100,000 iterations and 303 samples, the experiments did not finish within the time limit for 15 and 20 cycles.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/tvd_heatmap.pdf}
-  \caption[TVD of RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned]{TVD of Stochastic 
-  Reconfiguration with restarts learned for the combinations of iterations and samples tested.
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-learned/tvd_heatmap.pdf}
+  \caption[TVD of RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned]{
+  \gls{tvd} of \gls{rbm}s trained with Stochastic Reconfiguration with random restarts and $CZ$ gates learned.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit for 15 and 20 cycles.}
   \label{fig:sr_restarts_tvd}
 \end{figure}
 
-A lower TVD does not always correlate with a higher cross entropy difference as figure~\ref{fig:sr_restarts_fxeb}
+A lower \gls{tvd} does not always correlate with a higher cross entropy difference as figure~\ref{fig:sr_restarts_fxeb}
 shows. On 5 cycles, the highest fidelity is achieved with 303 samples and 10,000 iterations, on 10 cycles 
 with 303 samples and 100,000 iterations. On 15 cycles, 8 samples and 1,000 iterations led to the best performance, 
 and 47 samples with 100,000 iterations on 20 cycles. Overall, there is a tendency for a higher cross entropy difference 
@@ -143,16 +143,16 @@ fidelity for all number of training samples.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/fxeb_heatmap.pdf}
-  \caption[Cross Entropy Difference of RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned]{Cross entropy difference of Stochastic 
-  Reconfiguration with restarts and the $CZ$ gates learned for the combinations of iterations and samples tested.
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-learned/fxeb_heatmap.pdf}
+  \caption[Cross Entropy Difference of RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned]{
+  Cross entropy difference of \gls{rbm}s trained with Stochastic Reconfiguration with random restarts and $CZ$ gates learned.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit for 15 and 20 cycles.}
   \label{fig:sr_restarts_fxeb}
 \end{figure}
 
-Figures~\ref{fig:sr_restarts_overlap_8} to~\ref{fig:sr_restarts_overlap_303} detail the mean log overlap of the RBMs during the 
+Figures~\ref{fig:sr_restarts_overlap_8} to~\ref{fig:sr_restarts_overlap_303} detail the mean log overlap of the \gls{rbm}s during the 
 training process when trained with 10,000 iterations for 8, 47, and 303 samples. The 
-mean overlap of the RBM's state and the distribution implied by the training and test data sets are measured 
+mean overlap of the \gls{rbm}'s state and the distribution implied by the training and test data sets are measured 
 for each training iteration.
 
 For 8 samples, the log overlap on the training set can be reduced to almost 0 within the first few training iterations 
@@ -167,9 +167,9 @@ slightly increases within the first few iterations and goes down to some extend 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/avgOverlap_8.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned - 8 Samples]{Training 
-  Overlap of Stochastic Reconfiguration with restarts and the $CZ$ gates learned for 8 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-learned/avgOverlap_8.pdf}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned - 8 Samples]{
+  Training and testing overlaps for Stochastic Reconfiguration with random restarts and $CZ$ gates learned - 8 training samples.}
   \label{fig:sr_restarts_overlap_8}
 \end{figure}
 
@@ -207,9 +207,9 @@ down to about 0.24, and to about 0.12 on the $CZ$ gate. Over all gates, the test
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/avgOverlap_47.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned - 47 Samples]{Training 
-  Overlap of Stochastic Reconfiguration with restarts learned for 47 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-learned/avgOverlap_47.pdf}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned - 47 Samples]{
+  Training and testing overlaps for Stochastic Reconfiguration with random restarts and $CZ$ gates learned - 47 training samples.}
   \label{fig:sr_restarts_overlap_47}
 \end{figure}
 
@@ -232,9 +232,9 @@ it increases again. Starting at about 9,000 iterations, it decreases again to ab
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-learned/avgOverlap_303.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned - 303 Samples]{Training 
-  Overlap of Stochastic Reconfiguration with restarts and the $CZ$ gates learned for 303 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-learned/avgOverlap_303.pdf}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Learned - 303 Samples]{
+  Training and testing overlaps for Stochastic Reconfiguration with random restarts and $CZ$ gates learned - 303 training samples.}
   \label{fig:sr_restarts_overlap_303}
 \end{figure}
 
@@ -242,71 +242,70 @@ it increases again. Starting at about 9,000 iterations, it decreases again to ab
 
 \subsection{Stochastic Reconfiguration without Random Restarts and CZ Gates Learned}
 
-The last section showed the results for RBMs that were trained with the Stochastic Reconfiguration
-method and random restarts. The following section shows the results of RBMs trained without restarts.
+The last section showed the results for \gls{rbm}s that were trained with the \gls{sr}
+method and random restarts. The following section shows the results of \gls{rbm}s trained without restarts.
 
-Figure~\ref{fig:sr_no_restarts_avgPDF} shows the averaged output distribution of all RBMs and
+Figure~\ref{fig:sr_no_restarts_avgPDF} shows the averaged output distribution of all \gls{rbm}s and
 the averaged true output distributions of all circuits. As before, the 
 true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
-The TVD of the average output of all RBMs trained with SR without restarts
+The \gls{tvd} of the average output of all \gls{rbm}s trained with \gls{sr} without restarts
 is 0.34 for 5, 0.38 for 10, 0.34 for 15, and 0.38 for 20 cycles. The corresponding cross entropy is 
 0.12 for 5, 0.00 for 10, 0.04 for 15, and 0.00 for 20 cycles.
 
-\begin{figure}[H]
+\begin{figure}[H] 
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/avgPDF.pdf}
+  \includegraphics[width=\textwidth]{figures/results/sr-no-restarts-learned/avgPDF.pdf}
   \caption[Scaled Average Output Probabilities of All RBMs Trained with Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned]{
-    Scaled average output probabilities of Stochastic Reconfiguration without restarts learned. The true 
+    Scaled average output probabilities of all \gls{rbm}s trained with Stochastic Reconfiguration without random restarts and $CZ$ gates learned. The true 
     output distribution approaches a Porter-Thomas shape with increasing number of cycles.}
   \label{fig:sr_no_restarts_avgPDF}
 \end{figure}
 
-In figure~\ref{fig:sr_no_restarts_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
-TVD are selected and their outputs averaged. The averaged best output distribution for the SR methods without 
-random restarts and $CZ$ gates learned has a TVD of 0.07 for 5, 0.18 for 10, 0.21 for 15, and 0.21 for 20 
+In figure~\ref{fig:sr_no_restarts_bestPDF}, only the output distribution of the best performing \gls{rbm}s with respect to the 
+\gls{tvd} are selected and their outputs averaged. The averaged best output distribution for the \gls{sr} methods without 
+random restarts and $CZ$ gates learned has a \gls{tvd} of 0.07 for 5, 0.18 for 10, 0.21 for 15, and 0.21 for 20 
 cycles. The cross entropy difference is 0.71 for 5, 0.37 for 10, 0.40 for 15, and 0.35 for 20 cycles each. 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/avgBestPDF.pdf}
+  \includegraphics[width=\textwidth]{figures/results/sr-no-restarts-learned/avgBestPDF.pdf}
   \caption[Scaled Average Output Probabilities of Best Performing RBMs Trained with Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned]{
-    Scaled average output probabilities of Stochastic Reconfiguration without restarts learned, only RBMs with lowest
-    TVD for each circuit are considered. The true 
+    Scaled average output probabilities of the best performing \gls{rbm}s trained with Stochastic Reconfiguration without random restarts and $CZ$ gates learned. The true 
     output distribution approaches a Porter-Thomas shape with increasing number of cycles.}
   \label{fig:sr_no_restarts_bestPDF}
 \end{figure}
 
 Figure~\ref{fig:sr_no_restarts_tvd} and figure~\ref{fig:sr_no_restarts_fxeb} give a more detailed overview of the influence of the 
-number of training samples and training iterations on the TVD and cross entropy difference achieved by 
-the RBMs. Also here, there seems to be no correlation between the number of training
-iterations and the performance of the RBMs. 
+number of training samples and training iterations on the \gls{tvd} and cross entropy difference achieved by 
+the \gls{rbm}s. Also here, there seems to be no correlation between the number of training
+iterations and the performance of the \gls{rbm}s. 
 
 For 5 cycles, a higher number of training samples 
-correlates with an overall lower TVD for 10,000 and 100,000 iterations, but not so for 1,000 iterations. The RBM performs best on 
+correlates with an overall lower \gls{tvd} for 10,000 and 100,000 iterations, but not so for 1,000 iterations. The \gls{rbm} performs best on 
 circuits with a depth of 5 cycles when trained with 100,000 iterations and 303 samples. In this case, 
-it achieves a mean TVD of $0.43$. Overall, the performance is independent of the number of 
+it achieves a mean \gls{tvd} of $0.43$. Overall, the performance is independent of the number of 
 training iterations when trained with less than 303 samples. In these cases, the performance is very 
 similar for 1,000, 10,000, and 100,000 iterations. The only exception is for 54 samples, where 100,000 iterations lead to a 
-mean TVD of $0.55$, while the mean TVD is at $0.64$ when trained with 1,000. the mean TVD is $0.62$ when trained for 
+mean \gls{tvd} of $0.55$, while the mean \gls{tvd} is at $0.64$ when trained with 1,000. the mean \gls{tvd} is $0.62$ when trained for 
 10,000 iterations. 
 
-For 10 cycles, 1,000 training iterations achieve the lowest TVDs for 43 or more samples. 
-100,000 iterations lead to a lower TVD than 10,000 iterations in all cases. 
+For 10 cycles, 1,000 training iterations achieve the lowest \gls{tvd}s for 43 or more samples. 
+100,000 iterations lead to a lower \gls{tvd} than 10,000 iterations in all cases. 
 
-For 15 and 20 cycles, again 10,000 training iterations correlate with the highest TVD in most cases.
-The performance is similar for all number of training samples. The lowest TVDs are achieved when trained for 1,000
+For 15 and 20 cycles, again 10,000 training iterations correlate with the highest \gls{tvd} in most cases.
+The performance is similar for all number of training samples. The lowest \gls{tvd}s are achieved when trained for 1,000
 iterations. Also in these cases, the performance is similar for all tested number of training samples; with 
 the exception that it is significantly higher for 8 samples.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/tvd_heatmap.pdf}
-  \caption[TVD of RBMs Trained with Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned]{TVD of Stochastic 
-  Reconfiguration without restarts learned for the combinations of iterations and samples tested.}
+  \includegraphics[width=\textwidth]{figures/results/sr-no-restarts-learned/tvd_heatmap.pdf}
+  \caption[TVD of RBMs Trained with Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned]{
+  \gls{tvd} of \gls{rbm}s trained with Stochastic Reconfiguration without random restarts and $CZ$ gates learned.}
   \label{fig:sr_no_restarts_tvd}
 \end{figure}
 
-As in the case with restarts, a lower TVD does not always correlate with a higher cross entropy difference as 
+As in the case with restarts, a lower \gls{tvd} does not always correlate with a higher cross entropy difference as 
 figure~\ref{fig:sr_no_restarts_fxeb}
 implies. For 5 cycles, the highest fidelity is achieved with 303 samples and 10,000 iterations, on 10 cycles 
 with 43 samples and 1,000 iterations, with 47 samples and 100,000 iterations on 15 cycles, and with 303 samples and 
@@ -315,15 +314,15 @@ the number of training iterations, samples, and cross entropy difference.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/fxeb_heatmap.pdf}
-  \caption[Cross Entropy Difference of RBMs Trained with Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned]{TVD of Stochastic 
-  Reconfiguration without restarts learned for the combinations of iterations and samples tested.}
+  \includegraphics[width=\textwidth]{figures/results/sr-no-restarts-learned/fxeb_heatmap.pdf}
+  \caption[Cross Entropy Difference of RBMs Trained with Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned]{
+  Cross entropy difference of \gls{rbm}s trained with Stochastic Reconfiguration without random restarts and $CZ$ gates learned.}
   \label{fig:sr_no_restarts_fxeb}
 \end{figure}
 
-Figure~\ref{fig:sr_no_restarts_overlap_8} to~\ref{fig:sr_no_restarts_overlap_303} detail the mean log overlap of the RBMs during the 
+Figure~\ref{fig:sr_no_restarts_overlap_8} to~\ref{fig:sr_no_restarts_overlap_303} detail the mean log overlap of the \gls{rbm}s during the 
 training process when trained with 10,000 iterations for 8, 47, and 303 samples. The 
-mean overlap of the RBM's state and the distribution implied by the training and test data sets are measured 
+mean overlap of the \gls{rbm}'s state and the distribution implied by the training and test data sets are measured 
 for each training iteration.
 
 For 8 samples, the log overlap on the training set can be reduced to about 0 for all three gates after about 2,500 iterations.
@@ -344,9 +343,9 @@ slightly increases again over the course of the next about 2,000 iterations.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/avgOverlap_8.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned - 8 Samples]{Training 
-  Overlap of Stochastic Reconfiguration without restarts learned for 8 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-no-restarts-learned/avgOverlap_8.pdf}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned - 8 Samples]{ 
+  Training and testing overlaps for Stochastic Reconfiguration without random restarts and $CZ$ gates learned - 8 training samples.}
   \label{fig:sr_no_restarts_overlap_8}
 \end{figure}
 
@@ -374,9 +373,9 @@ testing overlap averaged over all gates approaches 0.2 for 54 samples.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/avgOverlap_47.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned - 47 Samples]{Training 
-  Overlap of Stochastic Reconfiguration without restarts learned for 47 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-no-restarts-learned/avgOverlap_47.pdf}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned - 47 Samples]{ 
+  Training and testing overlaps for Stochastic Reconfiguration without random restarts and $CZ$ gates learned - 47 training samples.}
   \label{fig:sr_no_restarts_overlap_47}
 \end{figure}
 
@@ -386,9 +385,9 @@ about the same as the training overlap in all cases.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-no-restarts-learned/avgOverlap_303.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned - 303 Samples]{Training 
-  Overlap of Stochastic Reconfiguration without restarts learned for 303 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-no-restarts-learned/avgOverlap_303.pdf}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration without Random Restarts and $CZ$ Gates Learned - 303 Samples]{ 
+  Training and testing overlaps for Stochastic Reconfiguration without random restarts and $CZ$ gates learned - 303 training samples.}
   \label{fig:sr_no_restarts_overlap_303}
 \end{figure}
 
@@ -396,73 +395,72 @@ about the same as the training overlap in all cases.
 
 \subsection{Stochastic Reconfiguration with Random Restarts and CZ Gates Applied Exactly}
 
-In previous works, the $CZ$ gate had been applied to the RBM state in the same manner as 
+In previous works, the $CZ$ gate had been applied to the \gls{rbm} state in the same manner as 
 other diagonal gates \cite{jnsson2018neuralnetwork}. This kind of application of the $CZ$ gate 
 will be referred to as an \textit{exact} application of the gate. This study compares 
-the performance of RBMs when the $CZ$ gate is applied exactly and learned. The comparison might shed
+the performance of \gls{rbm}s when the $CZ$ gate is applied exactly and learned. The comparison might shed
 light on how the training process of a gate is influenced by the number of qubits the gate 
 is acting on. It further can give a hint on whether the addition of hidden units by applying the $CZ$
 gate exactly influences the training process of the other gates.
-The following section shows the results of RBMs trained with restarts and the $CZ$ gates applied 
-with the rules from section X.
-
-Figure~\ref{fig:sr_exact_avgPDF} shows the averaged output distribution of all RBMs and
-the averaged true output distributions of all circuits. As in the cases before, the 
-true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
-The TVD of the average output of all RBMs 
-is 0.35 for 5, 0.33 for 10, 0.34 for 15, and 0.38 for 20 cycles. The corresponding cross entropy is 
-0.20 for 5, 0.02 for 10, 0.06 for 15, and 0.00 for 20 cycles.
+The following section shows the results of \gls{rbm}s trained with restarts and the $CZ$ gates applied 
+with the rules from section~\ref{sec:applicationToQuantumComputing}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/avgPDF.pdf}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-not-learned/avgPDF.pdf}
   \caption[Scaled Average Output Probabilities of All RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly]{
-    Scaled average output probabilities of Stochastic Reconfiguration with restarts exact. The true 
+    Scaled average output probabilities of all \gls{rbm}s trained with Stochastic Reconfiguration with random restarts and $CZ$ gates applied exactly. The true 
     output distribution approaches a Porter-Thomas shape with increasing number of cycles.}
   \label{fig:sr_exact_avgPDF}
 \end{figure}
 
-In figure~\ref{fig:sr_exact_bestPDF}, only the output distribution of the best performing RBMs with respect to the 
-TVD are selected. Their outputs are averaged. The averaged best output distribution 
-has a TVD of 0.03 for 5, 0.13 for 10, 0.22 for 15, and 0.21 for 20 
+Figure~\ref{fig:sr_exact_avgPDF} shows the averaged output distribution of all \gls{rbm}s and
+the averaged true output distributions of all circuits. As in the cases before, the 
+true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
+The \gls{tvd} of the average output of all \gls{rbm}s 
+is 0.35 for 5, 0.33 for 10, 0.34 for 15, and 0.38 for 20 cycles. The corresponding cross entropy is 
+0.20 for 5, 0.02 for 10, 0.06 for 15, and 0.00 for 20 cycles.
+
+In figure~\ref{fig:sr_exact_bestPDF}, only the output distribution of the best performing \gls{rbm}s with respect to the 
+\gls{tvd} are selected. Their outputs are averaged. The averaged best output distribution 
+has a \gls{tvd} of 0.03 for 5, 0.13 for 10, 0.22 for 15, and 0.21 for 20 
 cycles. The cross entropy difference is 1.00 for 5, 0.46 for 10, 0.33 for 15, and 0.40 for 20 cycles each. 
 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/avgBestPDF.pdf}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-not-learned/avgBestPDF.pdf}
   \caption[Scaled Average Output Probabilities of Best Performing RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly]{
-    Scaled average output probabilities of Stochastic Reconfiguration with restarts exact, only RBMs with lowest
-    TVD for each circuit are considered. The true 
+    Scaled average output probabilities of the best performing \gls{rbm}s trained with Stochastic Reconfiguration with random restarts and $CZ$ gates applied exactly. The true 
     output distribution approaches a Porter-Thomas shape with increasing number of cycles.}
   \label{fig:sr_exact_bestPDF}
 \end{figure}
 
 Figure~\ref{fig:sr_exact_tvd} and figure~\ref{fig:sr_exact_fxeb} detail the influence of the 
-number of training samples and training iterations on the TVD and cross entropy difference that was achieved by 
-the RBMs. 
+number of training samples and training iterations on the \gls{tvd} and cross entropy difference that was achieved by 
+the \gls{rbm}s. 
 
 For 5 cycles, a higher number of training samples 
-correlates with an overall lower TVD. The RBM performs best on 
+correlates with an overall lower \gls{tvd}. The \gls{rbm} performs best on 
 circuits with a depth of 5 cycles when trained with 100,000 iterations and 303 samples. In that case, 
-it achieves a mean TVD of $0.49$. Overall, the performance is similar for 1,000 and 100,000 iterations.
+it achieves a mean \gls{tvd} of $0.49$. Overall, the performance is similar for 1,000 and 100,000 iterations.
 
-For 10 cycles, the lowest TVD is also achieved by RBMs trained with 303 samples and 100,000 iterations.
-A higher number of samples correlates with an overall lower TVD for 100,000 iterations. For 1,000 iterations, 
-the TVD is about 0.60 for 43 samples and higher; and 0.74 for 8 samples. For 10,000 iterations, the TVD varies 
+For 10 cycles, the lowest \gls{tvd} is also achieved by \gls{rbm}s trained with 303 samples and 100,000 iterations.
+A higher number of samples correlates with an overall lower \gls{tvd} for 100,000 iterations. For 1,000 iterations, 
+the \gls{tvd} is about 0.60 for 43 samples and higher; and 0.74 for 8 samples. For 10,000 iterations, the \gls{tvd} varies 
 around about 0.75 independent of the number of samples. 
 
-For 15 and 20 cycles, 10,000 training iterations correlate with the highest TVD in most cases.
-The performance is similar for all numbers of training samples. The lowest TVDs are achieved with 100,000
+For 15 and 20 cycles, 10,000 training iterations correlate with the highest \gls{tvd} in most cases.
+The performance is similar for all numbers of training samples. The lowest \gls{tvd}s are achieved with 100,000
 iterations and 47 or 54 samples. With 10,000 iterations, a higher number of training samples correlates 
-with a higher TVD. For 1,000 and 100,000 iterations, there is no clear difference in the number of training 
+with a higher \gls{tvd}. For 1,000 and 100,000 iterations, there is no clear difference in the number of training 
 samples.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/tvd_heatmap.pdf}
-  \caption[TVD of RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly]{TVD of Stochastic 
-  Reconfiguration with restarts exact for the combinations of iterations and samples tested.
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-not-learned/tvd_heatmap.pdf}
+  \caption[TVD of RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly]{
+  \gls{tvd} of \gls{rbm}s trained with Stochastic Reconfiguration with random restarts and $CZ$ gates applied exactly.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit for 15 and 20 cycles.}
   \label{fig:sr_exact_tvd}
 \end{figure}
@@ -471,22 +469,22 @@ Figure~\ref{fig:sr_no_restarts_fxeb} shows the average cross entropy difference 
 cycles, the highest fidelity is achieved with 303 samples and 100,000 iterations. 
 For 15 cycles, the highest fidelity is achieved with 50 samples on 100,000 iterations and 
 303 samples and 10,000 iterations.
-For 20 cycles, the highest fidelity is achieved on RBMs trained with 47 samples for 100,000 iterations.
+For 20 cycles, the highest fidelity is achieved on \gls{rbm}s trained with 47 samples for 100,000 iterations.
 There is no clear tendency that shows a correlation between 
 the number of training iterations or samples and the cross entropy difference.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/fxeb_heatmap.pdf}
-  \caption[Cross Entropy Difference of RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly]{TVD of Stochastic 
-  Reconfiguration with restarts exact for the combinations of iterations and samples tested.
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-not-learned/fxeb_heatmap.pdf}
+  \caption[Cross Entropy Difference of RBMs Trained with Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly]{
+  Cross entropy difference of \gls{rbm}s trained with Stochastic Reconfiguration with random restarts and $CZ$ gates applied exactly.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit for 15 and 20 cycles.}
   \label{fig:sr_exact_fxeb}
 \end{figure}
 
-Figure~\ref{fig:sr_exact_overlap_8} to~\ref{fig:sr_exact_overlap_303} detail the mean log overlap of the RBMs during the 
+Figure~\ref{fig:sr_exact_overlap_8} to~\ref{fig:sr_exact_overlap_303} detail the mean log overlap of the \gls{rbm}s during the 
 training process when trained with 10,000 iterations for 8, 47, and 303 samples. The 
-mean overlap of the RBM's state and the distribution implied by the training and test data sets are measured 
+mean overlap of the \gls{rbm}'s state and the distribution implied by the training and test data sets are measured 
 for each training iteration.
 
 For 8 samples, both the training and the testing overlap don't vary much during the training. The training errors on the $\sqrt{X}$ and 
@@ -494,9 +492,9 @@ $\sqrt{Y}$ gate are both close to 0 during the whole training process. The test 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/avgOverlap_8.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly - 8 Samples]{Training 
-  Overlap of Stochastic Reconfiguration with restarts exact for 8 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-not-learned/avgOverlap_8.png}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly - 8 Samples]{
+  Training and testing overlaps for Stochastic Reconfiguration with random restarts and $CZ$ gates applied exactly - 8 training samples.}
   \label{fig:sr_exact_overlap_8}
 \end{figure}
 
@@ -529,9 +527,9 @@ throughout the 10,000 iterations.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/avgOverlap_47.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly - 47 Samples]{Training 
-  Overlap of Stochastic Reconfiguration with restarts exact for 47 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-not-learned/avgOverlap_47.png}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly - 47 Samples]{
+  Training and testing overlaps for Stochastic Reconfiguration with random restarts and $CZ$ gates applied exactly - 47 samples.}
   \label{fig:sr_exact_overlap_47}
 \end{figure}
 
@@ -546,9 +544,9 @@ following training iterations.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{figures/results/SR-restarts-not-learned/avgOverlap_303.pdf}
-  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly - 303 Samples]{Training 
-  Overlap of Stochastic Reconfiguration with restarts exact for 303 samples.}
+  \includegraphics[width=\textwidth]{figures/results/sr-restarts-not-learned/avgOverlap_303.png}
+  \caption[Training and Testing Overlaps for Stochastic Reconfiguration with Random Restarts and $CZ$ Gates Applied Exactly - 303 Samples]{
+  Training and testing overlaps for Stochastic Reconfiguration with random restarts and $CZ$ gates applied exactly - 303 samples.}
   \label{fig:sr_exact_overlap_303}
 \end{figure}
 
@@ -556,15 +554,15 @@ following training iterations.
 
 \subsection{AdaMax with Random Restarts and CZ Gates Learned}
 
-AdaMax had been used to train RBMs for the 
+AdaMax had been used to train \gls{rbm}s for the 
 classical simulation of quantum circuits before \cite{jnsson2018neuralnetwork}. The following section presents the results
-of RBMs trained with AdaMax and five random restarts. The $CZ$ gates are also applied with the 
+of \gls{rbm}s trained with AdaMax and five random restarts. The $CZ$ gates are also applied with the 
 learning approach in these cases.
 
-Figure~\ref{fig:am_avgPDF} shows the averaged output distribution of all RBMs trained with AdaMax and 
+Figure~\ref{fig:am_avgPDF} shows the averaged output distribution of all \gls{rbm}s trained with AdaMax and 
 the averaged true output distributions of all circuits. As in the other cases, the 
 true output distributions approach a Porter-Thomas shape with an increasing number of cycles.
-The TVD of the average output of all RBMs trained with AdaMax
+The \gls{tvd} of the average output of all \gls{rbm}s trained with AdaMax
 is 0.25 for 5, 0.30 for 10, 0.35 for 15, and 0.33 for 20 cycles. The corresponding cross entropy is 
 0.20 for 5, 0.08 for 10, 0.06 for 15, and 0.04 for 20 cycles.
 
@@ -572,72 +570,71 @@ is 0.25 for 5, 0.30 for 10, 0.35 for 15, and 0.33 for 20 cycles. The correspondi
   \centering
   \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/avgPDF.pdf}
   \caption[Scaled Average Output Probabilities of All RBMs Trained with AdaMax with Random Restarts and $CZ$ Gates Learned]{
-    Scaled average output probabilities of AdaMax with restarts learned. The true 
+    Scaled average output probabilities of all \gls{rbm}s trained with AdaMax with random restarts and $CZ$ gates learned. The true 
     output distribution approaches a Porter-Thomas shape with increasing number of cycles.}
   \label{fig:am_avgPDF}
 \end{figure}
 
-In figure~\ref{fig:am_avgBestPDF}, only the output distribution of the best performing RBMs with respect to the 
-TVD are selected. Their outputs are averaged once again. The averaged best output distribution 
-has a TVD of 0.00 for 5, 0.00 for 10, 0.00 for 15, and 0.00 for 20 
+In figure~\ref{fig:am_avgBestPDF}, only the output distribution of the best performing \gls{rbm}s with respect to the 
+\gls{tvd} are selected. Their outputs are averaged once again. The averaged best output distribution 
+has a \gls{tvd} of 0.00 for 5, 0.00 for 10, 0.00 for 15, and 0.00 for 20 
 cycles. The cross entropy difference is 0.65 for 5, 0.72 for 10, 0.94 for 15 and 0.77 for 20 cycles each. 
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/avgBestPDF.pdf}
   \caption[Scaled Average Output Probabilities of Best Performing RBMs Trained with AdaMax with Random Restarts and $CZ$ Gates Learned]{
-    Scaled average output probabilities of AdaMax with restarts learned, only RBMs with lowest
-    TVD for each circuit are considered. The true 
+    Scaled average output probabilities of the best performing \gls{rbm}s trained with AdaMax with random restarts and $CZ$ gates learned. The true 
     output distribution approaches a Porter-Thomas shape with increasing number of cycles.}
   \label{fig:am_avgBestPDF}
 \end{figure}
 
 Figure~\ref{fig:am_tvd} and figure~\ref{fig:am_fxeb} give a more detailed overview of the influence of the 
-number of training samples and training iterations on the TVD and cross entropy difference.
+number of training samples and training iterations on the \gls{tvd} and cross entropy difference.
 
 Except for the case of 8 samples, for AdaMax a higher number of training samples as well as a higher 
-number of training iterations corresponds to a lower TVD. For 5 and 10 cycles, the TVD is lowest
+number of training iterations corresponds to a lower \gls{tvd}. For 5 and 10 cycles, the \gls{tvd} is lowest
 when trained with 303 samples and 100,000 iterations. In these cases, it approaches 0.
 
 For 15 and 20 cycles, the training process could not finish
-within the given time frame with this combination of training parameters. On these circuits, the lowest TVDs have been achieved with 303 samples 
+within the given time frame with this combination of training parameters. On these circuits, the lowest \gls{tvd}s have been achieved with 303 samples 
 and 10,000 iterations.
 
 Overall, the difference between 10,000 iterations and 100,0000 iterations is smaller than between 
 1,000 iterations and 10,000 iterations. For 43 to 54 samples, the performance is similar in all cases.
-Nevertheless, the TVD is lower with 54 samples than with 43 samples in all but one cases.
+Nevertheless, the \gls{tvd} is lower with 54 samples than with 43 samples in all but one cases.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/tvd_heatmap.pdf}
-  \caption[TVD of RBMs Trained with AdaMax with Random Restarts and $CZ$ Gates Learned]{TVD of Stochastic 
-  Reconfiguration with restarts learned for the combinations of iterations and samples tested.
+  \caption[TVD of RBMs Trained with AdaMax with Random Restarts and $CZ$ Gates Learned]{
+  \gls{tvd} of \gls{rbm}s trained with AdaMax with random restarts and $CZ$ gates learned.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit for 15 and 20 cycles.}
   \label{fig:am_tvd}
 \end{figure}
 
 Figure~\ref{fig:am_fxeb} shows the average cross entropy difference achieved. In contrast to the case 
-of TVD, a higher number of training samples and training iterations does not correlate with higher 
+of \gls{tvd}, a higher number of training samples and training iterations does not correlate with higher 
 fidelities. Only in the case of 5 cycles, this correlation can be observed for 10,000 and 100,000 iterations.
 
 The highest fidelities for 5 and 10 cycles are achieved for 303 samples and 100,000 iterations. For 
 15 and 20 cycles, they are achieved with 303 samples and 10,000 iterations. 
 
 In the case of 15 cycles, the overall highest fidelity of 0.90 had been measured. The highest fidelity is 0.65 for 5, 0.75 for 10, and 0.73 for 20 cycles.
-This once again demonstrates that a lower TVD does not translate to a higher fidelity directly.
+This once again demonstrates that a lower \gls{tvd} does not translate to a higher fidelity directly.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/fxeb_heatmap.pdf}
-  \caption[Cross Entropy Difference of RBMs Trained with AdaMax with Random Restarts and $CZ$ Gates Learned]{TVD of Stochastic 
-  Reconfiguration with restarts learned for the combinations of iterations and samples tested.
+  \caption[Cross Entropy Difference of RBMs Trained with AdaMax with Random Restarts and $CZ$ Gates Learned]{
+  Cross entropy difference of \gls{rbm}s trained with AdaMax with random restarts and $CZ$ gates learned.
   For 100,000 iterations and 303 samples, the experiments did not finish within the time limit for 15 and 20 cycles.}
   \label{fig:am_fxeb}
 \end{figure}
 
-Figure~\ref{fig:am_overlap_8} to~\ref{fig:am_overlap_303} detail the mean log overlap of the RBMs during the 
+Figure~\ref{fig:am_overlap_8} to~\ref{fig:am_overlap_303} detail the mean log overlap of the \gls{rbm}s during the 
 training process when trained with 10,000 iterations for 8, 47, and 303 samples. The 
-mean overlap of the RBM's state and the distribution implied by the training and test data sets are measured 
+mean overlap of the \gls{rbm}'s state and the distribution implied by the training and test data sets are measured 
 for each training iteration.
 For 8 samples, the training and test overlaps don't vary much during the training process. The training errors on all three gates
 close to 0 during the whole training process. The test error is at about 0.40 on the single-qubit gates. It is about 
@@ -646,8 +643,8 @@ close to 0 during the whole training process. The test error is at about 0.40 on
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/avgOverlap_8.pdf}
-  \caption[Training and Testing Overlaps for AdaMax with Random Restarts and $CZ$ Gates Learned - 8 Samples]{Training 
-  Overlap of AdaMax with restarts learned for 8 samples.}
+  \caption[Training and Testing Overlaps for AdaMax with Random Restarts and $CZ$ Gates Learned - 8 Samples]{
+  Training and testing overlaps for AdaMax with random restarts and $CZ$ gates learned - 8 training samples.}
   \label{fig:am_overlap_8}
 \end{figure}
 
@@ -673,8 +670,8 @@ On the $CZ$ gates, the testing overlap goes down to about 0.15 over the course o
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/avgOverlap_47.pdf}
-  \caption[Training and Testing Overlaps for AdaMax with Random Restarts and $CZ$ Gates Learned - 47 Samples]{Training 
-  Overlap of AdaMax with restarts learned for 47 samples.}
+  \caption[Training and Testing Overlaps for AdaMax with Random Restarts and $CZ$ Gates Learned - 47 Samples]{
+  Training and testing overlaps for AdaMax with random restarts and $CZ$ gates learned - 47 training samples.}
   \label{fig:am_overlap_47}
 \end{figure}
 
@@ -686,6 +683,6 @@ throughout the whole training process.
   \centering
   \includegraphics[width=\textwidth]{figures/results/AM-restarts-learned/avgOverlap_303.pdf}
   \caption[Training and Testing Overlaps for AdaMax with Random Restarts and $CZ$ Gates Learned - 303 Samples]{Training 
-  Overlap of AdaMax with restarts learned for 303 samples.}
+  Training and testing overlaps for AdaMax with random restarts and $CZ$ gates learned - 303 training samples.}
   \label{fig:am_overlap_303}
 \end{figure}

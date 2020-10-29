@@ -2,102 +2,102 @@
 \label{sec:discussion}
 
 \paragraph{Highlights.}
-The results of the experiments show that RBMs are able to accurately simulate random circuit 
+The results of the experiments show that \gls{rbm}s are able to accurately simulate random circuit 
 instances with 4 qubits and a depth of up to 20 cycles. The comparison of 
-Stochastic Reconfiguration (SR) and AdaMax as optimization algorithms suggests that 
+Stochastic Reconfiguration (\gls{sr}) and AdaMax as optimization algorithms suggests that 
 AdaMax is better suited for the given gate set and circuit structure with the chosen training 
 parameters. On each circuit instance, the best performing training parameters led 
-the RBMs reach TVDs below 0.01. Less than 100 training iterations were sufficient to 
-apply non-diagonal single-qubit gates to the state represented by the RBMs. 
-The more training samples were available, the better the RBMs resembled the target output distributions.
+the \gls{rbm}s reach \gls{tvd}s below 0.01. Less than 100 training iterations were sufficient to 
+apply non-diagonal single-qubit gates to the state represented by the \gls{rbm}s. 
+The more training samples were available, the better the \gls{rbm}s resembled the target output distributions.
 
 \paragraph{Performance of Stochastic Reconfiguration.}
-The high TVDs of RBMs trained with the SR methods might be grounded in the algorithm finding 
-local minima. These might be optimal only for a subset of the state space. The oscillation for SR could be explained by the algorithm finding an 
+The high \gls{tvd}s of \gls{rbm}s trained with the \gls{sr} methods might be grounded in the algorithm finding 
+local minima. These might be optimal only for a subset of the state space. The oscillation for \gls{sr} could be explained by the algorithm finding an 
 optimum for one training batch, which does not generalize well to the other training samples.
-This would also explain why there is no oscillations for SR with restarts on 8 samples. In that
+This would also explain why there is no oscillations for \gls{sr} with restarts on 8 samples. In that
 cases, all training samples are inside the same batch. Increasing the batch size or reducing the 
-number of hidden units could improve the performance of the SR algorithm.
+number of hidden units could improve the performance of the \gls{sr} algorithm.
 
 \paragraph{Effects of Random Restarts.}
-Using SR with random restarts had only small if any 
-impact on the resulting accuracy of the RBMs. However, the testing and training overlaps 
+Using \gls{sr} with random restarts had only small if any 
+impact on the resulting accuracy of the \gls{rbm}s. However, the testing and training overlaps 
 look different during the training process. Without the restarts, there is not much 
 oscillation in these metrics. This supports the assumption that with restarts, the 
-RBM is overfitting the current training batch, which does not generalize well to training 
+\gls{rbm} is overfitting the current training batch, which does not generalize well to training 
 samples in other batches. 
 
 This does not imply that this would also 
 hold for AdaMax. Indeed, pre-studies suggested that random restarts might have a positive 
-impact on the RBM's accuracy when trained with AdaMax.
+impact on the \gls{rbm}'s accuracy when trained with AdaMax.
 
 \paragraph{Effects of Learning the $CZ$ Gate.}
-There was no significant difference in the TVDs between RBMs to which the $CZ$ gates have 
+There was no significant difference in the \gls{tvd}s between \gls{rbm}s to which the $CZ$ gates have 
 been applied directly and those that learned the $CZ$ gates. At least for the given circuit 
-sizes, this implies that adding more hidden units to the RBM during the simulation of 
+sizes, this implies that adding more hidden units to the \gls{rbm} during the simulation of 
 quantum circuits had no significant effect on the training of the single-qubit non-diagonal 
 gates. 
 
 These results suggest that for the given gate set and circuit structure, the $CZ$ gates can 
-be applied directly to the RBM's state. This significantly reduces the number of gates which 
+be applied directly to the \gls{rbm}'s state. This significantly reduces the number of gates which 
 have to be applied through a learning phase on the given kind of random circuits.
 
 \paragraph{Performance of AdaMax.}
 The training and testing overlaps for AdaMax show that the single-qubit gates can 
 be learned within less than 100 training iterations. Applying 
-the $CZ$ gates directly will omit the need for more training iterations for the given RBM size.
+the $CZ$ gates directly will omit the need for more training iterations for the given \gls{rbm} size.
 
-Further, it seems that the more training samples are available, the better the RBM will 
+Further, it seems that the more training samples are available, the better the \gls{rbm} will 
 perform when trained with AdaMax. More experiments will be necessary 
 to understand how the number of samples scales with the number of qubits. Establishing
 a relation between the number of training samples and the resulting gate fidelity would 
-be a major step in understanding the capabilities of RBMs for the classical simulation of 
+be a major step in understanding the capabilities of \gls{rbm}s for the classical simulation of 
 quantum circuits.
 
 \paragraph{Influence of the Number of Training Samples.}
 In the conducted experiments, 303 samples were enough to sample each configuration of the 
 $2^n$ dimensional state space multiple times. Only for 8  samples, the full state space
-could not be observed during the training. The performance of the RBMs trained with 8 samples
-had been very low. Only if RBMs can achieve acceptable performance with a number of samples 
+could not be observed during the training. The performance of the \gls{rbm}s trained with 8 samples
+had been very low. Only if \gls{rbm}s can achieve acceptable performance with a number of samples 
 that does not scale exponentially with the number of qubits, this approach would be useful for 
 real-world applications. 
 
 In this regard, this study lacks on interpretable insights. Rather than making use of the 
-Coupon-collectors problem, it would have been possible to train the RBMs with less samples. 
+Coupon-collectors problem, it would have been possible to train the \gls{rbm}s with less samples. 
 The training and test sets could have been made up of a defined number of different 
 samples. This might have given clearer insights into the relation between the ratio of the 
-state space observed and the resulting RBM performance. For future research, the samples should
+state space observed and the resulting \gls{rbm} performance. For future research, the samples should
 be drawn that way.
 
-\paragraph{RBMs for the Classical Simulation of NISQ algorithms.}
+\paragraph{\gls{rbm}s for the Classical Simulation of \gls{nisq} algorithms.}
 Noisy simulations with 
 fidelities in the range of that from the Sycamore processor could help to understand the 
-capabilities and limits of NISQ devices using RBMs on classical computing hardware. 
+capabilities and limits of \gls{nisq} devices using \gls{rbm}s on classical computing hardware. 
 For 10 qubits, for instance, the cross entropy difference
 of the Sycamore processor was estimated to be around 0.4. On the 4 qubit circuits with 
-15 cycles, the fidelity of the best performing RBM is at about 0.9. 
-If RBMs are able to simulate quantum circuits with a similar accuracy as the Sycamore 
+15 cycles, the fidelity of the best performing \gls{rbm} is at about 0.9. 
+If \gls{rbm}s are able to simulate quantum circuits with a similar accuracy as the Sycamore 
 processor on a larger number of qubits with acceptable computational requirements, this 
-would make RBMs a suitable simulation framework to test NISQ algorithms.
+would make \gls{rbm}s a suitable simulation framework to test \gls{nisq} algorithms.
 
 \paragraph{Cross Entropy Difference as a Performance Metric.}
 The cross entropy difference was specifically designed to measure the 
 ability of an algorithm or device to sample from the output distributions of 
 random circuits. In the conducted experiments, it was also possible to 
-calculate the TVD between the RBM's output and the true output distributions of 
-the random circuit instances. The results show that a low TVD did not guarantee a 
+calculate the \gls{tvd} between the \gls{rbm}'s output and the true output distributions of 
+the random circuit instances. The results show that a low \gls{tvd} did not guarantee a 
 high cross entropy distance. The reasons for this could be twofold: First, the 
 cross entropy distance assumes a depolarizing noise model of the quantum computation. 
-Such a model might not be applicable to RBMs. Second, the considered circuits have been 
+Such a model might not be applicable to \gls{rbm}s. Second, the considered circuits have been 
 close to Porter-Thomas, but did not generate perfect Porter-Thomas output distributions.
-These two reasons might explain that the cross entropy distance and TVD did not 
+These two reasons might explain that the cross entropy distance and \gls{tvd} did not 
 always correlate in the conducted experiments. Nevertheless, the cross entropy distance 
-was highest for RBMs trained with AdaMax, which also reached the lowest TVDs.
+was highest for \gls{rbm}s trained with AdaMax, which also reached the lowest \gls{tvd}s.
 
 \paragraph{Future Research.}
-Understanding the ability of RBMs to simulate random circuits with a wider range of qubits 
+Understanding the ability of \gls{rbm}s to simulate random circuits with a wider range of qubits 
 was already intended for this work. However, the performed experiments 
-on 4 qubit random circuits took already 8 weeks. Testing RBMs with the same 
+on 4 qubit random circuits took already 8 weeks. Testing \gls{rbm}s with the same 
 level of detail on a range of up to 20 qubits was estimated to take up to 
 a year. This would have exceeded the time limits of a Master's thesis. Maintenance work on the Noctua Cluster 
 after the first batch of experiments made it impossible to conduct more experiments.
@@ -106,15 +106,15 @@ Nevertheless, the software developed in the progress of this work is available o
 This makes it easy to adapt the code to conduct experiments 
 with other ranges of parameters and quantum circuits. For the given kind of random circuit 
 sampling experiments, everything is set up to perform more experiments on a broader range of 
-qubits. Such experiments could further investigate the empirical relation of TVD and cross entropy 
+qubits. Such experiments could further investigate the empirical relation of \gls{tvd} and cross entropy 
 distance. Additionally, they could help to establish a relation between the number of samples and 
-the accuracy of the RBMs' simulations.
+the accuracy of the \gls{rbm}s' simulations.
 
-The framework can also be easily used to simulate other NISQ algorithms. This could help to 
+The framework can also be easily used to simulate other \gls{nisq} algorithms. This could help to 
 understand such algorithms when no physical device is available and how the algorithm
 behaves with different levels of noise in the computation.
 
-This thesis is the first to apply RBMs to the simulation of random circuit instances. 
+This thesis is the first to apply \gls{rbm}s to the simulation of random circuit instances. 
 The developed software is publicly available on GitHub \cite{NQS2020} and can be used to simulate arbitrary quantum 
 circuits provided in the QASM format. The results from 
 this thesis give a reference for suitable training parameters which have not been included in related works.

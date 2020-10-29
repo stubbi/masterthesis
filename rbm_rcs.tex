@@ -13,26 +13,32 @@
 \input{config/includes.tex}
 \input{config/defs.tex}
 
+\makeglossaries
+\input{acronyms.tex}
+
 \begin{document}
 
 \bibliographystyle{plain}
 
 \pagenumbering{roman}
-
+   
 \input{pretext/titlepage.tex}
 
 \input{pretext/declaration.tex}
 
-\input{chapters/abstract.tex}
+\input{pretext/acknowledgements.tex}
 
-\tableofcontents
+\input{pretext/abstract.tex}
 
-% If you have figures, uncomment this
-\listoffigures
+\tableofcontents 
+
+\printglossaries 
+% If you have figures, uncomment this 
+\listoffigures 
 
 % If you have algorithms, uncomment this
-%\listofalgorithms
-
+\listofalgorithms
+  
 \cleardoublepage
 \pagenumbering{arabic}
 
@@ -50,5 +56,7 @@
 \bibliography{biblio}
 
 \appendix
+\chapter{Additional Experimental Outcomes}
+Additional visualisation of the experimental outcomes can be found on the GitHub repository of this thesis at \url{https://github.com/stubbi/masterthesis/tree/master/appendix}.
 
 \end{document}

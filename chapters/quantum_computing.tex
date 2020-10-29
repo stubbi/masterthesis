@@ -680,15 +680,15 @@ For many years, it has been assumed that the extended Church Turing thesis holds
 Turing machine can efficiently simulate any realistic model of computation. The thesis is challenged by quantum computers, because they can potentially solve specific problems exponentially faster than classical computers \cite{feynman1982simulating}.
 
 The class of problems which can be solved efficiently by a quantum
-computer is called \textbf{BQP}, shorthand for \textit{bounded-error quantum
-  polynomial time} \cite{Bernstein93quantumcomplexity}. A decision problem is in \textbf{BQP} if there exists a quantum
+computer is called \gls{bqp}, shorthand for \textit{bounded-error quantum
+  polynomial time} \cite{Bernstein93quantumcomplexity}. A decision problem is in \gls{bqp} if there exists a quantum
 program that solves the decision problem in 2/3 of the cases and runs in
 polynomial time. This is the quantum analog of the \textit{bounded-error
-  probabilistic polynomial time} or \textbf{BPP} \cite{gill1977computational}, which is decidable by a
+  probabilistic polynomial time} or \gls{bpp} \cite{gill1977computational}, which is decidable by a
 probabilistic Turing machine in polynomial time and widely believed to be the same as
 \textbf{P}.
 
-Currently, there are a few problems known to be in \textbf{BQP}, which are suspected not to be in \textbf{P}, providing evidence for the superiority of quantum computers. One
+Currently, there are a few problems known to be in \gls{bqp}, which are suspected not to be in \textbf{P}, providing evidence for the superiority of quantum computers. One
 of these problems is \textit{factorization}, the problem of decomposing a
 composite integer into its prime factors. This problem has been known to be in
 \textbf{NP} before. Though, it is also believed that factorization is not an \textbf{NP}-hard problem, indicating that quantum computers might not able to provide
@@ -697,7 +697,7 @@ classical computer. Indeed, classical algorithms might even exist, which can
 solve factorization on a classical computer efficiently, which have not been
 discovered yet.
 
-While \textbf{BQP} includes \textbf{P} and intersects with \textbf{NP}, it can be shown that it is strictly
+While \gls{bqp} includes \textbf{P} and intersects with \textbf{NP}, it can be shown that it is strictly
 included in \textbf{PSPACE} \cite{Bernstein93quantumcomplexity}. The relationship of these complexity classes is visualized
 in figure \ref{fig:complexityclasses}.
 
