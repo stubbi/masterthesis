@@ -6,8 +6,8 @@ The results of the experiments show that \gls{rbm}s are able to accurately simul
 instances with 4 qubits and a depth of up to 20 cycles. The comparison of 
 Stochastic Reconfiguration (\gls{sr}) and AdaMax as optimization algorithms suggests that 
 AdaMax is better suited for the given gate set and circuit structure with the chosen training 
-parameters. On each circuit instance, the best performing training parameters led 
-the \gls{rbm}s reach \gls{tvd}s below 0.01. Less than 100 training iterations were sufficient to 
+parameters. The best performing \gls{rbm}s were able to approximate the true output 
+distributions with a \gls{tvd} of 0.00 on all circuit depths. Less than 100 training iterations were sufficient to 
 apply non-diagonal single-qubit gates to the state represented by the \gls{rbm}s. 
 The more training samples were available, the better the \gls{rbm}s resembled the target output distributions.
 

@@ -59,7 +59,7 @@ general, the neurons of a Boltzmann machine can be fully connected. A graphical 
 Each configuration $\bm{c}=(v_1,\dots,v_n,h_1,\dots,h_m)$ of neuron states
 of the Boltzmann machine is associated with an energy $E(\bm{c})$ value,
 which is defined by the parameters $\mathcal{W}$ consisting of the weights and 
-biases $\mathcal{W} = \{a_i, b_i, W_{ij}\}$:
+biases $\mathcal{W} = \{a_i, b_j, W_{ij}\}$:
 
 \begin{equation}
   E(\bm{c};\mathcal{W}) = - \sum_{v_i \in V} a_{i}v_{i} - \sum_{h_i \in H} b_{i}h_{i} - \sum_{x_i,x_j \in X} W_{x_i,x_j}x_{i}x_{j}.
@@ -243,13 +243,13 @@ algorithm~\ref{alg:gibbs}.
         \Repeat
             \State $r \gets random(m+n)$
             \State $E_i \gets bm(\bm{c}^{(t)})$
-            \State $E_j \gets bm(\{\bm{c}_1,\dots,\bar{\bm{c}_r},\dots,\bm{c}_{m+n}\})$
+            \State $E_j \gets bm(\{c_1,\dots,\bar{c_r},\dots,c_{m+n}\})$
             \If{$random(1) < \frac{E_i}{E_j}$}
-                \State $\bm{c}^{(t+1)} \gets \{\bm{c}_1,\dots,\bar{\bm{c}_r},\dots,\bm{c}_{m+n}\}$
+                \State $\bm{c}^{(t+1)} \gets \{c_1,\dots,\bar{c_r},\dots,c_{m+n}\}$
             \EndIf
             \State $t\gets t+1$
         \Until{$t=T$}
-        \State \textbf{return} $c^{(T)}$
+        \State \textbf{return} $\bm{c}^{(T)}$
     \end{algorithmic}
     \label{alg:gibbs}
 \end{algorithm}
@@ -277,7 +277,7 @@ The probability distribution over vector spaces given by a Boltzmann machine can
 resemble the distribution of data points $\bm{d}_i$ in a dataset $D=\{\bm{d}_1,\dots,\bm{d}_d\}$. This can be done either in a \textit{unsupervised}
 or in a \textit{supervised} manner.
 
-In both cases the parameters $\mathcal{W} = \{\bm{a},\bm{b},\bm{W}\}$ of the Boltzmann machine are updated minimizing 
+In both cases the parameters $\mathcal{W} = \{a_i,b_j,W_{ij}\}$ of the Boltzmann machine are updated minimizing 
 an objective function $O(\mathcal{W})$, which depends on the parameters of the Boltzmann machine and 
 depicts the overlap of the current and the target distribution in an iterative process called \textit{gradient descent}.
 
@@ -341,10 +341,10 @@ of \textit{Adam} \cite{kingma2014adam}.It combines the advantages of AdaGrad \ci
 two other popular gradient descent methods. AdaMax is computationally efficient, has little
 memory requirements, and proves to be well suited for problems with much noise and sparse gradients.
 
-Instead of using the raw gradient, the algorithm updates exponential moving averages of the gradient ($mt$) and the squared gradient
-($vt$) to include more information about the shape of the error function into the parameter updates. The hyper-parameters $\beta_1, \beta_2 \in [0, 1)$ control the exponential decay rates of these moving
+Instead of using the raw gradient, the algorithm updates exponential moving averages of the gradient ($\bm{m}_t$) and the squared gradient
+($\bm{v}_t$) to include more information about the shape of the error function into the parameter updates. The hyper-parameters $\beta_1, \beta_2 \in [0, 1)$ control the exponential decay rates of these moving
 averages. The moving averages themselves are estimates of the 1st moment (the mean) and the
-2nd raw moment of the gradient. The update rule for the parameters $\theta_{ij}$ for AdaMax are summarized in 
+2nd raw moment of the gradient. The update rule for the parameters $\theta_{i} \in \mathcal{W}$ for AdaMax are summarized in 
 algorithm~\ref{alg:adamax}.
 
 \begin{algorithm}
@@ -352,19 +352,19 @@ algorithm~\ref{alg:adamax}.
     \begin{algorithmic}[1]
         \Require $\alpha$: step size
         \Require $\beta_1, \beta_2 \in [0,1)$: Exponential decay rates
-        \Require $f(\theta)$: Stochastic objective function with parameters $\theta_i \in \mathcal{W}$
+        \Require $f(\mathcal{W})$: Stochastic objective function
         \Require $\mathcal{W}_0$: Initial parameter vector
-        \State $m_0 \gets 0$ (Initialize $1^{st}$ moment vector)
-        \State $u_0 \gets 0$ (Initialize the exponential weighted infinity norm)
+        \State $\bm{m}_0 \gets \bm{0}$ (Initialize $1^{st}$ moment vector)
+        \State $\bm{u}_0 \gets \bm{0}$ (Initialize the exponential weighted infinity norm)
         \State $t \gets 0$ (Initialize time step)
-        \While {$\theta_t$ not converged}
+        \While {$\mathcal{W}_t$ not converged}
             \State $t\gets t+1$
-            \State $g_t \gets \nabla_{\mathcal{W}}f_t(\mathcal{W}_{t-1})$ (Get gradients w.r.t. objective function at time step $t$)
-            \State $m_t \gets \beta_1 \cdot m_{t-1} + (1-\beta_1) \cdot g_t$ (Update biased first moment estimate)
-            \State $u_t \gets max(\beta_2 \cdot u_{t-1}, \vert{g_t})$ (Update the exponentially weighted infinity norm)
-            \State $\mathcal{W}_t \gets \mathcal{W}_{t-1} - (\alpha/ (1-\beta_1^t)) \cdot m_t/u_t$ (Update parameters)
+            \State $\bm{g}_t \gets \nabla_{\mathcal{W}}f_t(\mathcal{W}_{t-1})$ (Get gradients w.r.t. objective function at time step $t$)
+            \State $\bm{m}_t \gets \beta_1 \cdot m_{t-1} + (1-\beta_1) \cdot \bm{g}_t$ (Update biased first moment estimate)
+            \State $\bm{u}_t \gets max(\beta_2 \cdot u_{t-1}, \vert{\bm{g}_t})$ (Update the exponentially weighted infinity norm)
+            \State $\mathcal{W}_t \gets \mathcal{W}_{t-1} - (\alpha/ (1-\beta_1^t)) \cdot \bm{m}_t/\bm{u}_t$ (Update parameters)
         \EndWhile
-        \State \textbf{return} $\theta_t$ (Resulting parameters)
+        \State \textbf{return} $\mathcal{W}_t$ (Resulting parameters)
     \end{algorithmic}
     \label{alg:adamax}
 \end{algorithm}
