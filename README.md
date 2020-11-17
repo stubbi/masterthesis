@@ -1,6 +1,22 @@
 # Classical Simulation of Quantum Circuits with Restricted Boltzmann Machines
 
-*Disclaimer:*
-This work is still in progress. It might include typos and miss references. 
+Random circuit sampling provides a benchmarking tool for noisy intermediate-scale quantum (NISQ)
+devices and simulations.
+This thesis is the first to study the abilities of restricted Boltzmann machines (RBMs)
+to sample from the output distribution of such random quantum circuits. 
+Variations of Stochastic Reconfiguration and AdaMax are compared for a range of training samples 
+and iterations. Total variation distance (TVD) and cross entropy difference are measured 
+and compared as performance metrics.
+The results show that RBMs are able to simulate random quantum circuits with 4 qubits 
+and a depth of up to 20 cycles accurately. When trained with AdaMax, the best 
+performing RBMs were able to approximate the average true output distribution with a TVD of 0.00 
+on all circuit depths.
+The non-diagonal single-qubit gates can be applied within less than 100 training iterations. 
+The accuracy of the RBMs had been higher the more training samples were available.
+The software developed in the progress of this thesis is publicly available on GitHub. 
+It can be adapted to simulate random circuits with a wider range of qubits. It 
+further provides a simple interface to run quantum circuits given in the QASM format. This thesis
+can act as a reference for suitable training parameters of the RBMs, which have not been 
+included in related works.
 
-The current state of the thesis can be accessed [here](https://github.com/stubbi/masterthesis/blob/master/rbm_rcs.pdf)
+The thesis can be accessed [here](https://github.com/stubbi/masterthesis/blob/master/rbm_rcs.pdf)
