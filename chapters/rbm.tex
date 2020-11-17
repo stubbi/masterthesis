@@ -302,34 +302,13 @@ This process is repeated for a defined number of iterations to minimize the obje
 A graphical representation of this process is shown in figure~\ref{fig:sgd}.
 
 \begin{figure}[H]
-    \centering
-    
-    \begin{tikzpicture}
-        \begin{axis}[width=12cm,%
-            declare function={f(\x,\y)=cos(deg(\x)*0.8)*cos(deg(\y)*0.6)*exp(0.1*\x);}, yticklabels={,,}, xticklabels={,,}, zticklabels={,,}, ytick style={draw=none}, xtick style={draw=none}, ztick style={draw=none}]
-         \addplot3[surf,shader=interp,domain=-4:4,%samples=81
-         ]{f(x,y)};
-         \edef\myx{0.15} % first x coordinate
-         \edef\myy{-0.15} % first y coordinate
-         \edef\mystep{-2}% negative values mean descending
-         \pgfmathsetmacro{\myf}{f(\myx,\myy)}
-         \edef\lstCoords{(\myx,\myy,\myf)}
-         \pgfplotsforeachungrouped\X in{0,...,5}
-         {
-         \pgfmathsetmacro{\myx}{\myx+\mystep*xgrad(\myx,\myy)}
-         \pgfmathsetmacro{\myy}{\myy+\mystep*ygrad(\myx,\myy)}
-         \pgfmathsetmacro{\myf}{f(\myx,\myy)}
-         \edef\lstCoords{\lstCoords\space (\myx,\myy,\myf)}
-         }
-         \addplot3[samples y=0,arrowed] coordinates \lstCoords;
-        \end{axis}
-    \end{tikzpicture}
-
-    \caption[Gradient Descent]{Iterations of a gradient descent method. At each iteration the randomly initialized parameters are updated in 
-    direction of the steepest descent of the function to be optimized. After enough iterations a minimum of the function is reached.}
-    \label{fig:sgd}
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/gradient_descent}
+  \caption[Gradient Descent]{Iterations of a gradient descent method. At each iteration the randomly initialized parameters are updated in 
+   direction of the steepest descent of the function to be optimized. After enough iterations a minimum of the function is reached.}
+  \label{fig:sgd} 
 \end{figure}
-
+ 
 The simple update rule in \ref{eq:sgd} has several drawbacks, however. First, The gradient and the step size become smaller as closer the function approaches its minimum, leading to only small improvements and many steps necessary.
 Second, the function's shape will usually have (many) local minima, which should be avoided.
 Several variants of gradient descent have been developed to overcome these issues \cite{ruder2016overview}.
