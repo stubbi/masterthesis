@@ -109,9 +109,9 @@ $\Ket{1}$ state are then defined by the amplitudes:
 \begin{align}
   p(0) &= \Bra{\psi} M_0^{\dagger}M_0 \Ket{\psi} \\
        &=  \Bra{\psi} M_0 \Ket{\psi} \\
-       &= \alpha \Braket{0|0} \Bra{0} \alpha \Ket{0} + \beta \Braket{1|0} \Bra{0} \beta \Ket{1} \\
-       &= \alpha^2 \Braket{0|0} \Braket{0|0} + \beta^2 \Braket{1|0} \Braket{0|1} \\
-       &= \alpha^2
+       &= \alpha^* \Braket{0|0} \Bra{0} \alpha \Ket{0} + \beta^* \Braket{1|0} \Bra{0} \beta \Ket{1} \\
+       &= |\alpha|^2 \Braket{0|0} \Braket{0|0} + |\beta|^2 \Braket{1|0} \Braket{0|1} \\
+       &= |\alpha|^2
 \end{align}
 
 and
@@ -119,9 +119,9 @@ and
 \begin{align}
   p(1) &= \Bra{\psi} M_1^{\dagger} M_1 \Ket{\psi} \\
        &= \Bra{\psi} M_1 \Ket{\psi} \\
-       &= \alpha \Braket{0|1} \Bra{1} \alpha \Ket{0} + \beta \Braket{1|1} \Bra{1} \beta \Ket{1} \\
-       &= \alpha^2 \Braket{0|1} \Braket{1|0} + \beta^2 \Braket{1|1} \Braket{1|1} \\
-       &= \beta^2
+       &= \alpha^* \Braket{0|1} \Bra{1} \alpha \Ket{0} + \beta^* \Braket{1|1} \Bra{1} \beta \Ket{1} \\
+       &= |\alpha|^2 \Braket{0|1} \Braket{1|0} + |\beta|^2 \Braket{1|1} \Braket{1|1} \\
+       &= |\beta|^2
 \end{align}
 
 as $M_i^{\dagger}M_i = M_i$ and $\Braket{i|j} = \delta_{ij}$.
@@ -660,7 +660,7 @@ between the $\Ket{0}$ and $\Ket{1}$ state on the Bloch Sphere, is used as the
 control qubit in the $CNOT$ gate. This has an interesting effect on the second qubit,
 as the $X$ gate is applied and not applied at the same time, entangling
 the two qubits with each other. The final state before measurement is
-$\frac{\Ket{00} + \Ket{11}}{2}$, which has been discussed in section~\ref{sec:multiplequbitsandentanglement}.
+$\frac{\Ket{00} + \Ket{11}}{\sqrt{2}}$, which has been discussed in section~\ref{sec:multiplequbitsandentanglement}.
 This state is also known as one of the four \textit{Bell states}. They represent maximally
 entangled two-qubit states. Moreover, they play an important role in the analysis of
 \textit{quantum communication}.
